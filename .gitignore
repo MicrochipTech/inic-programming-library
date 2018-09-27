@@ -861,3 +861,7 @@ ASALocalRun/
 
 #Local Visual Studio Configuration
 CMakeSettings.json
+/Debug-Lib/
+/Debug-App/
+/Release-App/
+/Release-Lib/
