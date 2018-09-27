@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Unicens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" AsyncBandwidth="20" xsi:noNamespaceSchemaLocation="unicens.xsd" Network="INICnet-50">
+  <Node Address="0x270" Name="Amplifier" Description="HD Amplifier" Role="Root">
+    <SyncConnection MuteMode="NoMuting" Description="HD Audio">
+	  <NetworkSocket Route="Monitoring" Bandwidth="6" Description="Monitoring"/>    
+      <USBSocket EndpointAddress="0x81" FramesPerTransaction="42" Description="Peripheral"/>    	
+    </SyncConnection>
+  </Node>
+  <Node Address="0x210" Name="Slim Microphone 1" Description="HD Microphone #1" Role="Slim">
+    <StreamPort ClockConfig="64Fs" DataAlignment="Left24Bit" Description="Peripheral Configuration"/>
+    <SyncConnection MuteMode="NoMuting" Description="HD Audio">
+      <StreamSocket StreamPinID="SRXA0" Bandwidth="6" Description="Peripheral"/>
+      <NetworkSocket Route="Monitoring" Bandwidth="6" IsActive="true" Description="Monitoring"/>
+    </SyncConnection>
+  </Node>
+  <Node Address="0x211" Name="Slim Microphone 2" Description="HD Microphone #2" Role="Slim">
+    <StreamPort ClockConfig="64Fs" DataAlignment="Left24Bit" Description="Peripheral Configuration"/>
+    <SyncConnection MuteMode="NoMuting" Description="HD Audio">
+      <StreamSocket StreamPinID="SRXA0" Bandwidth="6" Description="Peripheral"/>
+      <NetworkSocket Route="Monitoring" Bandwidth="6" IsActive="false" Description="Monitoring"/>
+    </SyncConnection>
+  </Node>
+</Unicens>
+

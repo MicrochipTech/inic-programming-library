@@ -15,6 +15,7 @@ target_link_libraries(IPL_APP
 
 set_target_properties(IPL_APP
 		PROPERTIES
+		OUTPUT_NAME "ipl"
 		LINKER_LANGUAGE C
 		VERSION         ${${PROJECT_NAME}_VERSION}
 		)
