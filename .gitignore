@@ -865,3 +865,6 @@ CMakeSettings.json
 /Debug-App/
 /Release-App/
 /Release-Lib/
+/App_Release/
+/LibIpl_Debug/
+/App_Debug/
