@@ -11,7 +11,7 @@ set(IPL_PRIVATE_HEADERS
 	${IPL_INCLUDE_DIR}/ipl_81210.h
 	${IPL_INCLUDE_DIR}/ipl_81212.h
 	${IPL_INCLUDE_DIR}/ipl_81214.h
-	${IPL_INCLUDE_DIR}/ipl_cfg.h
+	${IPL_CONFIGURATION_DIR}/ipl_cfg.h
 	${IPL_INCLUDE_DIR}/ipl.h
 	)
 
@@ -40,6 +40,25 @@ set_target_properties(INIC_PROGRAMMING_LIBRARY
         VERSION         ${${PROJECT_NAME}_VERSION}
         )
 set_target_properties(INIC_PROGRAMMING_LIBRARY
+        PROPERTIES
+        OUTPUT_NAME     "Ipl"
+        FRAMEWORK       ON
+        PUBLIC_HEADER   "${IPL_PUBLIC_HEADERS}"
+        PRIVATE_HEADER  "${IPL_PRIVATE_HEADERS}"
+        )
+
+
+add_library(INIC_PROGRAMMING_LIBRARY_SHARED SHARED
+        ${IPL_SOURCES}
+        ${IPL_HEADERS}
+        )
+
+set_target_properties(INIC_PROGRAMMING_LIBRARY_SHARED
+        PROPERTIES
+        LINKER_LANGUAGE C
+        VERSION         ${${PROJECT_NAME}_VERSION}
+        )
+set_target_properties(INIC_PROGRAMMING_LIBRARY_SHARED
         PROPERTIES
         OUTPUT_NAME     "Ipl"
         FRAMEWORK       ON

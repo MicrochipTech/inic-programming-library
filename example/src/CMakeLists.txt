@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.11)
 
-set(IPL_APP_SOURCES
+set(IPL_EXAMPLE_SOURCES
 	main.c
 	hw_raspi.c
 	)
 
-add_executable(IPL_APP
-		${IPL_APP_SOURCES}
+add_executable(IPL_EXAMPLE
+	${IPL_EXAMPLE_SOURCES}
 		)
 
-target_link_libraries(IPL_APP
+	target_link_libraries(IPL_EXAMPLE
 		INIC_PROGRAMMING_LIBRARY
 		)
 
-set_target_properties(IPL_APP
+	set_target_properties(IPL_EXAMPLE
 		PROPERTIES
 		OUTPUT_NAME "ipl"
 		LINKER_LANGUAGE C
@@ -21,8 +21,8 @@ set_target_properties(IPL_APP
 		)
 
 # Install libs and headers.
-install(TARGETS IPL_APP
-		EXPORT Ipl:App
+install(TARGETS IPL_EXAMPLE
+	EXPORT Ipl:Example
 		LIBRARY DESTINATION
 		lib
 		COMPONENT libraries
