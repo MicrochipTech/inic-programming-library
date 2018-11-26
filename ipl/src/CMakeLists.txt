@@ -44,48 +44,49 @@ set_target_properties(INIC_PROGRAMMING_LIBRARY
 set_target_properties(INIC_PROGRAMMING_LIBRARY
         PROPERTIES
         OUTPUT_NAME     "Ipl"
-        FRAMEWORK       ON
+        FRAMEWORK       OFF
         PUBLIC_HEADER   "${IPL_PUBLIC_HEADERS}"
         PRIVATE_HEADER  "${IPL_PRIVATE_HEADERS}"
         )
+if(NOT WIN32)
 
+	add_library(INIC_PROGRAMMING_LIBRARY_SHARED SHARED
+			${IPL_SOURCES}
+			${IPL_HEADERS}
+		)
 
-add_library(INIC_PROGRAMMING_LIBRARY_SHARED SHARED
-        ${IPL_SOURCES}
-        ${IPL_HEADERS}
+	set_target_properties(INIC_PROGRAMMING_LIBRARY_SHARED
+			PROPERTIES
+			LINKER_LANGUAGE C
+			VERSION         ${${PROJECT_NAME}_VERSION}
+        )
+	set_target_properties(INIC_PROGRAMMING_LIBRARY_SHARED
+			PROPERTIES
+			OUTPUT_NAME     "Ipl"
+			FRAMEWORK       OFF
+			PUBLIC_HEADER   "${IPL_PUBLIC_HEADERS}"
+			PRIVATE_HEADER  "${IPL_PRIVATE_HEADERS}"
         )
 
-set_target_properties(INIC_PROGRAMMING_LIBRARY_SHARED
-        PROPERTIES
-        LINKER_LANGUAGE C
-        VERSION         ${${PROJECT_NAME}_VERSION}
+	install(TARGETS INIC_PROGRAMMING_LIBRARY
+			EXPORT Ipl:Lib
+			LIBRARY DESTINATION
+				lib
+				COMPONENT libraries
+			ARCHIVE DESTINATION
+				lib
+				COMPONENT libraries
+			RUNTIME DESTINATION
+				bin
+				COMPONENT libraries # Windows DLLs
+			PUBLIC_HEADER DESTINATION
+				include
+				COMPONENT dev
+			PRIVATE_HEADER DESTINATION
+				share/ipl/include
+				COMPONENT dev
+			FRAMEWORK DESTINATION
+				lib
+				COMPONENT libraries
         )
-set_target_properties(INIC_PROGRAMMING_LIBRARY_SHARED
-        PROPERTIES
-        OUTPUT_NAME     "Ipl"
-        FRAMEWORK       ON
-        PUBLIC_HEADER   "${IPL_PUBLIC_HEADERS}"
-        PRIVATE_HEADER  "${IPL_PRIVATE_HEADERS}"
-        )
-
-install(TARGETS INIC_PROGRAMMING_LIBRARY
-        EXPORT Ipl:Lib
-        LIBRARY DESTINATION
-            lib
-            COMPONENT libraries
-        ARCHIVE DESTINATION
-            lib
-            COMPONENT libraries
-        RUNTIME DESTINATION
-            bin
-            COMPONENT libraries # Windows DLLs
-        PUBLIC_HEADER DESTINATION
-            include
-            COMPONENT dev
-	PRIVATE_HEADER DESTINATION
-	    share/ipl/include
-	    COMPONENT dev
-        FRAMEWORK DESTINATION
-            lib
-            COMPONENT libraries
-        )
+endif()

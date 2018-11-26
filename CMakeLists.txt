@@ -219,6 +219,7 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
     )
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel")
   # using Intel C++
+  message(FATAL "Intel compiler not supported yet!")
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
   # using Visual Studio C++
 
@@ -356,6 +357,13 @@ set(IPL_INCLUDE_DIR
 set(IPL_CONFIGURATION_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/ipl/cfg
  )
+ 
+option(IPL_EXAMPLE_RPI "Build raspberry pi example" ON)
+option(IPL_EXAMPLE_WIN "Build windows aardvarg usb example" OFF)
+
+if(${IPL_EXAMPLE_RPI} AND ${IPL_EXAMPLE_WIN})
+	message(FATAL "Only one example can be build not both")
+endif()
 
 add_subdirectory(ipl)
 add_subdirectory(example)
