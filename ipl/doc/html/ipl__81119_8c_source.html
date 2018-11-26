@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/ipl_81119.c Source File</title>
+<title>INIC PROGRAMMING LIBRARY: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/src/ipl_81119.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -111,50 +111,104 @@ $(document).ready(function(){initNavTree('ipl__81119_8c_source.html','');});
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__cfg_8h.html" title="Configuration header for INIC Programming Library.">ipl_cfg.h</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl_8h.html" title="Internal header for general functions for INIC Programming Library.">ipl.h</a>&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipf_8h.html" title="Internal header for functions to parse IPF data for INIC Programming Library.">ipf.h</a>&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__81118_8h.html" title="Internal OS81118 specific header for INIC Programming Library.">ipl_81118.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__81119_8h.html" title="Internal OS81119 specific header for INIC Programming Library.">ipl_81119.h</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__cfg_8h.html" title="Configuration header for INIC Programming Library.">ipl_cfg.h</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl_8h.html" title="Internal header for general functions for INIC Programming Library.">ipl.h</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipf_8h.html" title="Internal header for functions to parse IPF data for INIC Programming Library.">ipf.h</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__81118_8h.html" title="Internal OS81118 specific header for INIC Programming Library.">ipl_81118.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__81119_8h.html" title="Internal OS81119 specific header for INIC Programming Library.">ipl_81119.h</a>&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifdef IPL_USE_OS81119</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">/* FUNCTIONS                                                                                      */</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="code" href="ipl__81119_8h.html#a829f6eb5825d90e3919f09ca15bc40f0">   41</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8c.html#a829f6eb5825d90e3919f09ca15bc40f0">OS81119_ReadConfigStringVersion</a>(uint32_t lData, uint8_t pData[])</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="ipl__81118_8c.html#a903268f8775808e72150004fb517b9c4">OS81118_ReadConfigStringVersion</a>(lData, pData);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#ifdef IPL_USE_OS81119</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* FUNCTIONS                                                                                      */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a829f6eb5825d90e3919f09ca15bc40f0">   42</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a829f6eb5825d90e3919f09ca15bc40f0">OS81119_ReadConfigStringVersion</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="ipl__81118_8h.html#a903268f8775808e72150004fb517b9c4">OS81118_ReadConfigStringVersion</a>(lData, pData);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="ipl__81119_8h.html#a1bbbbbe3290eb12bf88722a9a2f33f59">   48</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8c.html#a1bbbbbe3290eb12bf88722a9a2f33f59">OS81119_ProgFirmware</a>(uint32_t lData, uint8_t pData[])</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="ipl__81118_8c.html#aa5f24fc356ee8503ee2f74028988ade8">OS81118_ProgFirmware</a>(lData, pData);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a1bbbbbe3290eb12bf88722a9a2f33f59">   49</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a1bbbbbe3290eb12bf88722a9a2f33f59">OS81119_ProgFirmware</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="ipl__81118_8h.html#aa5f24fc356ee8503ee2f74028988ade8">OS81118_ProgFirmware</a>(lData, pData);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="ipl__81119_8h.html#a004584b91a0f1285a742ba811107ada9">   55</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8c.html#a004584b91a0f1285a742ba811107ada9">OS81119_ProgConfiguration</a>(uint32_t lData, uint8_t pData[])</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="ipl__81118_8c.html#aae04c083235b23d21dfbde8579cb658d">OS81118_ProgConfiguration</a>(lData, pData);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a004584b91a0f1285a742ba811107ada9">   56</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a004584b91a0f1285a742ba811107ada9">OS81119_ProgConfiguration</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="ipl__81118_8h.html#aae04c083235b23d21dfbde8579cb658d">OS81118_ProgConfiguration</a>(lData, pData);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">/* UNSUPPORTED FUNCTIONS                                                                          */</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a6b40d03b222e9dbbd53f9f67195fcdcd">   66</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a6b40d03b222e9dbbd53f9f67195fcdcd">OS81119_ProgPatchString</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgPatchString returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a10b190742b5520be87af2017e9daad66">   73</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a10b190742b5520be87af2017e9daad66">OS81119_ProgTestConfiguration</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgTestConfiguration returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a3950a837a460f9abc66aa3c54255bd62">   80</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a3950a837a460f9abc66aa3c54255bd62">OS81119_ProgTestPatchString</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgTestPatchString returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#ad2a025144bc016dca337ca097ab33b1f">   87</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#ad2a025144bc016dca337ca097ab33b1f">OS81119_ProgConfigString</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;{</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgConfigString returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a9b729dc17c86b5cc3cb2f6e49eee6d53">   94</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a9b729dc17c86b5cc3cb2f6e49eee6d53">OS81119_ProgTestConfigString</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;{</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgTestConfigString returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a747ec818f2b3f1f79ce7979e19551d05">  101</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a747ec818f2b3f1f79ce7979e19551d05">OS81119_ProgIdentString</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgIdentString returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="code" href="ipl__81119_8c.html#a3fc28449b088b33a589a197405651bfb">  108</a></span>&#160;uint8_t <a class="code" href="ipl__81119_8h.html#a3fc28449b088b33a589a197405651bfb">OS81119_ProgTestIdentString</a>(uint32_t lData, uint8_t pData[])</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;{</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<a class="code" href="group__trace__tags.html#gac9bfd03f08b778278071a635a3031ac1" title="Tag used for error tracing.">IPL_TRACETAG_ERR</a>, <span class="stringliteral">&quot;OS81119_ProgTestIdentString returned 0x%02X&quot;</span>, <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="ipl__81119_8c.html">ipl_81119.c</a></li>
+    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="dir_792ca1e11906090e01dead78297002c3.html">src</a></li><li class="navelem"><a class="el" href="ipl__81119_8c.html">ipl_81119.c</a></li>
     <li class="footer">&copy; 2018 Microchip Technology Inc. All rights reserved. <a href="http://www.microchip.com" target="_blank">www.microchip.com</a></li>
   </ul>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

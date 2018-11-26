@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/ipl_81212.h Source File</title>
+<title>INIC PROGRAMMING LIBRARY: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/inc/ipl_81212.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -111,46 +111,48 @@ $(document).ready(function(){initNavTree('ipl__81212_8h_source.html','');});
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#ifndef IPL_81212_H</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define IPL_81212_H</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__cfg_8h.html" title="Configuration header for INIC Programming Library.">ipl_cfg.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef IPL_81212_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define IPL_81212_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__cfg_8h.html" title="Configuration header for INIC Programming Library.">ipl_cfg.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef IPL_USE_OS81212</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">/* FUNCTION PROTOTYPES                                                                            */</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a333df51f5d1e2b4f947dbbc7c2dfe387">OS81212_ReadConfigStringVersion</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a82ebbe05dc61f0fc35f89c498e505c20">OS81212_ProgConfiguration</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a0e2198111d5576a7e6fb5559f065edbc">OS81212_ProgConfigString</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a06e8518721faa05e1eb6a1b23bf4b413">OS81212_ProgIdentString</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a1130288269a474e651ebb26a8a7e9445">OS81212_ProgPatchString</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a3f277f1dcf9081a55a4a541e746b1b6c">OS81212_ProgTestConfiguration</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a9b06ce211eccb0fdd72f6c54f7b907b9">OS81212_ProgTestPatchString</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a9dc3511ae05ec436a866676c18427b03">OS81212_ProgTestConfigString</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;uint8_t <a class="code" href="ipl__81212_8c.html#a8a734465065ede0c210c01b4bf26b47b">OS81212_ProgTestIdentString</a>(uint32_t lData, uint8_t pData[]);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifdef IPL_USE_OS81212</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* FUNCTION PROTOTYPES                                                                            */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a333df51f5d1e2b4f947dbbc7c2dfe387">OS81212_ReadConfigStringVersion</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a82ebbe05dc61f0fc35f89c498e505c20">OS81212_ProgConfiguration</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a0e2198111d5576a7e6fb5559f065edbc">OS81212_ProgConfigString</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a06e8518721faa05e1eb6a1b23bf4b413">OS81212_ProgIdentString</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a1130288269a474e651ebb26a8a7e9445">OS81212_ProgPatchString</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a3f277f1dcf9081a55a4a541e746b1b6c">OS81212_ProgTestConfiguration</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a9b06ce211eccb0fdd72f6c54f7b907b9">OS81212_ProgTestPatchString</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a9dc3511ae05ec436a866676c18427b03">OS81212_ProgTestConfigString</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a8a734465065ede0c210c01b4bf26b47b">OS81212_ProgTestIdentString</a>(uint32_t lData, uint8_t pData[]);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;uint8_t <a class="code" href="ipl__81212_8h.html#a65075ff72ac578bbb6b4522ae6a7c4ee">OS81212_ProgFirmware</a>(uint32_t lData, uint8_t pData[]);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="ipl__81212_8h.html">ipl_81212.h</a></li>
+    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="dir_9d2a425c484d38ddd81475bb685ae180.html">inc</a></li><li class="navelem"><a class="el" href="ipl__81212_8h.html">ipl_81212.h</a></li>
     <li class="footer">&copy; 2018 Microchip Technology Inc. All rights reserved. <a href="http://www.microchip.com" target="_blank">www.microchip.com</a></li>
   </ul>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

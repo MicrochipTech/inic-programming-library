@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: INIC Programming Library (IPL)</title>
+<title>INIC PROGRAMMING LIBRARY: INIC Programming Library (IPL)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -91,23 +91,36 @@ $(document).ready(function(){initNavTree('introduction.html','');});
 <div class="title">INIC Programming Library (IPL) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The IPL is a platform independent programming library that enables an application to program Microchip INIC network controllers via the I2C interface.<br/>
+<div class="textblock"><p>Microchip Technology Inc. provides a platform independent programming library called IPL.<br/>
+ The IPL enables an application to program Microchip's Intelligent Network Interface Controllers (INICs) via their I2C interface.<br/>
  <br/>
- The library can handle the following INICs:<br/>
- OS81118<br/>
- OS81119<br/>
- OS81210<br/>
- OS81212<br/>
- OS81214<br/>
+ The IPL can handle the following INICs:<br/>
  <br/>
- Depending on the used INIC, it is possible to program ConfigString, IdentString, PatchString and Firmware into RAM, OTP or FLASH.<br/>
- The library is using the IPF format for the programming data which can be created by Microchip Automotive Target Manager (MATM) or UNICENS System Designer.<br/>
- It is also possible to read out ConfigString and Firmware versions and to check, if an update with a certain IPF data file is useful.<br/>
+ OS81118 (INICnet<sup>TM</sup> 150)<br/>
+ OS81119 (INICnet<sup>TM</sup> 150)<br/>
+ OS81210 (INICnet<sup>TM</sup> 50)<br/>
+ OS81212 (INICnet<sup>TM</sup> 50)<br/>
+ OS81214 (INICnet<sup>TM</sup> 50)<br/>
+ OS81216 (INICnet<sup>TM</sup> 50)<br/>
+</p>
+<p>Depending on the used INIC, it is possible to program the<br/>
+</p>
+<ul>
+<li>Configuration string (CFGS)</li>
+<li>Identification string (IDENTS)</li>
+<li>Configuration (this includes both CFGS and IDENTS)</li>
+<li>Patch string (PATCHS)</li>
+<li>Firmware</li>
+</ul>
+<p>into RAM, OTP or FLASH memory.<br/>
+ The IPL uses the IPF format for the programming data, which can be created by the Microchip Automotive Target Manager (MATM) or UNICENS<sup>TM</sup> System Designer.<br/>
+ It is also possible to read out CFGS and firmware versions and to check if an update with a certain IPF data file is useful.<br/>
  <br/>
- Besides the connection via I2C, INICs RESET pin and ERR/BOOT pin needs to be controlled by the library. The use of the INT pin is optional.<br/>
+ Besides the connection via I2C, INIC's RESET pin and ERR/BOOT_ pin needs to be controlled by the IPL. The use of the INT_ pin is optional.<br/>
  <br/>
- On systems with low memory, it is possible to load only portions of the IPF content instead of the complete data.<br/>
+ For systems with low memory it is possible to load portions of the IPF content instead of loading the entire data.<br/>
  </p>
+<dl class="section note"><dt>Note</dt><dd>For support related to this code contact <a href="http://www.microchip.com/support">http://www.microchip.com/support</a>. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
@@ -118,7 +131,7 @@ $(document).ready(function(){initNavTree('introduction.html','');});
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

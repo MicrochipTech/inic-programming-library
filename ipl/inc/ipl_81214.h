@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl_81214.h
- *  \brief Internal OS81214 specific header for INIC Programming Library
+/*! \file   ipl_81214.h
+ *  \brief  Internal OS81214 specific header for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #ifndef IPL_81214_H
@@ -46,6 +47,8 @@ uint8_t OS81214_ProgTestConfiguration(uint32_t lData, uint8_t pData[]);
 uint8_t OS81214_ProgTestPatchString(uint32_t lData, uint8_t pData[]);
 uint8_t OS81214_ProgTestConfigString(uint32_t lData, uint8_t pData[]);
 uint8_t OS81214_ProgTestIdentString(uint32_t lData, uint8_t pData[]);
+
+uint8_t OS81214_ProgFirmware(uint32_t lData, uint8_t pData[]);
 
 
 #endif

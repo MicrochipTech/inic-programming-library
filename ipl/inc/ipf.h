@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipf.h
- *  \brief Internal header for functions to parse IPF data for INIC Programming Library
+/*! \file   ipf.h
+ *  \brief  Internal header for functions to parse IPF data for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #ifndef IPF_H
@@ -100,6 +101,8 @@
 #define VERSION_INVALID                 0xFFU
 
 
+
+
 /*------------------------------------------------------------------------------------------------*/
 /* TYPES                                                                                          */
 /*------------------------------------------------------------------------------------------------*/
@@ -176,6 +179,7 @@ extern Ipl_IpfData_t Ipl_IpfData;
 
 uint8_t Ipl_ParseIpf(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_t stringType);
 void    Ipl_ClrIpfData(Ipl_IpfData_t *ipf);
+void    Ipl_ClrMetaData(Ipl_IpfData_t *ipf);
 
 
 #endif

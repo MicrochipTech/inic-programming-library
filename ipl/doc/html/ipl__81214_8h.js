@@ -8,5 +8,6 @@ var ipl__81214_8h =
     [ "OS81214_ProgTestConfiguration", "ipl__81214_8h.html#a01ec2a40c3d4ce06f28e847ffcc26478", null ],
     [ "OS81214_ProgTestPatchString", "ipl__81214_8h.html#ae274e0785b1fbf191254dc64b7ddc5d6", null ],
     [ "OS81214_ProgTestConfigString", "ipl__81214_8h.html#a4cbfa75945a5126cc6c87e3aadcfff38", null ],
-    [ "OS81214_ProgTestIdentString", "ipl__81214_8h.html#a760854bb75f915afff8c116b99e9afd5", null ]
+    [ "OS81214_ProgTestIdentString", "ipl__81214_8h.html#a760854bb75f915afff8c116b99e9afd5", null ],
+    [ "OS81214_ProgFirmware", "ipl__81214_8h.html#ab04c67778e35e4c042bc817940084670", null ]
 ];

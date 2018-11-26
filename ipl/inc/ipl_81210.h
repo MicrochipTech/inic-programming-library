@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl_81210.h
- *  \brief Internal OS81210 specific header for INIC Programming Library
+/*! \file   ipl_81210.h
+ *  \brief  Internal OS81210 specific header for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #ifndef IPL_81210_H
@@ -30,9 +31,8 @@
 #include "ipl_cfg.h"
 
 
-/* INICnet50 product family */
-#if defined IPL_USE_OS81210 || defined IPL_USE_OS81212 || defined IPL_USE_OS81214
-
+/* INICnet 50 product family */
+#if defined IPL_USE_OS81210 || defined IPL_USE_OS81212 || defined IPL_USE_OS81214 || defined IPL_USE_OS81216
 
 /*------------------------------------------------------------------------------------------------*/
 /* FUNCTION PROTOTYPES                                                                            */
@@ -48,6 +48,7 @@ uint8_t OS81210_ProgTestPatchString(uint32_t lData, uint8_t pData[]);
 uint8_t OS81210_ProgTestConfigString(uint32_t lData, uint8_t pData[]);
 uint8_t OS81210_ProgTestIdentString(uint32_t lData, uint8_t pData[]);
 
+uint8_t OS81210_ProgFirmware(uint32_t lData, uint8_t pData[]);
 
 #endif
 

@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file hw_raspi.c
- *  \brief HW Abstraction for Raspberry Pi
+/*! \file   hw_raspi.c
+ *  \brief  HW Abstraction for Raspberry Pi
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  *
  *  Used Pins:
  *  PHY+ Board          RasPI
@@ -246,23 +247,23 @@ void Ipl_Trace(const char *tag, const char* fmt, ...)
         if ( NULL != tag )
         {
             fprintf(tracefile,"%s %06d ", tag, Hw_GetTime());
+            va_start(args, fmt);
+            vfprintf(tracefile, fmt, args);
+            va_end(args);
+            fprintf(tracefile, "\n");
+            fflush(tracefile);
         }
-        va_start(args, fmt);
-        vfprintf(tracefile, fmt, args);
-        va_end(args);
-        fprintf(tracefile, "\n");
-        fflush(tracefile);
     }
     /* Print on stderr
     if ( NULL != tag )
     {
         fprintf(stderr,"%s %06d ", tag, Hw_GetTime());
-    }
-    va_list args;
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-    fprintf(stderr, "\r\n"); */
+        va_list args;
+        va_start(args, fmt);
+        vfprintf(stderr, fmt, args);
+        va_end(args);
+        fprintf(stderr, "\r\n");
+    } */
 }
 
 

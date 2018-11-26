@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl_81118.h
- *  \brief Internal OS81118 specific header for INIC Programming Library
+/*! \file   ipl_81118.h
+ *  \brief  Internal OS81118 specific header for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #ifndef IPL_81118_H
@@ -30,7 +31,7 @@
 #include "ipl_cfg.h"
 
 
-/* INICnet150 product family */
+/* INICnet 150 product family */
 #if defined IPL_USE_OS81118 || defined IPL_USE_OS81119
 
 
@@ -42,6 +43,13 @@ uint8_t OS81118_ReadConfigStringVersion(uint32_t lData, uint8_t pData[]);
 uint8_t OS81118_ProgFirmware(uint32_t lData, uint8_t pData[]);
 uint8_t OS81118_ProgConfiguration(uint32_t lData, uint8_t pData[]);
 
+uint8_t OS81118_ProgPatchString(uint32_t lData, uint8_t pData[]);
+uint8_t OS81118_ProgTestConfiguration(uint32_t lData, uint8_t pData[]);
+uint8_t OS81118_ProgTestPatchString(uint32_t lData, uint8_t pData[]);
+uint8_t OS81118_ProgConfigString(uint32_t lData, uint8_t pData[]);
+uint8_t OS81118_ProgTestConfigString(uint32_t lData, uint8_t pData[]);
+uint8_t OS81118_ProgIdentString(uint32_t lData, uint8_t pData[]);
+uint8_t OS81118_ProgTestIdentString(uint32_t lData, uint8_t pData[]);
 
 #endif
 

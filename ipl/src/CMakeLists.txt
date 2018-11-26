@@ -11,6 +11,7 @@ set(IPL_PRIVATE_HEADERS
 	${IPL_INCLUDE_DIR}/ipl_81210.h
 	${IPL_INCLUDE_DIR}/ipl_81212.h
 	${IPL_INCLUDE_DIR}/ipl_81214.h
+	${IPL_INCLUDE_DIR}/ipl_81216.h
 	${IPL_CONFIGURATION_DIR}/ipl_cfg.h
 	${IPL_INCLUDE_DIR}/ipl.h
 	)
@@ -27,6 +28,7 @@ set(IPL_SOURCES
 	ipl_81210.c
 	ipl_81212.c
 	ipl_81214.c
+	ipl_81216.c
 	ipl.c
 	)
 add_library(INIC_PROGRAMMING_LIBRARY STATIC

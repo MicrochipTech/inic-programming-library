@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/ipl.h File Reference</title>
+<title>INIC PROGRAMMING LIBRARY: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/inc/ipl.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('ipl_8h.html','');});
 <p>Internal header for general functions for INIC Programming Library.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;stddef.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="ipl__cfg_8h_source.html">ipl_cfg.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>&quot;</code><br/>
 </div>
@@ -109,21 +110,47 @@ $(document).ready(function(){initNavTree('ipl_8h.html','');});
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIpl__IplData__t.html">Ipl_IplData_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIpl__InicData__t.html">Ipl_InicData_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaa82081842d9d9223c542044be8b05eec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version.html#gaa82081842d9d9223c542044be8b05eec">VERSIONTAG</a>&#160;&#160;&#160;&quot;V0.0.7-0&quot;</td></tr>
+<tr class="memitem:gaa82081842d9d9223c542044be8b05eec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version.html#gaa82081842d9d9223c542044be8b05eec">VERSIONTAG</a>&#160;&#160;&#160;&quot;V0.0.9-0&quot;</td></tr>
 <tr class="separator:gaa82081842d9d9223c542044be8b05eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13fd86bc0506d990fb0f96b2721576f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a13fd86bc0506d990fb0f96b2721576f5">INICMODE_NORMAL</a>&#160;&#160;&#160;0x01U</td></tr>
-<tr class="separator:a13fd86bc0506d990fb0f96b2721576f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04a2a67b59329a86ab64d58d27896e17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a04a2a67b59329a86ab64d58d27896e17">INICMODE_BOOT</a>&#160;&#160;&#160;0x02U</td></tr>
-<tr class="separator:a04a2a67b59329a86ab64d58d27896e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ae10839f2075cd5a08f2f3b4bdf7a0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a3ae10839f2075cd5a08f2f3b4bdf7a0e">INIC_MODE_NORMAL</a>&#160;&#160;&#160;0x01U</td></tr>
+<tr class="separator:a3ae10839f2075cd5a08f2f3b4bdf7a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa57bd72a850ded06f98d924bd05e7468"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#aa57bd72a850ded06f98d924bd05e7468">INIC_MODE_BOOT</a>&#160;&#160;&#160;0x02U</td></tr>
+<tr class="separator:aa57bd72a850ded06f98d924bd05e7468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26b35a9f1dc0da39c7189e4e751623a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a26b35a9f1dc0da39c7189e4e751623a8">INIC_TESTMEM_UNCLEARED</a>&#160;&#160;&#160;0x00U</td></tr>
+<tr class="separator:a26b35a9f1dc0da39c7189e4e751623a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3fec1008fdfb8706f0eaf160668113"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a9d3fec1008fdfb8706f0eaf160668113">INIC_TESTMEM_CLEARED</a>&#160;&#160;&#160;0x01U</td></tr>
+<tr class="separator:a9d3fec1008fdfb8706f0eaf160668113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48cef2535b7438e3f31d282d81b8c4a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a48cef2535b7438e3f31d282d81b8c4a2">INIC_MAX_TELLEN</a>&#160;&#160;&#160;36U /* Meta.BmMaxDataLength + 4 */</td></tr>
 <tr class="separator:a48cef2535b7438e3f31d282d81b8c4a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1a625c330182a249bf66743c82843a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ac1a625c330182a249bf66743c82843a5">INIC_MAX_PATCHSTRINGLEN</a>&#160;&#160;&#160;64U</td></tr>
-<tr class="separator:ac1a625c330182a249bf66743c82843a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f849dd8fa1236afae540157b5a9b033"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a1f849dd8fa1236afae540157b5a9b033">INIC_MAX_TESTMEMSIZE</a>&#160;&#160;&#160;768U /* OS8121x */</td></tr>
+<tr class="memitem:ab29546ba4a665fca37f9d3e11580c419"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ab29546ba4a665fca37f9d3e11580c419">INIC_MAX_PATCHSTRINGSIZE</a>&#160;&#160;&#160;64U</td></tr>
+<tr class="separator:ab29546ba4a665fca37f9d3e11580c419"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f849dd8fa1236afae540157b5a9b033"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a1f849dd8fa1236afae540157b5a9b033">INIC_MAX_TESTMEMSIZE</a>&#160;&#160;&#160;768U /*  OS8121x */</td></tr>
 <tr class="separator:a1f849dd8fa1236afae540157b5a9b033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb75143270093af18108d306731458ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#afb75143270093af18108d306731458ac">INIC_MAX_OTPMEMSIZE</a>&#160;&#160;&#160;0x01FFU /* Address range from ReadOTPMemory command */</td></tr>
+<tr class="separator:afb75143270093af18108d306731458ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86ce417d411f7f7dc59ca7ddf851bf3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a86ce417d411f7f7dc59ca7ddf851bf3b">INIC_MAX_INFOMEMSIZE</a>&#160;&#160;&#160;0x03FFU /* Address range from ReadInfoMemory command */</td></tr>
+<tr class="separator:a86ce417d411f7f7dc59ca7ddf851bf3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6200815466ef04fdf76b4fd6f8c0f31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ac6200815466ef04fdf76b4fd6f8c0f31">INIC_MAX_PROGMEMSIZE</a>&#160;&#160;&#160;0xFFFFU /* Address range from ReadProgramMemory command */</td></tr>
+<tr class="separator:ac6200815466ef04fdf76b4fd6f8c0f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac65ea7ebebfbdb2c2e06e5765643fe95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ac65ea7ebebfbdb2c2e06e5765643fe95">INIC_MAX_RAMSIZE</a>&#160;&#160;&#160;0x2000U</td></tr>
+<tr class="separator:ac65ea7ebebfbdb2c2e06e5765643fe95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab002aa1bb834f524b66271296744129e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ab002aa1bb834f524b66271296744129e">INIC_MAX_DATABUFFERSIZE</a>&#160;&#160;&#160;0x5000U</td></tr>
+<tr class="separator:ab002aa1bb834f524b66271296744129e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18f59236c08699cab18fffb4904eb183"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a18f59236c08699cab18fffb4904eb183">INIC_MAX_RTSIZE</a>&#160;&#160;&#160;768U</td></tr>
+<tr class="separator:a18f59236c08699cab18fffb4904eb183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40923f6b0eaf6e6e9fe66d1a56ef52e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a40923f6b0eaf6e6e9fe66d1a56ef52e0">INIC_MAX_RFSIZE</a>&#160;&#160;&#160;640U</td></tr>
+<tr class="separator:a40923f6b0eaf6e6e9fe66d1a56ef52e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a40cfcae1595264b1b64f95a3561f86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a4a40cfcae1595264b1b64f95a3561f86">INIC_MAX_IOREGNUM</a>&#160;&#160;&#160;0xFFU</td></tr>
+<tr class="separator:a4a40cfcae1595264b1b64f95a3561f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d7ebd39bc305f3fd89a613a3016c3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a39d7ebd39bc305f3fd89a613a3016c3a">INIC_MAX_EXTIOREGNUM</a>&#160;&#160;&#160;0xFFU</td></tr>
+<tr class="separator:a39d7ebd39bc305f3fd89a613a3016c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92fe3b74886ee3f0c24f47ad575c3c72"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a92fe3b74886ee3f0c24f47ad575c3c72">INIC_MAX_CPUREGNUM</a>&#160;&#160;&#160;0x07U</td></tr>
+<tr class="separator:a92fe3b74886ee3f0c24f47ad575c3c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8f04d559f2f14efe5b2cb5ca6774504"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ab8f04d559f2f14efe5b2cb5ca6774504">TOOL_MAX_TYPELEN</a>&#160;&#160;&#160;80U</td></tr>
 <tr class="separator:ab8f04d559f2f14efe5b2cb5ca6774504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d4a8123293d7bfe81d36fc181c08a31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a7d4a8123293d7bfe81d36fc181c08a31">CMD_PROGSTART</a>&#160;&#160;&#160;0x0DU</td></tr>
@@ -210,6 +237,12 @@ Macros</h2></td></tr>
 <tr class="separator:a077b0a7ce48e7ec271b49a58c70eb6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af05fd780cc87e41eced5ea1812c164db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#af05fd780cc87e41eced5ea1812c164db">CMD_WRITETESTMEM_RXLEN</a>&#160;&#160;&#160;1U</td></tr>
 <tr class="separator:af05fd780cc87e41eced5ea1812c164db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9a55e0006adbabdfe44e8bcead6885e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ad9a55e0006adbabdfe44e8bcead6885e">CMD_READTESTMEM</a>&#160;&#160;&#160;0x1AU</td></tr>
+<tr class="separator:ad9a55e0006adbabdfe44e8bcead6885e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd12d56cc8af6026e2375e5e1d6a9e05"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#afd12d56cc8af6026e2375e5e1d6a9e05">CMD_READTESTMEM_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:afd12d56cc8af6026e2375e5e1d6a9e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdc0eea1564924d45fa4123c84d802dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#abdc0eea1564924d45fa4123c84d802dc">CMD_READTESTMEM_RXLEN</a>&#160;&#160;&#160;36U /* Meta.BmMaxDataLength + 4 */</td></tr>
+<tr class="separator:abdc0eea1564924d45fa4123c84d802dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a454668734622d4f89ba30b9685f06a48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a454668734622d4f89ba30b9685f06a48">CMD_CLEARCRC</a>&#160;&#160;&#160;0xE5U</td></tr>
 <tr class="separator:a454668734622d4f89ba30b9685f06a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a436ca7cb84609b947addd3edac522cd3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a436ca7cb84609b947addd3edac522cd3">CMD_CLEARCRC_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
@@ -222,6 +255,84 @@ Macros</h2></td></tr>
 <tr class="separator:aee2526cb313e3f0e5ed2f83043bb0326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35e22ab5afd60b1477b382b7b0d33aca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a35e22ab5afd60b1477b382b7b0d33aca">CMD_GETCRC_RXLEN</a>&#160;&#160;&#160;6U</td></tr>
 <tr class="separator:a35e22ab5afd60b1477b382b7b0d33aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdf27d041ec9758d800ddfd09e00a7c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#afdf27d041ec9758d800ddfd09e00a7c5">CMD_LEG_READFWVER</a>&#160;&#160;&#160;0xE4U</td></tr>
+<tr class="separator:afdf27d041ec9758d800ddfd09e00a7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862c52cd2e3bed860df69ee1282f475a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a862c52cd2e3bed860df69ee1282f475a">CMD_LEG_READFWVER_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:a862c52cd2e3bed860df69ee1282f475a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca57021704d9242d58bccd9203e3179d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#aca57021704d9242d58bccd9203e3179d">CMD_LEG_READFWVER_RXLEN</a>&#160;&#160;&#160;19U</td></tr>
+<tr class="separator:aca57021704d9242d58bccd9203e3179d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14f3bf3e8611103ac9bb38a85c3c8a1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a14f3bf3e8611103ac9bb38a85c3c8a1d">CMD_LEG_ERASEENABLE</a>&#160;&#160;&#160;0x0FU</td></tr>
+<tr class="separator:a14f3bf3e8611103ac9bb38a85c3c8a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8859325aa4c0987e17e97e9a672bb9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ae8859325aa4c0987e17e97e9a672bb9b">CMD_LEG_ERASEENABLE_TXLEN</a>&#160;&#160;&#160;5U</td></tr>
+<tr class="separator:ae8859325aa4c0987e17e97e9a672bb9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48f8f92734fce65e5f61b304f4ddf69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ac48f8f92734fce65e5f61b304f4ddf69">CMD_LEG_ERASEENABLE_RXLEN</a>&#160;&#160;&#160;1U</td></tr>
+<tr class="separator:ac48f8f92734fce65e5f61b304f4ddf69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5b2feeaa8aece5a083d24c9984d4c18"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ad5b2feeaa8aece5a083d24c9984d4c18">CMD_LEG_ERASECS</a>&#160;&#160;&#160;0xCCU</td></tr>
+<tr class="separator:ad5b2feeaa8aece5a083d24c9984d4c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64da4983c63922d687e871c18eee9366"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a64da4983c63922d687e871c18eee9366">CMD_LEG_ERASECS_TXLEN</a>&#160;&#160;&#160;2U</td></tr>
+<tr class="separator:a64da4983c63922d687e871c18eee9366"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae75917d2fb7c244fe82db37326b4e457"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ae75917d2fb7c244fe82db37326b4e457">CMD_LEG_ERASECS_RXLEN</a>&#160;&#160;&#160;1U</td></tr>
+<tr class="separator:ae75917d2fb7c244fe82db37326b4e457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf47a59c56aad4e1f1f5843e658fc884"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#acf47a59c56aad4e1f1f5843e658fc884">CMD_LEG_WRITECS</a>&#160;&#160;&#160;0xC1U</td></tr>
+<tr class="separator:acf47a59c56aad4e1f1f5843e658fc884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab60126df61392e9c51fd81e63105f80"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#aab60126df61392e9c51fd81e63105f80">CMD_LEG_WRITECS_TXLEN</a>&#160;&#160;&#160;32U</td></tr>
+<tr class="separator:aab60126df61392e9c51fd81e63105f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d28e3c577348d10fff2286820bebc38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a3d28e3c577348d10fff2286820bebc38">CMD_LEG_WRITECS_RXLEN</a>&#160;&#160;&#160;1U</td></tr>
+<tr class="separator:a3d28e3c577348d10fff2286820bebc38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3787842c7186db57b3ef1308f9522fed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a3787842c7186db57b3ef1308f9522fed">CMD_LEG_GETCSINFO</a>&#160;&#160;&#160;0xD1U</td></tr>
+<tr class="separator:a3787842c7186db57b3ef1308f9522fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cf24b858696c53f95a4c2354bde53d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a3cf24b858696c53f95a4c2354bde53d4">CMD_LEG_GETCSINFO_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:a3cf24b858696c53f95a4c2354bde53d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1659f57f42d993e4cc751bf9ac641881"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a1659f57f42d993e4cc751bf9ac641881">CMD_LEG_GETCSINFO_RXLEN</a>&#160;&#160;&#160;30U</td></tr>
+<tr class="separator:a1659f57f42d993e4cc751bf9ac641881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed1c27018d8b709398d38eec19432f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a6ed1c27018d8b709398d38eec19432f4">CMD_READRAM</a>&#160;&#160;&#160;0x10U</td></tr>
+<tr class="separator:a6ed1c27018d8b709398d38eec19432f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36149b0fec73d6c93f876a798d66ce13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a36149b0fec73d6c93f876a798d66ce13">CMD_READRAM_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:a36149b0fec73d6c93f876a798d66ce13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12a13545616f3e991e50385ba6c6bda0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a12a13545616f3e991e50385ba6c6bda0">CMD_READRAM_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:a12a13545616f3e991e50385ba6c6bda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd6070919e12ede15ce8277914af158c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#acd6070919e12ede15ce8277914af158c">CMD_READIOREG</a>&#160;&#160;&#160;0x12U</td></tr>
+<tr class="separator:acd6070919e12ede15ce8277914af158c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21934b413f5f0d521ad4730f66010e3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a21934b413f5f0d521ad4730f66010e3d">CMD_READIOREG_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:a21934b413f5f0d521ad4730f66010e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a167a6f01bf385b3f48794acd5a365bb9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a167a6f01bf385b3f48794acd5a365bb9">CMD_READIOREG_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:a167a6f01bf385b3f48794acd5a365bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3863849666f841a2d9baf7cdd4187af8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a3863849666f841a2d9baf7cdd4187af8">CMD_READCPUREG</a>&#160;&#160;&#160;0x14U</td></tr>
+<tr class="separator:a3863849666f841a2d9baf7cdd4187af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27fec8781174e68c1e99138b500ddde2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a27fec8781174e68c1e99138b500ddde2">CMD_READCPUREG_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:a27fec8781174e68c1e99138b500ddde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c419380b82f131b277cd1628e8040f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a18c419380b82f131b277cd1628e8040f">CMD_READCPUREG_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:a18c419380b82f131b277cd1628e8040f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37f9370a65b4f0b24e61d8c84a181f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a37f9370a65b4f0b24e61d8c84a181f7b">CMD_READEXTIOREG</a>&#160;&#160;&#160;0x1BU</td></tr>
+<tr class="separator:a37f9370a65b4f0b24e61d8c84a181f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b3d2e2146c19156266ab693ff1b093"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ad1b3d2e2146c19156266ab693ff1b093">CMD_READEXTIOREG_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:ad1b3d2e2146c19156266ab693ff1b093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6558e932f0095096b3d61d238b049a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#aca6558e932f0095096b3d61d238b049a">CMD_READEXTIOREG_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:aca6558e932f0095096b3d61d238b049a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8113c027a1e6f77d53fa1681a6d23e60"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a8113c027a1e6f77d53fa1681a6d23e60">CMD_READDATABUF</a>&#160;&#160;&#160;0x30U</td></tr>
+<tr class="separator:a8113c027a1e6f77d53fa1681a6d23e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce80ae304a7e45dfa6fe98bbfcfaad8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#abce80ae304a7e45dfa6fe98bbfcfaad8">CMD_READDATABUF_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:abce80ae304a7e45dfa6fe98bbfcfaad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c6d8b8d15887adf3952a75bbde99f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a61c6d8b8d15887adf3952a75bbde99f5">CMD_READDATABUF_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:a61c6d8b8d15887adf3952a75bbde99f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd65bf03434abf2420fa35db9eca372d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#acd65bf03434abf2420fa35db9eca372d">CMD_READRT</a>&#160;&#160;&#160;0x50U</td></tr>
+<tr class="separator:acd65bf03434abf2420fa35db9eca372d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af11ed0d55f0adae4252fe3282920d63a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#af11ed0d55f0adae4252fe3282920d63a">CMD_READRT_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:af11ed0d55f0adae4252fe3282920d63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa797f4cf84f9dff41abf7754396d4fc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#aa797f4cf84f9dff41abf7754396d4fc3">CMD_READRT_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:aa797f4cf84f9dff41abf7754396d4fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0667cdc843507cd0608d01938311390c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a0667cdc843507cd0608d01938311390c">CMD_READRF0</a>&#160;&#160;&#160;0x51U</td></tr>
+<tr class="separator:a0667cdc843507cd0608d01938311390c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8c1c3a0aa0a94b3a8eebde2639be888"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#aa8c1c3a0aa0a94b3a8eebde2639be888">CMD_READRF0_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:aa8c1c3a0aa0a94b3a8eebde2639be888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08723ed3df40daf3ef5641123e831d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ac08723ed3df40daf3ef5641123e831d3">CMD_READRF0_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:ac08723ed3df40daf3ef5641123e831d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1092c437cf65ee57390d6ee278e434ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a1092c437cf65ee57390d6ee278e434ab">CMD_READRF1</a>&#160;&#160;&#160;0x52U</td></tr>
+<tr class="separator:a1092c437cf65ee57390d6ee278e434ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7f26d43e1aa3b6e1fa9ab624aefb12"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#acb7f26d43e1aa3b6e1fa9ab624aefb12">CMD_READRF1_TXLEN</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="separator:acb7f26d43e1aa3b6e1fa9ab624aefb12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad176bda4a0433c4251744ce3f4dbea3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ad176bda4a0433c4251744ce3f4dbea3a">CMD_READRF1_RXLEN</a>&#160;&#160;&#160;36U</td></tr>
+<tr class="separator:ad176bda4a0433c4251744ce3f4dbea3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab15876c833dea9392af51839237240c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ab15876c833dea9392af51839237240c2">TRACELINE_MAXLEN</a>&#160;&#160;&#160;200U</td></tr>
 <tr class="separator:ab15876c833dea9392af51839237240c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af85a8c6a09856dbb3bc88c829432db58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#af85a8c6a09856dbb3bc88c829432db58">DIR_TX</a>&#160;&#160;&#160;0U</td></tr>
@@ -250,14 +361,6 @@ Macros</h2></td></tr>
 <tr class="separator:a1c1053a974d2bbf2a2fc2c4b2c3b73bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9833a414fff896f8637e213e3cd3b0ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a9833a414fff896f8637e213e3cd3b0ae">TESTMEM_CLEAR</a>&#160;&#160;&#160;1U</td></tr>
 <tr class="separator:a9833a414fff896f8637e213e3cd3b0ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:gaa8ebbe57f740846098661b54e6611f44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intpin.html#gaa8ebbe57f740846098661b54e6611f44">IPL_USE_INTPIN</a></td></tr>
-<tr class="memdesc:gaa8ebbe57f740846098661b54e6611f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables usage of INICs INT pin for RX control.  <a href="group__intpin.html#gaa8ebbe57f740846098661b54e6611f44"></a><br/></td></tr>
-<tr class="separator:gaa8ebbe57f740846098661b54e6611f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a1242469c1297fa71403d65842a91f6bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a1242469c1297fa71403d65842a91f6bc">IPL_DECODE_RESULTS</a></td></tr>
-<tr class="memdesc:a1242469c1297fa71403d65842a91f6bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The macro enables the API function Ipl_DecodeResult to decode the result values of all functions.  <a href="#a1242469c1297fa71403d65842a91f6bc"></a><br/></td></tr>
-<tr class="separator:a1242469c1297fa71403d65842a91f6bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -273,66 +376,82 @@ Functions</h2></td></tr>
 <tr class="separator:a249e0e86b3ab5fb11479f026dab2e6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a972673aac1b6aca5da582ae77b833457"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a972673aac1b6aca5da582ae77b833457">Ipl_TraceTag</a> (uint8_t result)</td></tr>
 <tr class="separator:a972673aac1b6aca5da582ae77b833457"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47384fcbb587300dcaae222de90602f6"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a47384fcbb587300dcaae222de90602f6">Ipl_BcdChr</a> (uint8_t val, uint8_t lowHigh)</td></tr>
-<tr class="separator:a47384fcbb587300dcaae222de90602f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99752465e5420a5ed5bff5bd651183fd"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a99752465e5420a5ed5bff5bd651183fd">Ipl_Bcd2Char</a> (uint8_t val, uint8_t lowHigh)</td></tr>
+<tr class="separator:a99752465e5420a5ed5bff5bd651183fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1263b1421deae3555763c7f302a0aea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#ae1263b1421deae3555763c7f302a0aea">Ipl_ClrPData</a> (uint32_t lData, uint8_t pData[])</td></tr>
 <tr class="separator:ae1263b1421deae3555763c7f302a0aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a78d5de8111f8c092d4e8d7664d197d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a5a78d5de8111f8c092d4e8d7664d197d">Ipl_PData</a> (uint32_t index, uint32_t lData, uint8_t pData[])</td></tr>
 <tr class="separator:a5a78d5de8111f8c092d4e8d7664d197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44039e12d2afb5072f121e80f6a620ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a44039e12d2afb5072f121e80f6a620ac">Ipl_ExportChipInfo</a> (void)</td></tr>
+<tr class="separator:a44039e12d2afb5072f121e80f6a620ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a832951799200d3143282210eb4db9867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIpl__IplData__t.html">Ipl_IplData_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a832951799200d3143282210eb4db9867">Ipl_IplData</a></td></tr>
 <tr class="separator:a832951799200d3143282210eb4db9867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83221363349af59b8b403b0ad673a48f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIpl__InicData__t.html">Ipl_InicData_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8h.html#a83221363349af59b8b403b0ad673a48f">Ipl_InicData</a></td></tr>
+<tr class="separator:a83221363349af59b8b403b0ad673a48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Internal header for general functions for INIC Programming Library. </p>
 <dl class="section author"><dt>Author</dt><dd>Roland Trissl (RTR) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>For support related to this code contact <a href="http://www.microchip.com/support">http://www.microchip.com/support</a>. </dd></dl>
 
 <p>Definition in file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a1242469c1297fa71403d65842a91f6bc"></a>
+<a class="anchor" id="a3ae10839f2075cd5a08f2f3b4bdf7a0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IPL_DECODE_RESULTS</td>
+          <td class="memname">#define INIC_MODE_NORMAL&#160;&#160;&#160;0x01U</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The macro enables the API function Ipl_DecodeResult to decode the result values of all functions. </p>
-<p>&lt; </p>
-
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00124">124</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00100">100</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a13fd86bc0506d990fb0f96b2721576f5"></a>
+<a class="anchor" id="aa57bd72a850ded06f98d924bd05e7468"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INICMODE_NORMAL&#160;&#160;&#160;0x01U</td>
+          <td class="memname">#define INIC_MODE_BOOT&#160;&#160;&#160;0x02U</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00181">181</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00101">101</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a04a2a67b59329a86ab64d58d27896e17"></a>
+<a class="anchor" id="a26b35a9f1dc0da39c7189e4e751623a8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INICMODE_BOOT&#160;&#160;&#160;0x02U</td>
+          <td class="memname">#define INIC_TESTMEM_UNCLEARED&#160;&#160;&#160;0x00U</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00182">182</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00103">103</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9d3fec1008fdfb8706f0eaf160668113"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_TESTMEM_CLEARED&#160;&#160;&#160;0x01U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00104">104</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -346,21 +465,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00189">189</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00111">111</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac1a625c330182a249bf66743c82843a5"></a>
+<a class="anchor" id="ab29546ba4a665fca37f9d3e11580c419"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INIC_MAX_PATCHSTRINGLEN&#160;&#160;&#160;64U</td>
+          <td class="memname">#define INIC_MAX_PATCHSTRINGSIZE&#160;&#160;&#160;64U</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00190">190</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00112">112</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -369,12 +488,152 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define INIC_MAX_TESTMEMSIZE&#160;&#160;&#160;768U /* OS8121x */</td>
+          <td class="memname">#define INIC_MAX_TESTMEMSIZE&#160;&#160;&#160;768U /*  OS8121x */</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00191">191</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00113">113</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afb75143270093af18108d306731458ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_OTPMEMSIZE&#160;&#160;&#160;0x01FFU /* Address range from ReadOTPMemory command */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00114">114</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86ce417d411f7f7dc59ca7ddf851bf3b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_INFOMEMSIZE&#160;&#160;&#160;0x03FFU /* Address range from ReadInfoMemory command */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00115">115</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac6200815466ef04fdf76b4fd6f8c0f31"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_PROGMEMSIZE&#160;&#160;&#160;0xFFFFU /* Address range from ReadProgramMemory command */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00116">116</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac65ea7ebebfbdb2c2e06e5765643fe95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_RAMSIZE&#160;&#160;&#160;0x2000U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00117">117</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab002aa1bb834f524b66271296744129e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_DATABUFFERSIZE&#160;&#160;&#160;0x5000U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00118">118</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a18f59236c08699cab18fffb4904eb183"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_RTSIZE&#160;&#160;&#160;768U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00119">119</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a40923f6b0eaf6e6e9fe66d1a56ef52e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_RFSIZE&#160;&#160;&#160;640U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00120">120</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4a40cfcae1595264b1b64f95a3561f86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_IOREGNUM&#160;&#160;&#160;0xFFU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00121">121</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a39d7ebd39bc305f3fd89a613a3016c3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_EXTIOREGNUM&#160;&#160;&#160;0xFFU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00122">122</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a92fe3b74886ee3f0c24f47ad575c3c72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INIC_MAX_CPUREGNUM&#160;&#160;&#160;0x07U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00123">123</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -388,7 +647,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00192">192</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00124">124</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -402,7 +661,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00199">199</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00131">131</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -416,7 +675,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00200">200</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00132">132</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -430,7 +689,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00201">201</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00133">133</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -444,7 +703,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00202">202</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00134">134</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -458,7 +717,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00203">203</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00135">135</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -472,7 +731,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00204">204</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00136">136</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +745,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00205">205</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00137">137</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -500,7 +759,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00206">206</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00138">138</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -514,7 +773,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00207">207</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00139">139</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -528,7 +787,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00208">208</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00140">140</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -542,7 +801,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00209">209</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00141">141</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -556,7 +815,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00210">210</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00142">142</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -570,7 +829,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00211">211</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00143">143</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -584,7 +843,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00212">212</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00144">144</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -598,7 +857,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00213">213</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00145">145</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -612,7 +871,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00214">214</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00146">146</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -626,7 +885,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00215">215</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00147">147</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -640,7 +899,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00216">216</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00148">148</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -654,7 +913,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00217">217</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00149">149</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -668,7 +927,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00218">218</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00150">150</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -682,7 +941,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00219">219</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00151">151</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -696,7 +955,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00220">220</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00152">152</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -710,7 +969,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00221">221</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00153">153</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -724,7 +983,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00222">222</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00154">154</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -738,7 +997,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00223">223</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00155">155</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -752,7 +1011,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00224">224</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00156">156</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -766,7 +1025,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00225">225</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00157">157</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -780,7 +1039,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00226">226</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00158">158</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -794,7 +1053,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00227">227</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00159">159</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -808,7 +1067,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00228">228</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00160">160</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -822,7 +1081,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00229">229</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00161">161</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -836,7 +1095,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00230">230</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00162">162</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -850,7 +1109,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00231">231</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00163">163</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -864,7 +1123,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00232">232</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00164">164</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -878,7 +1137,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00233">233</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00165">165</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -892,7 +1151,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00234">234</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00166">166</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -906,7 +1165,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00235">235</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00167">167</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -920,7 +1179,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00236">236</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00168">168</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -934,7 +1193,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00237">237</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00169">169</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -948,7 +1207,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00238">238</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00170">170</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -962,7 +1221,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00239">239</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00171">171</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -976,7 +1235,49 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00240">240</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00172">172</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad9a55e0006adbabdfe44e8bcead6885e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READTESTMEM&#160;&#160;&#160;0x1AU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00173">173</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afd12d56cc8af6026e2375e5e1d6a9e05"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READTESTMEM_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00174">174</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abdc0eea1564924d45fa4123c84d802dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READTESTMEM_RXLEN&#160;&#160;&#160;36U /* Meta.BmMaxDataLength + 4 */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00175">175</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -990,7 +1291,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00241">241</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00176">176</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1004,7 +1305,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00242">242</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00177">177</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1018,7 +1319,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00243">243</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00178">178</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1032,7 +1333,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00244">244</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00179">179</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1046,7 +1347,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00245">245</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00180">180</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1060,7 +1361,553 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00246">246</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00181">181</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afdf27d041ec9758d800ddfd09e00a7c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_READFWVER&#160;&#160;&#160;0xE4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00182">182</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a862c52cd2e3bed860df69ee1282f475a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_READFWVER_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00183">183</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aca57021704d9242d58bccd9203e3179d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_READFWVER_RXLEN&#160;&#160;&#160;19U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00184">184</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a14f3bf3e8611103ac9bb38a85c3c8a1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_ERASEENABLE&#160;&#160;&#160;0x0FU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00185">185</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae8859325aa4c0987e17e97e9a672bb9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_ERASEENABLE_TXLEN&#160;&#160;&#160;5U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00186">186</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac48f8f92734fce65e5f61b304f4ddf69"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_ERASEENABLE_RXLEN&#160;&#160;&#160;1U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00187">187</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad5b2feeaa8aece5a083d24c9984d4c18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_ERASECS&#160;&#160;&#160;0xCCU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00188">188</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a64da4983c63922d687e871c18eee9366"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_ERASECS_TXLEN&#160;&#160;&#160;2U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00189">189</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae75917d2fb7c244fe82db37326b4e457"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_ERASECS_RXLEN&#160;&#160;&#160;1U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00190">190</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acf47a59c56aad4e1f1f5843e658fc884"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_WRITECS&#160;&#160;&#160;0xC1U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00191">191</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aab60126df61392e9c51fd81e63105f80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_WRITECS_TXLEN&#160;&#160;&#160;32U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00192">192</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3d28e3c577348d10fff2286820bebc38"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_WRITECS_RXLEN&#160;&#160;&#160;1U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00193">193</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3787842c7186db57b3ef1308f9522fed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_GETCSINFO&#160;&#160;&#160;0xD1U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00194">194</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3cf24b858696c53f95a4c2354bde53d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_GETCSINFO_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00195">195</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1659f57f42d993e4cc751bf9ac641881"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_LEG_GETCSINFO_RXLEN&#160;&#160;&#160;30U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00196">196</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6ed1c27018d8b709398d38eec19432f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRAM&#160;&#160;&#160;0x10U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00197">197</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a36149b0fec73d6c93f876a798d66ce13"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRAM_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00198">198</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a12a13545616f3e991e50385ba6c6bda0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRAM_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00199">199</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acd6070919e12ede15ce8277914af158c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READIOREG&#160;&#160;&#160;0x12U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00200">200</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a21934b413f5f0d521ad4730f66010e3d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READIOREG_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00201">201</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a167a6f01bf385b3f48794acd5a365bb9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READIOREG_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00202">202</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3863849666f841a2d9baf7cdd4187af8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READCPUREG&#160;&#160;&#160;0x14U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00203">203</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a27fec8781174e68c1e99138b500ddde2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READCPUREG_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00204">204</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a18c419380b82f131b277cd1628e8040f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READCPUREG_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00205">205</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a37f9370a65b4f0b24e61d8c84a181f7b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READEXTIOREG&#160;&#160;&#160;0x1BU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00206">206</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad1b3d2e2146c19156266ab693ff1b093"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READEXTIOREG_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00207">207</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aca6558e932f0095096b3d61d238b049a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READEXTIOREG_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00208">208</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8113c027a1e6f77d53fa1681a6d23e60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READDATABUF&#160;&#160;&#160;0x30U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00209">209</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abce80ae304a7e45dfa6fe98bbfcfaad8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READDATABUF_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00210">210</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a61c6d8b8d15887adf3952a75bbde99f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READDATABUF_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00211">211</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acd65bf03434abf2420fa35db9eca372d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRT&#160;&#160;&#160;0x50U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00212">212</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af11ed0d55f0adae4252fe3282920d63a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRT_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00213">213</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa797f4cf84f9dff41abf7754396d4fc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRT_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00214">214</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0667cdc843507cd0608d01938311390c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRF0&#160;&#160;&#160;0x51U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00215">215</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa8c1c3a0aa0a94b3a8eebde2639be888"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRF0_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00216">216</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac08723ed3df40daf3ef5641123e831d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRF0_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00217">217</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1092c437cf65ee57390d6ee278e434ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRF1&#160;&#160;&#160;0x52U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00218">218</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acb7f26d43e1aa3b6e1fa9ab624aefb12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRF1_TXLEN&#160;&#160;&#160;4U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00219">219</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad176bda4a0433c4251744ce3f4dbea3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMD_READRF1_RXLEN&#160;&#160;&#160;36U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00220">220</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1074,7 +1921,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00253">253</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00227">227</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1088,7 +1935,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00254">254</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00228">228</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1102,7 +1949,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00255">255</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00229">229</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1116,7 +1963,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00256">256</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00230">230</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1130,7 +1977,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00257">257</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00231">231</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1144,7 +1991,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00264">264</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00237">237</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1158,7 +2005,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00265">265</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00238">238</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1172,7 +2019,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00266">266</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00239">239</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1186,7 +2033,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00267">267</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00240">240</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1200,7 +2047,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00268">268</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00241">241</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1214,7 +2061,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00269">269</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00242">242</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1228,7 +2075,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00270">270</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00243">243</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1242,7 +2089,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00277">277</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00250">250</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1256,7 +2103,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00278">278</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8h_source.html#l00251">251</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
 
 </div>
 </div>
@@ -1275,7 +2122,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00542">542</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00787">787</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +2140,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00996">996</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01346">1346</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1321,7 +2168,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01087">1087</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01437">1437</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1339,7 +2186,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00752">752</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01128">1128</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1357,7 +2204,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00810">810</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01162">1162</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1375,16 +2222,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01271">1271</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01713">1713</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a47384fcbb587300dcaae222de90602f6"></a>
+<a class="anchor" id="a99752465e5420a5ed5bff5bd651183fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char Ipl_BcdChr </td>
+          <td class="memname">char Ipl_Bcd2Char </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>val</em>, </td>
@@ -1403,7 +2250,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01203">1203</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01645">1645</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1431,7 +2278,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01146">1146</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01510">1510</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1465,7 +2312,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01122">1122</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01486">1486</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a44039e12d2afb5072f121e80f6a620ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Ipl_ExportChipInfo </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01467">1467</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1480,7 +2345,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00097">97</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00087">87</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a83221363349af59b8b403b0ad673a48f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIpl__InicData__t.html">Ipl_InicData_t</a> Ipl_InicData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00088">88</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -1489,13 +2368,13 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="ipl_8h.html">ipl.h</a></li>
+    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="dir_9d2a425c484d38ddd81475bb685ae180.html">inc</a></li><li class="navelem"><a class="el" href="ipl_8h.html">ipl.h</a></li>
     <li class="footer">&copy; 2018 Microchip Technology Inc. All rights reserved. <a href="http://www.microchip.com" target="_blank">www.microchip.com</a></li>
   </ul>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/ipl.c File Reference</title>
+<title>INIC PROGRAMMING LIBRARY: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/src/ipl.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('ipl_8c.html','');});
 <code>#include &quot;<a class="el" href="ipl__81210_8h_source.html">ipl_81210.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="ipl__81212_8h_source.html">ipl_81212.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="ipl__81214_8h_source.html">ipl_81214.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="ipl__81216_8h_source.html">ipl_81216.h</a>&quot;</code><br/>
 </div>
 <p><a href="ipl_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -120,13 +121,13 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gaa3f49ce540f84dfe75aa2c3b09d3788d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d">Ipl_EnterProgMode</a> (uint8_t chipID)</td></tr>
-<tr class="memdesc:gaa3f49ce540f84dfe75aa2c3b09d3788d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets INIC, starts up in programming mode and checks Bootloader communication. Needs to be called before <a class="el" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by Ipl_E...">Ipl_Prog()</a> is called.  <a href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d"></a><br/></td></tr>
+<tr class="memdesc:gaa3f49ce540f84dfe75aa2c3b09d3788d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets INIC, starts up in programming mode and checks Bootloader communication.  <a href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d"></a><br/></td></tr>
 <tr class="separator:gaa3f49ce540f84dfe75aa2c3b09d3788d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacfe7f25778afff6d61133206f6296d31"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api.html#gacfe7f25778afff6d61133206f6296d31">Ipl_LeaveProgMode</a> (void)</td></tr>
 <tr class="memdesc:gacfe7f25778afff6d61133206f6296d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets INIC and starts up in normal mode. Needs to be called when programming is finished.  <a href="group__api.html#gacfe7f25778afff6d61133206f6296d31"></a><br/></td></tr>
 <tr class="separator:gacfe7f25778afff6d61133206f6296d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga721b326f53f0d2378443566b46a92b20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api.html#ga721b326f53f0d2378443566b46a92b20">Ipl_Prog</a> (uint8_t job, uint32_t lData, uint8_t *pData)</td></tr>
-<tr class="memdesc:ga721b326f53f0d2378443566b46a92b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by Ipl_EnterProgMode).  <a href="group__api.html#ga721b326f53f0d2378443566b46a92b20"></a><br/></td></tr>
+<tr class="memdesc:ga721b326f53f0d2378443566b46a92b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by calling <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>).  <a href="group__api.html#ga721b326f53f0d2378443566b46a92b20"></a><br/></td></tr>
 <tr class="separator:ga721b326f53f0d2378443566b46a92b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4f7ba7b0cb44bc3af6946b8fec6af3b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#ab4f7ba7b0cb44bc3af6946b8fec6af3b">Ipl_ExecInicCmd</a> (void)</td></tr>
 <tr class="separator:ab4f7ba7b0cb44bc3af6946b8fec6af3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,12 +139,14 @@ Functions</h2></td></tr>
 <tr class="separator:a20dc824e22f72e234a74015a6891e717"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af465af082891915864161caaf7d9f1f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#af465af082891915864161caaf7d9f1f3">Ipl_ProgressIndicator</a> (uint32_t val, uint32_t fval)</td></tr>
 <tr class="separator:af465af082891915864161caaf7d9f1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44039e12d2afb5072f121e80f6a620ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a44039e12d2afb5072f121e80f6a620ac">Ipl_ExportChipInfo</a> (void)</td></tr>
+<tr class="separator:a44039e12d2afb5072f121e80f6a620ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a78d5de8111f8c092d4e8d7664d197d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a5a78d5de8111f8c092d4e8d7664d197d">Ipl_PData</a> (uint32_t index, uint32_t lData, uint8_t pData[])</td></tr>
 <tr class="separator:a5a78d5de8111f8c092d4e8d7664d197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1263b1421deae3555763c7f302a0aea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#ae1263b1421deae3555763c7f302a0aea">Ipl_ClrPData</a> (uint32_t lData, uint8_t pData[])</td></tr>
 <tr class="separator:ae1263b1421deae3555763c7f302a0aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47384fcbb587300dcaae222de90602f6"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a47384fcbb587300dcaae222de90602f6">Ipl_BcdChr</a> (uint8_t val, uint8_t lowHigh)</td></tr>
-<tr class="separator:a47384fcbb587300dcaae222de90602f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99752465e5420a5ed5bff5bd651183fd"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a99752465e5420a5ed5bff5bd651183fd">Ipl_Bcd2Char</a> (uint8_t val, uint8_t lowHigh)</td></tr>
+<tr class="separator:a99752465e5420a5ed5bff5bd651183fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a972673aac1b6aca5da582ae77b833457"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a972673aac1b6aca5da582ae77b833457">Ipl_TraceTag</a> (uint8_t result)</td></tr>
 <tr class="separator:a972673aac1b6aca5da582ae77b833457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -151,12 +154,15 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a832951799200d3143282210eb4db9867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIpl__IplData__t.html">Ipl_IplData_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a832951799200d3143282210eb4db9867">Ipl_IplData</a></td></tr>
 <tr class="separator:a832951799200d3143282210eb4db9867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83221363349af59b8b403b0ad673a48f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIpl__InicData__t.html">Ipl_InicData_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bm.html#ga83221363349af59b8b403b0ad673a48f">Ipl_InicData</a></td></tr>
-<tr class="separator:ga83221363349af59b8b403b0ad673a48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83221363349af59b8b403b0ad673a48f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIpl__InicData__t.html">Ipl_InicData_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ipl_8c.html#a83221363349af59b8b403b0ad673a48f">Ipl_InicData</a></td></tr>
+<tr class="separator:a83221363349af59b8b403b0ad673a48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71e6ffd8b98f27d39e2408125bbdf077"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIpl__Inic__t.html">Ipl_Inic_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bm.html#ga71e6ffd8b98f27d39e2408125bbdf077">Ipl_Inic</a></td></tr>
+<tr class="separator:ga71e6ffd8b98f27d39e2408125bbdf077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Internal general functions for INIC Programming Library. </p>
 <dl class="section author"><dt>Author</dt><dd>Roland Trissl (RTR) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>For support related to this code contact <a href="http://www.microchip.com/support">http://www.microchip.com/support</a>. </dd></dl>
 
 <p>Definition in file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -170,7 +176,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00076">76</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00063">63</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -189,7 +195,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00542">542</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00787">787</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -207,7 +213,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00752">752</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01128">1128</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -225,7 +231,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00810">810</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01162">1162</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -243,7 +249,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00996">996</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01346">1346</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -271,7 +277,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01087">1087</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01437">1437</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a44039e12d2afb5072f121e80f6a620ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Ipl_ExportChipInfo </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01467">1467</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -305,7 +329,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01122">1122</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01486">1486</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -333,16 +357,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01146">1146</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01510">1510</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a47384fcbb587300dcaae222de90602f6"></a>
+<a class="anchor" id="a99752465e5420a5ed5bff5bd651183fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char Ipl_BcdChr </td>
+          <td class="memname">char Ipl_Bcd2Char </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>val</em>, </td>
@@ -361,7 +385,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01203">1203</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01645">1645</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -379,7 +403,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l01271">1271</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l01713">1713</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -394,7 +418,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ipl_8c_source.html#l00097">97</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00087">87</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a83221363349af59b8b403b0ad673a48f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIpl__InicData__t.html">Ipl_InicData_t</a> Ipl_InicData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="ipl_8c_source.html#l00088">88</a> of file <a class="el" href="ipl_8c_source.html">ipl.c</a>.</p>
 
 </div>
 </div>
@@ -403,13 +441,13 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="ipl_8c.html">ipl.c</a></li>
+    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="dir_792ca1e11906090e01dead78297002c3.html">src</a></li><li class="navelem"><a class="el" href="ipl_8c.html">ipl.c</a></li>
     <li class="footer">&copy; 2018 Microchip Technology Inc. All rights reserved. <a href="http://www.microchip.com" target="_blank">www.microchip.com</a></li>
   </ul>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

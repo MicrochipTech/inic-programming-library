@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file main.c
- *  \brief Example Application for INIC Programming Library
+/*! \file   main.c
+ *  \brief  Example Application for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #include <stdio.h>
@@ -57,8 +58,8 @@ extern char Hw_GetKey(void);
 /*------------------------------------------------------------------------------------------------*/
 
 uint8_t  image[IMAGE_MAXLEN];
-uint32_t imageLen;
-uint8_t  chipid = IPL_CHIP_OS81118;
+int32_t  imageLen;
+uint8_t  chipid = IPL_CHIP_OS81210;
 char     ipffile[FILENAME_MAXLEN];
 
 
@@ -95,7 +96,8 @@ uint8_t * Ipl_ProvideDataChunk(uint32_t sIndex, uint32_t lData)
 /* Loads an IPF file or a portion of it into an array. */
 uint32_t load_ipf(char* fileName, uint32_t posData, uint32_t lData, uint8_t* pData)
 {
-    int32_t rd, ls, tl;
+    int32_t rd, ls;
+    int32_t tl = -1;
     FILE *fp;
 
     fp = fopen(fileName, "rb");
@@ -114,21 +116,24 @@ uint32_t load_ipf(char* fileName, uint32_t posData, uint32_t lData, uint8_t* pDa
             rd = fread(pData, lData, 1, fp);
             if (rd >= 0)
             {
-                /* printf("File %s loaded from pos %u, len %u bytes, total %u bytes\n", fileName, posData, lData, tl); */
+                Ipl_Trace("EXAMPLE", "File %s loaded from pos %u, len %u bytes, total %u bytes", fileName, posData, lData, tl);
             }
             else
             {
-                printf("Error: Read error\n");
+                tl = -1;
+                Ipl_Trace("EXAMPLE", "IPF file read error");
             }
         }
         else
         {
-            printf("Error: File pos invalid\n");
+            tl = -1;
+            Ipl_Trace("EXAMPLE", "IPF file position invalid");
         }
     }
     else
     {
-        printf("Error: File %s does not exist\n", fileName);
+        tl = -1;
+        Ipl_Trace("EXAMPLE", "IPF file %s does not exist", fileName);
     }
     fclose(fp);
     return tl;
@@ -138,34 +143,43 @@ uint32_t load_ipf(char* fileName, uint32_t posData, uint32_t lData, uint8_t* pDa
 /* Prints the main menu of the example application (interactive mode). */
 void print_menu(void)
 {
-    printf("\nINIC Programming Library Example - Chip ID: 0x%02X, ", chipid);
+    printf("\nINIC Programming Library Example - Chip: ");
+    switch (chipid)
+    {
+        case IPL_CHIP_OS81118: printf("OS81118, "); break;
+        case IPL_CHIP_OS81119: printf("OS81119, "); break;
+        case IPL_CHIP_OS81210: printf("OS81210, "); break;
+        case IPL_CHIP_OS81212: printf("OS81212, "); break;
+        case IPL_CHIP_OS81214: printf("OS81214, "); break;
+        case IPL_CHIP_OS81216: printf("OS81216, "); break;
+        case IPL_CHIP_OS81050: printf("OS81050, "); break;
+        case IPL_CHIP_OS81060: printf("OS81060, "); break;
+        case IPL_CHIP_OS81082: printf("OS81082, "); break;
+        case IPL_CHIP_OS81092: printf("OS81092, "); break;
+        case IPL_CHIP_OS81110: printf("OS81110, "); break;
+    }
 #ifndef IPL_USE_INTPIN
     printf("no ");
 #endif
-    printf("INT pin used.\r\n");
-    printf("------------------------------------------------------------------------\r\n");
-    printf("[0] - Change Chip ID \r\n");
-    printf("[1] - EnterProgMode \r\n");
-    printf("[2] - LoadIpf \r\n");
-    printf("[u] - CheckUpdateConfig / CheckUpdateFirmware\r\n");
-    printf("[9] - LeaveProgMode \r\n");
-    printf("------------------------------------------------------------------------\r\n");
-    printf("[3] - ReadFirmwareVersion \r\n");
-    printf("[4] - ReadConfigStringVersion \r\n");
-    printf("------------------------------------------------------------------------\r\n");
-    printf("[5] - ProgramConfiguration \r\n");
-    printf("[6] - ProgramFirmware \r\n");
-    printf("------------------------------------------------------------------------\r\n");
-    printf("[c] - ProgramConfigString \r\n");
-    printf("[e] - ProgramIdentString \r\n");
-    printf("[7] - ProgramPatchString \r\n");
-    printf("------------------------------------------------------------------------\r\n");
-    printf("[a] - ProgramTestConfiguration \r\n");
-    printf("[d] - ProgramTestConfigString \r\n");
-    printf("[f] - ProgramTestIdentString \r\n");
-    printf("[b] - ProgramTestPatchString \r\n");
-    printf("------------------------------------------------------------------------\r\n");
-    printf("[x] - Exit \r\n\n");
+    printf("INT pin used.\n");
+    printf("------------------------------------------------------------------------\n");
+    printf("[0] - Change Chip \n");
+    printf("[1] - EnterProgMode \n");
+    printf("[2] - LoadIpf \n");
+    printf("[u] - CheckUpdateConfig / CheckUpdateFirmware\n");
+    printf("[9] - LeaveProgMode \n");
+    printf("------------------------------------------------------------------------\n");
+    printf("[3] - ReadFirmwareVersion \n");
+    printf("[4] - ReadConfigStringVersion \n");
+    printf("------------------------------------------------------------------------\n");
+    printf("[5] - ProgramConfiguration             [a] - ProgramTestConfiguration   \n");
+    printf("[6] - ProgramFirmware \n");
+    printf("------------------------------------------------------------------------\n");
+    printf("[c] - ProgramConfigString              [d] - ProgramTestConfigString    \n");
+    printf("[e] - ProgramIdentString               [f] - ProgramTestIdentString     \n");
+    printf("[7] - ProgramPatchString               [b] - ProgramTestPatchString     \n");
+    printf("------------------------------------------------------------------------\n");
+    printf("[x] - Exit \n\n");
 }
 
 
@@ -187,6 +201,24 @@ void change_chipid(void)
             chipid = IPL_CHIP_OS81214;
             break;
         case IPL_CHIP_OS81214:
+            chipid = IPL_CHIP_OS81216;
+            break;
+        case IPL_CHIP_OS81216:
+            chipid = IPL_CHIP_OS81050;
+            break;
+        case IPL_CHIP_OS81050:
+            chipid = IPL_CHIP_OS81060;
+            break;
+        case IPL_CHIP_OS81060:
+            chipid = IPL_CHIP_OS81082;
+            break;
+        case IPL_CHIP_OS81082:
+            chipid = IPL_CHIP_OS81092;
+            break;
+        case IPL_CHIP_OS81092:
+            chipid = IPL_CHIP_OS81110;
+            break;
+        case IPL_CHIP_OS81110:
         default:
             chipid = IPL_CHIP_OS81118;
             break;
@@ -207,8 +239,8 @@ uint8_t exec_job(uint8_t job)
             fflush(stdout);
             if (IPL_RES_OK == res)
             {
-                printf("- V%02u.%02u.%02u\n", Ipl_InicData.CfgsCustMajorVersion, Ipl_InicData.CfgsCustMinorVersion,
-                       Ipl_InicData.CfgsCustReleaseVersion);
+                printf("- V%02u.%02u.%02u\n", Ipl_Inic.CfgsCustMajorVersion, Ipl_Inic.CfgsCustMinorVersion,
+                       Ipl_Inic.CfgsCustReleaseVersion);
             }
             else
             {
@@ -275,7 +307,8 @@ uint8_t exec_job(uint8_t job)
             fflush(stdout);
             if (IPL_RES_OK == res)
             {
-                printf("- V%02u.%02u.%02u-%02u\n", Ipl_InicData.FwMajorVersion, Ipl_InicData.FwMinorVersion, Ipl_InicData.FwReleaseVersion, Ipl_InicData.FwBuildVersion);
+                printf("- ChipID: 0x%2X - V%02u.%02u.%02u-%02u\n", Ipl_Inic.ChipID, Ipl_Inic.FwMajorVersion,
+                       Ipl_Inic.FwMinorVersion, Ipl_Inic.FwReleaseVersion, Ipl_Inic.FwBuildVersion);
             }
             else
             {
@@ -293,8 +326,10 @@ uint8_t exec_job(uint8_t job)
             fflush(stdout);
             break;
         default:
+            printf("Job [0x%02X] [  0%%]", job);
+            fflush(stdout);
             res = Ipl_Prog(job, imageLen, image);
-            printf("Job [0x%02X]: 0x%02X \n", job, res);
+            printf("\b\b\b\b\b\b0x%02X     \n", res);
             break;
     }
     return res;
@@ -325,7 +360,13 @@ int main(int argc, char** argv)
             else if ( 0 == strcmp(argv[2], "OS81119") ) chipid = IPL_CHIP_OS81119;
             else if ( 0 == strcmp(argv[2], "OS81210") ) chipid = IPL_CHIP_OS81210;
             else if ( 0 == strcmp(argv[2], "OS81212") ) chipid = IPL_CHIP_OS81212;
-            else if ( 0 == strcmp(argv[2], "OS81214") ) chipid = IPL_CHIP_OS81212;
+            else if ( 0 == strcmp(argv[2], "OS81214") ) chipid = IPL_CHIP_OS81214;
+            else if ( 0 == strcmp(argv[2], "OS81216") ) chipid = IPL_CHIP_OS81216;
+            else if ( 0 == strcmp(argv[2], "OS81050") ) chipid = IPL_CHIP_OS81050;
+            else if ( 0 == strcmp(argv[2], "OS81060") ) chipid = IPL_CHIP_OS81060;
+            else if ( 0 == strcmp(argv[2], "OS81082") ) chipid = IPL_CHIP_OS81082;
+            else if ( 0 == strcmp(argv[2], "OS81092") ) chipid = IPL_CHIP_OS81092;
+            else if ( 0 == strcmp(argv[2], "OS81110") ) chipid = IPL_CHIP_OS81110;
             else err_syntax = true;
         }
         else err_syntax = true;
@@ -372,7 +413,14 @@ int main(int argc, char** argv)
         if (argc == 7)
         {
              imageLen = load_ipf(ipffile, 0, 0, image);
-             printf("File %s loaded, total %u bytes\n", ipffile, imageLen);
+             if (imageLen > 0)
+             {
+                 printf("File %s loaded, total %u bytes\n", ipffile, imageLen);
+             }
+             else
+             {
+                 printf("File %s could not be loaded\n", ipffile);
+             }
         }
         res = exec_job(jobid);
         res = Ipl_LeaveProgMode();
@@ -431,7 +479,14 @@ int main(int argc, char** argv)
                     ipffile[--res] = '\0';
                 }
                 imageLen = load_ipf(ipffile, 0, IPL_DATACHUNK_SIZE, image);
-                printf("File %s loaded, total %u bytes\n", ipffile, imageLen);
+                if (imageLen > 0)
+                {
+                    printf("File %s loaded, total %u bytes\n", ipffile, imageLen);
+                }
+                else
+                {
+                       printf("File %s could not be loaded\n", ipffile);
+                }
                 break;
             case '3':
                 exec_job(IPL_JOB_READ_FIRMWARE_VER);
@@ -476,6 +531,9 @@ int main(int argc, char** argv)
                 break;
             case 'm':
                 print_menu();
+                break;
+            case 'z':
+                exec_job(0xFEU);
                 break;
             case 'x':
             case  27:

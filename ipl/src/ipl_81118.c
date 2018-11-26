@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl_81118.c
- *  \brief Internal OS81118 specific functions for INIC Programming Library
+/*! \file   ipl_81118.c
+ *  \brief  Internal OS81118 specific functions for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #include <stdint.h>
@@ -30,7 +31,7 @@
 #include "ipl_81118.h"
 
 
-/* INICnet150 product family */
+/* INICnet 150 product family */
 #if defined IPL_USE_OS81118 || defined IPL_USE_OS81119
 
 /*------------------------------------------------------------------------------------------------*/
@@ -470,5 +471,59 @@ static uint8_t OS81118_ProgInfoMem(uint32_t addr, uint32_t nOfBytes, uint8_t pDa
     Ipl_Trace(Ipl_TraceTag(res), "OS81118_ProgInfoMem returned 0x%02X", res);
     return res;
 }
+
+
+/*------------------------------------------------------------------------------------------------*/
+/* UNSUPPORTED FUNCTIONS                                                                          */
+/*------------------------------------------------------------------------------------------------*/
+
+uint8_t OS81118_ProgPatchString(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgPatchString returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
+
+uint8_t OS81118_ProgTestConfiguration(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgTestConfiguration returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
+
+uint8_t OS81118_ProgTestPatchString(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgTestPatchString returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
+
+uint8_t OS81118_ProgConfigString(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgConfigString returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
+
+uint8_t OS81118_ProgTestConfigString(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgTestConfigString returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
+
+uint8_t OS81118_ProgIdentString(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgIdentString returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
+
+uint8_t OS81118_ProgTestIdentString(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81118_ProgTestIdentString returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
+}
+
 
 #endif

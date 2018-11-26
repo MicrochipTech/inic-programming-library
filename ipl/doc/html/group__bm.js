@@ -1,4 +1,4 @@
 var group__bm =
 [
-    [ "Ipl_InicData", "group__bm.html#ga83221363349af59b8b403b0ad673a48f", null ]
+    [ "Ipl_Inic", "group__bm.html#ga71e6ffd8b98f27d39e2408125bbdf077", null ]
 ];

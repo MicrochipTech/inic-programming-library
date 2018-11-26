@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: INIC Driver Open/Close Callback Functions</title>
+<title>INIC PROGRAMMING LIBRARY: INIC Driver Open/Close Callback Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -100,8 +100,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga813bf7594a5f51054c13242d3cd9598a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Enables usage of INICs INT pin for RX control. If defined, the additional callback function ::Ipl_GetIntPin() that checks INICs INT pin needs to be implemented. If not defined, IPL does not check INICs INT pin and ::Ipl_GetIntPin() is not needed.</p>
-<p>If your application has functions for setting up the INIC (I2C) driver, you can let them call by the IPL via the callback functions <a class="el" href="group__callback.html#ga33e1b7e8c8be8df780a7210cbca6a4f0" title="HW Abstraction. Callback function to open INIC driver.">Ipl_InicDriverOpen()</a> and <a class="el" href="group__callback.html#gac1c3cbd7aca42a21642fa30c2bc362ad" title="HW Abstraction. Callback function to close INIC driver.">Ipl_InicDriverClose()</a>. </p>
+<p>Enables usage of the INIC's INT_ pin for RX control. If the macro is defined, the additional callback function ::Ipl_GetIntPin() needs to be implemented. The function reads the status of INIC's INT_ pin. If the macro is not defined, IPL does not check the INIC's INT_ pin and the callback function ::Ipl_GetIntPin() is not required.</p>
+<p>If your application has functions for setting up the INIC (I2C) driver, you can let them call by the IPL via the callback functions <a class="el" href="group__callback.html#ga33e1b7e8c8be8df780a7210cbca6a4f0" title="Hardware abstraction. Callback function to open INIC driver.">Ipl_InicDriverOpen()</a> and <a class="el" href="group__callback.html#gac1c3cbd7aca42a21642fa30c2bc362ad" title="Hardware abstraction. Callback function to close INIC driver.">Ipl_InicDriverClose()</a>. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga813bf7594a5f51054c13242d3cd9598a"></a>
 <div class="memitem">
@@ -112,9 +112,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enables additional callbacks to open/close INIC driver. Callbacks: <a class="el" href="group__callback.html#ga33e1b7e8c8be8df780a7210cbca6a4f0" title="HW Abstraction. Callback function to open INIC driver.">Ipl_InicDriverOpen()</a>, <a class="el" href="group__callback.html#gac1c3cbd7aca42a21642fa30c2bc362ad" title="HW Abstraction. Callback function to close INIC driver.">Ipl_InicDriverClose()</a>. </p>
+<p>Enables additional callbacks to open/close the INIC driver. Callbacks: <a class="el" href="group__callback.html#ga33e1b7e8c8be8df780a7210cbca6a4f0" title="Hardware abstraction. Callback function to open INIC driver.">Ipl_InicDriverOpen()</a>, <a class="el" href="group__callback.html#gac1c3cbd7aca42a21642fa30c2bc362ad" title="Hardware abstraction. Callback function to close INIC driver.">Ipl_InicDriverClose()</a>. </p>
 
-<p>Definition at line <a class="el" href="ipl__cfg_8h_source.html#l00080">80</a> of file <a class="el" href="ipl__cfg_8h_source.html">ipl_cfg.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__cfg_8h_source.html#l00083">83</a> of file <a class="el" href="ipl__cfg_8h_source.html">ipl_cfg.h</a>.</p>
 
 </div>
 </div>
@@ -128,7 +128,7 @@ Macros</h2></td></tr>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

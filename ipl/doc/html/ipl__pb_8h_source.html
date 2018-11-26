@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/ipl_pb.h Source File</title>
+<title>INIC PROGRAMMING LIBRARY: C:/Users/rtrissl/Desktop/AppsTeam/Misc/InicProgLib/trunk/ipl/inc/ipl_pb.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -111,177 +111,292 @@ $(document).ready(function(){initNavTree('ipl__pb_8h_source.html','');});
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#ifndef IPL_PB_H</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define IPL_PB_H</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__cfg_8h.html" title="Configuration header for INIC Programming Library.">ipl_cfg.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef IPL_PB_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define IPL_PB_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ipl__cfg_8h.html" title="Configuration header for INIC Programming Library.">ipl_cfg.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">/* CHECKS FOR ipl_cfg.h                                                                           */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef IPL_DATACHUNK_SIZE</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#error &quot;ipl_cfg.h: IPL_DATACHUNK_SIZE needs to be defined.&quot;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">/* CONSTANTS                                                                                      */</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="group__chip__ids.html#gacc0014ae54710f10809169ae48b9a6e3">   51</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81118                    0x18U </span></div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga7cbd2907be0efc401991c40ed847cead">   52</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81119                    0x19U </span></div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="group__chip__ids.html#gafc761e017336fbee4dfefd0c069bb4f6">   53</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81210                    0x30U </span></div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga0b148cef54fc011062727fc8dde4ce10">   54</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81212                    0x32U </span></div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga409fd5f28784d4b894a8416f2b7ff375">   55</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81214                    0x34U </span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">/* CHECKS FOR ipl_cfg.h                                                                           */</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifndef IPL_DATACHUNK_SIZE</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#error &quot;ipl_cfg.h: IPL_DATACHUNK_SIZE needs to be defined.&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/* CONSTANTS                                                                                      */</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="group__chip__ids.html#gacc0014ae54710f10809169ae48b9a6e3">   54</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81118                    0x18U</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga7cbd2907be0efc401991c40ed847cead">   56</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81119                    0x19U</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626">   65</a></span>&#160;<span class="preprocessor">#define IPL_RES_OK                          0x00U </span></div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaaefb838a936d188fb7a39ae4eb4f1df1">   69</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IS_INVALID              0x60U </span></div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga6c7aa9f403445bb6666e439fd69c5ee6">   74</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PROG_INFOMEM            0x61U </span></div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb">   78</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NOT_SUPPORTED           0x62U </span></div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga089240bb14d60a5488a1471a2ce9d840">   82</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_HW_INIC_COMM            0x63U </span></div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="group__result__codes.html#gabffabdeab78ef920f8442e41bff29550">   87</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_INT_READ                0x64U </span></div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="group__result__codes.html#gafaa41463e27566ba032ec9ee8020cce1">   92</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_INT_TIMEOUT             0x65U </span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="code" href="group__result__codes.html#gae7d9ae9016dcd00b60e0379ec831c8a1">   97</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PS_INCORRECT            0x66U </span></div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga94c8183cf6fa4617f27ca03d07fb189b">  102</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NO_OTP_SPACE            0x67U </span></div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="code" href="group__result__codes.html#gab01b2e0036c5b5cd6ca02a653c907964">  106</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITETESTMEM            0x68U </span></div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaccd51e2f105ef0d5f996160ae1a50a4b">  110</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READINFOMEM             0x69U </span></div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga854c18a411f0f193cadb7f12ef5bc48b">  114</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READFWVER               0x6AU </span></div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1d9befb24bbb1b3619452e9ddff80c7a">  119</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PROGSTART               0x6BU </span></div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga58ae5e253318264f97303178f0ee1309">  123</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READOTPMEM              0x6CU </span></div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga37c98d417f5bd092ac42aa81aa06730e">  127</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READPROGMEM             0x6DU </span></div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad6536ee3d597d8bb30dddf77b5536eb2">  131</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_VERIFYOTPMEM            0x6EU </span></div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaefdbdcb7928c09985e0ac20e0a0afa0d">  135</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITEOTPMEM             0x6FU </span></div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga9c1423823eabe1bc9cd3aa4cc8c6ca96">  139</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITEINFOMEM            0x70U </span></div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga31a4b42924ede7959dd24851fc58aa1d">  143</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ERASEPROGMEM            0x71U</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7cef57055f2bc73686340126f7e68389">  147</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CLEARCRC                0x72U </span></div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga09ddbd0132e38d02c38dd6647c17afb6">  151</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_SETPROGMEMPAGE          0x73U </span></div>
-<div class="line"><a name="l00155"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga77b964896eec267c487b91cfec685c06">  155</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITEPROGMEM            0x74U </span></div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga81fbe1356e6e549e11014527ef49d8e0">  159</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_GETCRC                  0x75U </span></div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7f3b825d210c8dd315abe5a9d92d57d1">  163</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ERASEINFOMEM            0x76U </span></div>
-<div class="line"><a name="l00167"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1bc093d519a63ffa3b7049ba8005d5c0">  167</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_TXTELLEN_INVALID        0x77U </span></div>
-<div class="line"><a name="l00171"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaaeb390bdf319119109eca229a15b7708">  171</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READ                    0x78U </span></div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad5a985fd10e27b2ba6e46f3bd9cd22ba">  176</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITE                   0x79U </span></div>
-<div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga349036008f1794897a3d4af4c2999e2d">  181</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_RESP_UNEXPECTED         0x7AU </span></div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaee10e9d92b89962ca118ebe06fb78373">  185</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CMD_UNEXPECTED          0x7BU </span></div>
-<div class="line"><a name="l00189"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga68afad9fb339e48c59cb34861ec10537">  189</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_WRONGSTRINGTYPE     0x7CU </span></div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga74bf4b714ae810e1d3514ff4d9b4fce2">  194</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_WRONGINIC           0x7DU </span></div>
-<div class="line"><a name="l00199"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1001d967c8493207f2a983559f0287b8">  199</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_CRC               0x7EU </span></div>
-<div class="line"><a name="l00203"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga8003c2436725259d1b3c706e76087d93">  203</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CS_INVALID              0x7FU </span></div>
-<div class="line"><a name="l00208"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1dec97fc90b62c2650d7db79c6e5bf2e">  208</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PROG_OTP                0x80U </span></div>
-<div class="line"><a name="l00212"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7260ddef6f8989a9f67fa452cf3210a2">  212</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_WRONGFWVERSION      0x81U </span></div>
-<div class="line"><a name="l00217"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga5f4363f42fc1faeb5f233db8266ad1f5">  217</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_INVALID             0x82U </span></div>
-<div class="line"><a name="l00222"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7fef831def800437e2c132672d5c3642">  222</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_MAX_PATCHSTRINGLEN      0x83U </span></div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga65648819c50fa885f6365fff61742cc8">  226</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NOVALIDCHIPID           0x84U </span></div>
-<div class="line"><a name="l00231"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1b55a7f6ce424974e2b896927c679b1e">  231</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_HW_INIC_PINS            0x85U </span></div>
-<div class="line"><a name="l00237"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga600fba61a3be0a0eeca84146b5ca44d0">  237</a></span>&#160;<span class="preprocessor">#define IPL_RES_UPDATE_DENIED_EQUAL        0x86U </span></div>
-<div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga0100beb0166798212ec1d5884f4fd7a4">  243</a></span>&#160;<span class="preprocessor">#define IPL_RES_UPDATE_DENIED_NEWER        0x87U </span></div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae">  249</a></span>&#160;<span class="preprocessor">#define IPL_RES_UPDATE_DENIED_UNKNOWN       0x88U </span></div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga57488685e3e7e4a337876a0daa0cad24">  254</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_INVALID_DATACHUNK       0x89U </span></div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga42bb07cf8a8910753bd9267da12f3132">  260</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PARTITION_INVALID       0x01U </span></div>
-<div class="line"><a name="l00265"></a><span class="lineno"><a class="code" href="group__result__codes.html#gabf91f12bed575ec100f090ff181fffcd">  265</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_VERIFYINFOMEM           0x10U </span></div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="group__result__codes.html#gae16b8a8b5969e19018cf9fb83c2db1f3">  271</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_LOCATION_INVALID        0x11U </span></div>
-<div class="line"><a name="l00277"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7916c1c8a3cb045d7e4b612ac48a8731">  277</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ADDRESS_INVALID         0x12U </span></div>
-<div class="line"><a name="l00281"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaf32c12e5324a7b096a94552ea0bef665">  281</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_LENGTH_INVALID          0x13U </span></div>
-<div class="line"><a name="l00286"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad37706a1f5e7dd692314343461535a22">  286</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CMD_CC_BAD              0x14U </span></div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaa1d625ec823a88f9da2f26b926c11de9">  290</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NOT_LOCKED              0x20U </span></div>
-<div class="line"><a name="l00296"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga519b4e0853ad273cbdcbc0455b9b43a6">  296</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_MISSING_PROGSTART       0x21U </span></div>
-<div class="line"><a name="l00301"></a><span class="lineno"><a class="code" href="group__result__codes.html#gadb5cf6b5d8ceb3f4e237a643d3a651f4">  301</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_BAD_CLK                 0x22U </span></div>
-<div class="line"><a name="l00306"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga9f821c055a6ff98706d24b356d72ec64">  306</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_BAD_DIV                 0x23U </span></div>
-<div class="line"><a name="l00310"></a><span class="lineno"><a class="code" href="group__result__codes.html#gac972787cbd7cacc4538ca6af68ed7943">  310</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_BAD_KEY                 0x24U </span></div>
-<div class="line"><a name="l00315"></a><span class="lineno"><a class="code" href="group__result__codes.html#gab53585c6b7bba8432ec798479b61f522">  315</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_SEQUENCE          0x25U </span></div>
-<div class="line"><a name="l00319"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga5a894ba8c63e00ebe789c8a2d85e677f">  319</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NO_OTP_ACCESS           0x26U </span></div>
-<div class="line"><a name="l00323"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaade959b7ae2213dec29bde2dc49f353d">  323</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_OTP_IS_ZERO             0x27U </span></div>
-<div class="line"><a name="l00328"></a><span class="lineno"><a class="code" href="group__result__codes.html#gac4a6f03097971292dae1834dcf802ed2">  328</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CMD_NOT_RECOGNIZED      0x40U </span></div>
-<div class="line"><a name="l00332"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga2358733d754b57a20d31a3f90ea68915">  332</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IF_USED                 0x41U </span></div>
-<div class="line"><a name="l00337"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga90678a703d163ccedab33fa45e155f84">  337</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PIPE_NOT_READY          0x50U </span></div>
-<div class="line"><a name="l00341"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga11c1e27b8c4baf1b88cae77b9d2b0dbe">  341</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_PIPENUMBER        0x51U </span></div>
-<div class="line"><a name="l00345"></a><span class="lineno"><a class="code" href="group__result__codes.html#gadb6cb7d96138e2364ea7babcf06efb27">  345</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_PIPEMODE          0x52U </span></div>
-<div class="line"><a name="l00349"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7c2108d329624926dc2006b40dba6d0f">  349</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PIPE_BUF                0x53U </span></div>
-<div class="line"><a name="l00353"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaa92712292809c25d0b6bb90c72336363">  353</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PIPE_DATA               0x54U </span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="group__chip__ids.html#gafc761e017336fbee4dfefd0c069bb4f6">   58</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81210                    0x30U</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga0b148cef54fc011062727fc8dde4ce10">   60</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81212                    0x32U</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga409fd5f28784d4b894a8416f2b7ff375">   62</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81214                    0x34U</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga9b78a01e057fb8149c2b603b864a4a24">   64</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81216                    0x33U</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="group__chip__ids.html#gafee5f03522497af618597afd35e6edfb">   66</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81110                    0x10U</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga890d68e9249f96af139b759ad18e0ce7">   68</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81092                    0x82U</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga034af76de94a79dcfddf4dc62b8f2dea">   70</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81082                    0x92U</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga657cf0c0c2736d706443b97b701b9681">   72</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81060                    0x60U</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="group__chip__ids.html#ga40cfccd0f0d351ae7494c148ca32140d">   74</a></span>&#160;<span class="preprocessor">#define IPL_CHIP_OS81050                    0x0FU</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626">   90</a></span>&#160;<span class="preprocessor">#define IPL_RES_OK                          0x00U</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaaefb838a936d188fb7a39ae4eb4f1df1">   96</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IS_INVALID              0x60U</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga6c7aa9f403445bb6666e439fd69c5ee6">  102</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PROG_INFOMEM            0x61U</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb">  108</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NOT_SUPPORTED           0x62U</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga9f67ca1be07f19c970f3e28705fcac05">  115</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_HW_INIC_COM             0x63U</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="group__result__codes.html#gabffabdeab78ef920f8442e41bff29550">  122</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_INT_READ                0x64U</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="code" href="group__result__codes.html#gafaa41463e27566ba032ec9ee8020cce1">  129</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_INT_TIMEOUT             0x65U</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="code" href="group__result__codes.html#gae7d9ae9016dcd00b60e0379ec831c8a1">  136</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PS_INCORRECT            0x66U</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00143"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga94c8183cf6fa4617f27ca03d07fb189b">  143</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NO_OTP_SPACE            0x67U</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga392921dc18c90684259638fc6817724e">  149</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ACCESS_TESTMEM          0x68U</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00155"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaccd51e2f105ef0d5f996160ae1a50a4b">  155</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READINFOMEM             0x69U</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga854c18a411f0f193cadb7f12ef5bc48b">  163</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READFWVER               0x6AU</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1d9befb24bbb1b3619452e9ddff80c7a">  169</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PROGSTART               0x6BU</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga58ae5e253318264f97303178f0ee1309">  175</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READOTPMEM              0x6CU</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga37c98d417f5bd092ac42aa81aa06730e">  181</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READPROGMEM             0x6DU</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad6536ee3d597d8bb30dddf77b5536eb2">  187</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_VERIFYOTPMEM            0x6EU</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaefdbdcb7928c09985e0ac20e0a0afa0d">  193</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITEOTPMEM             0x6FU</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga9c1423823eabe1bc9cd3aa4cc8c6ca96">  199</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITEINFOMEM            0x70U</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga31a4b42924ede7959dd24851fc58aa1d">  205</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ERASEPROGMEM            0x71U</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7cef57055f2bc73686340126f7e68389">  211</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CLEARCRC                0x72U</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga09ddbd0132e38d02c38dd6647c17afb6">  217</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_SETPROGMEMPAGE          0x73U</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga77b964896eec267c487b91cfec685c06">  223</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITEPROGMEM            0x74U</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00229"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga81fbe1356e6e549e11014527ef49d8e0">  229</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_GETCRC                  0x75U</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00235"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7f3b825d210c8dd315abe5a9d92d57d1">  235</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ERASEINFOMEM            0x76U</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1bc093d519a63ffa3b7049ba8005d5c0">  241</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_TXTELLEN_INVALID        0x77U</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaaeb390bdf319119109eca229a15b7708">  248</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_READ                    0x78U</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00255"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad5a985fd10e27b2ba6e46f3bd9cd22ba">  255</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRITE                   0x79U</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga349036008f1794897a3d4af4c2999e2d">  261</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_RESP_UNEXPECTED         0x7AU</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaee10e9d92b89962ca118ebe06fb78373">  267</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CMD_UNEXPECTED          0x7BU</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00274"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga68afad9fb339e48c59cb34861ec10537">  274</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_WRONGSTRINGTYPE     0x7CU</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00281"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga74bf4b714ae810e1d3514ff4d9b4fce2">  281</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_WRONGINIC           0x7DU</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00287"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1001d967c8493207f2a983559f0287b8">  287</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_CRC               0x7EU</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00294"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga8003c2436725259d1b3c706e76087d93">  294</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CS_INVALID              0x7FU</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1dec97fc90b62c2650d7db79c6e5bf2e">  300</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PROG_OTP                0x80U</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00307"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7260ddef6f8989a9f67fa452cf3210a2">  307</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_WRONGFWVERSION      0x81U</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00314"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga5f4363f42fc1faeb5f233db8266ad1f5">  314</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IPF_INVALID             0x82U</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00320"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7fef831def800437e2c132672d5c3642">  320</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_MAX_PATCHSTRINGLEN      0x83U</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00327"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga65648819c50fa885f6365fff61742cc8">  327</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NOVALIDCHIPID           0x84U</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00335"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga1b55a7f6ce424974e2b896927c679b1e">  335</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_HW_INIC_PINS            0x85U</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00343"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga600fba61a3be0a0eeca84146b5ca44d0">  343</a></span>&#160;<span class="preprocessor">#define IPL_RES_UPDATE_DENIED_EQUAL         0x86U</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00351"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga0100beb0166798212ec1d5884f4fd7a4">  351</a></span>&#160;<span class="preprocessor">#define IPL_RES_UPDATE_DENIED_NEWER         0x87U</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00358"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae">  358</a></span>&#160;<span class="preprocessor">#define IPL_RES_UPDATE_DENIED_UNKNOWN       0x88U</span></div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00366"></a><span class="lineno"><a class="code" href="group__jobs.html#gac21fdc7d502428379b403b61ba2fdacf">  366</a></span>&#160;<span class="preprocessor">#define IPL_JOB_READ_FIRMWARE_VER           0x01U </span></div>
-<div class="line"><a name="l00367"></a><span class="lineno"><a class="code" href="group__jobs.html#ga12ee1efcef6926c0575d2559d8f7daf9">  367</a></span>&#160;<span class="preprocessor">#define IPL_JOB_READ_CONFIGSTRING_VER       0x02U </span></div>
-<div class="line"><a name="l00368"></a><span class="lineno"><a class="code" href="group__jobs.html#gaaf0f9a04f8b7139ed43cc9b737f58ca2">  368</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_FIRMWARE               0x03U </span></div>
-<div class="line"><a name="l00369"></a><span class="lineno"><a class="code" href="group__jobs.html#gac53033e83b941fa8e83430a04a666ddb">  369</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_CONFIG                 0x04U </span></div>
-<div class="line"><a name="l00370"></a><span class="lineno"><a class="code" href="group__jobs.html#ga32324491865d3050c49146cfcd0f1b4d">  370</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_PATCHSTRING            0x05U </span></div>
-<div class="line"><a name="l00371"></a><span class="lineno"><a class="code" href="group__jobs.html#gaea2e2406c48a6527bc7a7f2a7169deb3">  371</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_CONFIG            0x06U </span></div>
-<div class="line"><a name="l00372"></a><span class="lineno"><a class="code" href="group__jobs.html#gaa03acbc9add7249f41f86494fd616487">  372</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_PATCHSTRING       0x07U </span></div>
-<div class="line"><a name="l00373"></a><span class="lineno"><a class="code" href="group__jobs.html#gacfec1840ad603a5a7c32f19ea8849733">  373</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_CONFIGSTRING           0x08U </span></div>
-<div class="line"><a name="l00374"></a><span class="lineno"><a class="code" href="group__jobs.html#gadb57f42020d3137b42dd7b6ede934227">  374</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_CONFIGSTRING      0x09U </span></div>
-<div class="line"><a name="l00375"></a><span class="lineno"><a class="code" href="group__jobs.html#ga1d952501ae4058d1add0c597eb2ad044">  375</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_IDENTSTRING            0x0AU </span></div>
-<div class="line"><a name="l00376"></a><span class="lineno"><a class="code" href="group__jobs.html#gad28f34bd363a6c0fe4a9ec23c763fa4a">  376</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_IDENTSTRING       0x0BU </span></div>
-<div class="line"><a name="l00377"></a><span class="lineno"><a class="code" href="group__jobs.html#gaf11e90c8cfa125e4ae673f7eb0815338">  377</a></span>&#160;<span class="preprocessor">#define IPL_JOB_CHK_UPDATE_CONFIGSTRING     0x0CU </span></div>
-<div class="line"><a name="l00391"></a><span class="lineno"><a class="code" href="group__jobs.html#gac2eb3b9a4d24c5ee78cedaae9693c668">  391</a></span>&#160;<span class="preprocessor">#define IPL_JOB_CHK_UPDATE_FIRMWARE        0x0DU </span></div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment">/* TYPES                                                                                          */</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
-<div class="line"><a name="l00411"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html">  411</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>Ipl_InicData_</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;{</div>
-<div class="line"><a name="l00413"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a30236d05b852e8fdb471542a59ffcb0c">  413</a></span>&#160;    uint32_t <a class="code" href="structIpl__InicData__t.html#a30236d05b852e8fdb471542a59ffcb0c" title="INIC identifier. All supported ChipIDs are listed here: Chip IDs.">ChipID</a>;                  </div>
-<div class="line"><a name="l00414"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a5953f6c7ef1bdf05efe57a535ee9943d">  414</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a5953f6c7ef1bdf05efe57a535ee9943d" title="Firmware major version.">FwMajorVersion</a>;          </div>
-<div class="line"><a name="l00415"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a167a2e3289d692e07ad8164b591a9f2b">  415</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a167a2e3289d692e07ad8164b591a9f2b" title="Firmware minor version.">FwMinorVersion</a>;          </div>
-<div class="line"><a name="l00416"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#ad67f16630ca6f0e23cdf450dc4bd6526">  416</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#ad67f16630ca6f0e23cdf450dc4bd6526" title="Firmware release version.">FwReleaseVersion</a>;        </div>
-<div class="line"><a name="l00417"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a90c3436fabd758aed157f034ef6f6078">  417</a></span>&#160;    uint32_t <a class="code" href="structIpl__InicData__t.html#a90c3436fabd758aed157f034ef6f6078" title="Firmware build version.">FwBuildVersion</a>;          </div>
-<div class="line"><a name="l00418"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a4373252b4802445885a215fd1b94adac">  418</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a4373252b4802445885a215fd1b94adac" title="ConfigString customer major version.">CfgsCustMajorVersion</a>;    </div>
-<div class="line"><a name="l00419"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a535dfe61e7389c7c31eca387206df190">  419</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a535dfe61e7389c7c31eca387206df190" title="ConfigString customer minor version.">CfgsCustMinorVersion</a>;    </div>
-<div class="line"><a name="l00420"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a99c90763a1f92c410c5b72b746d689e0">  420</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a99c90763a1f92c410c5b72b746d689e0" title="ConfigString customer release version.">CfgsCustReleaseVersion</a>;  </div>
-<div class="line"><a name="l00421"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a0da094dba8cc17265fad1c0a8a6a3e2e">  421</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a0da094dba8cc17265fad1c0a8a6a3e2e">FwVersionValid</a>;          </div>
-<div class="line"><a name="l00422"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a944073626d7bc739eee740ac8a1fb74d">  422</a></span>&#160;    uint16_t <a class="code" href="structIpl__InicData__t.html#a944073626d7bc739eee740ac8a1fb74d">FwCrc</a>;                   </div>
-<div class="line"><a name="l00423"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a5c00baffe895941eb6efe4ce216d251e">  423</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a5c00baffe895941eb6efe4ce216d251e">CfgsVersionValid</a>;        </div>
-<div class="line"><a name="l00424"></a><span class="lineno"><a class="code" href="structIpl__InicData__t.html#a23cfba1cbd35b250fbd83daaafcce0ef">  424</a></span>&#160;    uint8_t  <a class="code" href="structIpl__InicData__t.html#a23cfba1cbd35b250fbd83daaafcce0ef">CfgsActiveConfigPage</a>;    </div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;} <a class="code" href="structIpl__InicData__t.html">Ipl_InicData_t</a>;</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="keyword">extern</span> <a class="code" href="structIpl__InicData__t.html">Ipl_InicData_t</a> <a class="code" href="group__bm.html#ga83221363349af59b8b403b0ad673a48f">Ipl_InicData</a>;</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">/* FUNCTION PROTOTYPES                                                                            */</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gafa5f5e83af518a555ae6debd8325b404" title="HW Abstraction. Callback function to set INICs RESET pin.">Ipl_SetResetPin</a>(uint8_t lowHigh);                       </div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gaa0dae03f53687c599af73249c8dc1111" title="HW Abstraction. Callback function to set INICs ERR/BOOT pin.">Ipl_SetErrBootPin</a>(uint8_t lowHigh);                     </div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gaac97f24c8302dfe5b248a1153357b630" title="HW Abstraction. Callback function to read telegram from INIC.">Ipl_InicRead</a>(uint8_t lData, uint8_t* pData);            </div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gafe5d645de6e4a4a45637641173a7b5c2" title="HW Abstraction. Callback function to send telegram to INIC.">Ipl_InicWrite</a>(uint8_t lData, uint8_t* pData);            </div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span>     <a class="code" href="group__callback.html#gafef602a475f58000c4dd0b4a8e100058" title="HW Abstraction. Callback function to sleep some milliseconds.">Ipl_Sleep</a>(uint16_t timeMs);                             </div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="preprocessor">#ifdef IPL_USE_INTPIN</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> uint8_t  Ipl_GetIntPin(<span class="keywordtype">void</span>);                                    </div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">void</span>     <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* tag, <span class="keyword">const</span> <span class="keywordtype">char</span>* fmt, ...);       </div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="preprocessor">#ifdef IPL_PROGRESS_INDICATOR</span></div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">void</span>     <a class="code" href="group__callback.html#gae9ab244cfead932bbcf15cbf703abecc" title="Callback function to deliver progress indication for long running jobs.">Ipl_Progress</a>(uint8_t percent);                          </div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifdef IPL_INICDRIVER_OPENCLOSE</span></div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#ga33e1b7e8c8be8df780a7210cbca6a4f0" title="HW Abstraction. Callback function to open INIC driver.">Ipl_InicDriverOpen</a>(<span class="keywordtype">void</span>);                               </div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gac1c3cbd7aca42a21642fa30c2bc362ad" title="HW Abstraction. Callback function to close INIC driver.">Ipl_InicDriverClose</a>(<span class="keywordtype">void</span>);                              </div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if IPL_DATACHUNK_SIZE &gt; 0</span></div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> uint8_t* <a class="code" href="group__callback.html#ga4a0b52f4a835d3e43ce6e9b4c868ded5" title="Callback function to provide a portion (chunk) of the IPF data.">Ipl_ProvideDataChunk</a>(uint32_t sIndex, uint32_t lData);  </div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;uint8_t <a class="code" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication. Needs to be called be...">Ipl_EnterProgMode</a>(uint8_t chipID);                              </div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;uint8_t <a class="code" href="group__api.html#gacfe7f25778afff6d61133206f6296d31" title="Resets INIC and starts up in normal mode. Needs to be called when programming is finished.">Ipl_LeaveProgMode</a>(<span class="keywordtype">void</span>);                                        </div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;uint8_t <a class="code" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by Ipl_E...">Ipl_Prog</a>(uint8_t job, uint32_t lData, uint8_t* pData);          </div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;</div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga57488685e3e7e4a337876a0daa0cad24">  365</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_INVALID_DATACHUNK       0x89U</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00372"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga6200f923391e866580979fff96b838df">  372</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_INIC              0x90U</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00378"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga5c1b1d3d7c7f00fd5be627c1ddd6dbd0">  378</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ACCESS_RAM              0x68U</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00385"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga42bb07cf8a8910753bd9267da12f3132">  385</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PARTITION_INVALID       0x01U</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00393"></a><span class="lineno"><a class="code" href="group__result__codes.html#gabf91f12bed575ec100f090ff181fffcd">  393</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_VERIFYINFOMEM           0x10U</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00401"></a><span class="lineno"><a class="code" href="group__result__codes.html#gae16b8a8b5969e19018cf9fb83c2db1f3">  401</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_LOCATION_INVALID        0x11U</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00407"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7916c1c8a3cb045d7e4b612ac48a8731">  407</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_ADDRESS_INVALID         0x12U</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00413"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaf32c12e5324a7b096a94552ea0bef665">  413</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_LENGTH_INVALID          0x13U</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00419"></a><span class="lineno"><a class="code" href="group__result__codes.html#gad37706a1f5e7dd692314343461535a22">  419</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CMD_CC_BAD              0x14U</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00426"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaa1d625ec823a88f9da2f26b926c11de9">  426</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NOT_LOCKED              0x20U</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00433"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga519b4e0853ad273cbdcbc0455b9b43a6">  433</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_MISSING_PROGSTART       0x21U</span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00440"></a><span class="lineno"><a class="code" href="group__result__codes.html#gadb5cf6b5d8ceb3f4e237a643d3a651f4">  440</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_BAD_CLK                 0x22U</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00446"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga9f821c055a6ff98706d24b356d72ec64">  446</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_BAD_DIV                 0x23U</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00453"></a><span class="lineno"><a class="code" href="group__result__codes.html#gac972787cbd7cacc4538ca6af68ed7943">  453</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_BAD_KEY                 0x24U</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00459"></a><span class="lineno"><a class="code" href="group__result__codes.html#gab53585c6b7bba8432ec798479b61f522">  459</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_SEQUENCE          0x25U</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00465"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga5a894ba8c63e00ebe789c8a2d85e677f">  465</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_NO_OTP_ACCESS           0x26U</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00472"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaade959b7ae2213dec29bde2dc49f353d">  472</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_OTP_IS_ZERO             0x27U</span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00478"></a><span class="lineno"><a class="code" href="group__result__codes.html#gac4a6f03097971292dae1834dcf802ed2">  478</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_CMD_NOT_RECOGNIZED      0x40U</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;</div>
+<div class="line"><a name="l00486"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga2358733d754b57a20d31a3f90ea68915">  486</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_IF_USED                 0x41U</span></div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00492"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga90678a703d163ccedab33fa45e155f84">  492</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PIPE_NOT_READY          0x50U</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00498"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga11c1e27b8c4baf1b88cae77b9d2b0dbe">  498</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_PIPENUMBER        0x51U</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00504"></a><span class="lineno"><a class="code" href="group__result__codes.html#gadb6cb7d96138e2364ea7babcf06efb27">  504</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_WRONG_PIPEMODE          0x52U</span></div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00510"></a><span class="lineno"><a class="code" href="group__result__codes.html#ga7c2108d329624926dc2006b40dba6d0f">  510</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PIPE_BUF                0x53U</span></div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00516"></a><span class="lineno"><a class="code" href="group__result__codes.html#gaa92712292809c25d0b6bb90c72336363">  516</a></span>&#160;<span class="preprocessor">#define IPL_RES_ERR_PIPE_DATA               0x54U</span></div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00532"></a><span class="lineno"><a class="code" href="group__jobs.html#gac21fdc7d502428379b403b61ba2fdacf">  532</a></span>&#160;<span class="preprocessor">#define IPL_JOB_READ_FIRMWARE_VER           0x01U</span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00535"></a><span class="lineno"><a class="code" href="group__jobs.html#ga12ee1efcef6926c0575d2559d8f7daf9">  535</a></span>&#160;<span class="preprocessor">#define IPL_JOB_READ_CONFIGSTRING_VER       0x02U</span></div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00539"></a><span class="lineno"><a class="code" href="group__jobs.html#gaaf0f9a04f8b7139ed43cc9b737f58ca2">  539</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_FIRMWARE               0x03U</span></div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00546"></a><span class="lineno"><a class="code" href="group__jobs.html#gac53033e83b941fa8e83430a04a666ddb">  546</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_CONFIG                 0x04U</span></div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00553"></a><span class="lineno"><a class="code" href="group__jobs.html#ga32324491865d3050c49146cfcd0f1b4d">  553</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_PATCHSTRING            0x05U</span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00560"></a><span class="lineno"><a class="code" href="group__jobs.html#gaea2e2406c48a6527bc7a7f2a7169deb3">  560</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_CONFIG            0x06U</span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00567"></a><span class="lineno"><a class="code" href="group__jobs.html#gaa03acbc9add7249f41f86494fd616487">  567</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_PATCHSTRING       0x07U</span></div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00574"></a><span class="lineno"><a class="code" href="group__jobs.html#gacfec1840ad603a5a7c32f19ea8849733">  574</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_CONFIGSTRING           0x08U</span></div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00581"></a><span class="lineno"><a class="code" href="group__jobs.html#gadb57f42020d3137b42dd7b6ede934227">  581</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_CONFIGSTRING      0x09U</span></div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00588"></a><span class="lineno"><a class="code" href="group__jobs.html#ga1d952501ae4058d1add0c597eb2ad044">  588</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_IDENTSTRING            0x0AU</span></div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00595"></a><span class="lineno"><a class="code" href="group__jobs.html#gad28f34bd363a6c0fe4a9ec23c763fa4a">  595</a></span>&#160;<span class="preprocessor">#define IPL_JOB_PROG_TEST_IDENTSTRING       0x0BU</span></div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00619"></a><span class="lineno"><a class="code" href="group__jobs.html#gaf11e90c8cfa125e4ae673f7eb0815338">  619</a></span>&#160;<span class="preprocessor">#define IPL_JOB_CHK_UPDATE_CONFIGSTRING     0x0CU</span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00634"></a><span class="lineno"><a class="code" href="group__jobs.html#gac2eb3b9a4d24c5ee78cedaae9693c668">  634</a></span>&#160;<span class="preprocessor">#define IPL_JOB_CHK_UPDATE_FIRMWARE        0x0DU</span></div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;<span class="preprocessor">#ifdef IPL_TRACETAG_DUMP</span></div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;<span class="preprocessor">#define IPL_JOB_DUMP_OTPMEM                0xF0U</span></div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="preprocessor">#define IPL_JOB_DUMP_INFOMEM               0xF1U</span></div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;<span class="preprocessor">#define IPL_JOB_DUMP_PROGMEM               0xF2U</span></div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;<span class="preprocessor">#define IPL_JOB_DUMP_TESTMEM               0xF3U</span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;<span class="preprocessor">#define IPL_JOB_DUMP_ALL                   0xFEU</span></div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="comment">/* TYPES                                                                                          */</span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;</div>
+<div class="line"><a name="l00655"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html">  655</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>Ipl_Inic_</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;{</div>
+<div class="line"><a name="l00657"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#a0e483ebca2b189c3b9d034051927265d">  657</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#a0e483ebca2b189c3b9d034051927265d" title="INIC identifier. All supported ChipIDs are listed here: Chip IDs.">ChipID</a>;                  </div>
+<div class="line"><a name="l00658"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#a6648211ab898aeb03f61b58dbd9050dd">  658</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#a6648211ab898aeb03f61b58dbd9050dd" title="Firmware major version.">FwMajorVersion</a>;          </div>
+<div class="line"><a name="l00659"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#a6e391d52276058d5ba64724d9353653a">  659</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#a6e391d52276058d5ba64724d9353653a" title="Firmware minor version.">FwMinorVersion</a>;          </div>
+<div class="line"><a name="l00660"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#a25c607412ea9aaa3098309c200f8753e">  660</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#a25c607412ea9aaa3098309c200f8753e" title="Firmware release version.">FwReleaseVersion</a>;        </div>
+<div class="line"><a name="l00661"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#a32c2e4c79f5de589bd1c23cd2ff84a24">  661</a></span>&#160;    uint32_t <a class="code" href="structIpl__Inic__t.html#a32c2e4c79f5de589bd1c23cd2ff84a24" title="Firmware build version.">FwBuildVersion</a>;          </div>
+<div class="line"><a name="l00662"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#abbdd8594b1dc3456f7bc417589445a3c">  662</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#abbdd8594b1dc3456f7bc417589445a3c" title="ConfigString customer major version.">CfgsCustMajorVersion</a>;    </div>
+<div class="line"><a name="l00663"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#ac6c83d8ca88b1440a9975ca45c02d216">  663</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#ac6c83d8ca88b1440a9975ca45c02d216" title="ConfigString customer minor version.">CfgsCustMinorVersion</a>;    </div>
+<div class="line"><a name="l00664"></a><span class="lineno"><a class="code" href="structIpl__Inic__t.html#a08515341256ce557b0660f36ba0f1779">  664</a></span>&#160;    uint8_t  <a class="code" href="structIpl__Inic__t.html#a08515341256ce557b0660f36ba0f1779" title="ConfigString customer release version.">CfgsCustReleaseVersion</a>;  </div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;} <a class="code" href="structIpl__Inic__t.html">Ipl_Inic_t</a>;</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;<span class="keyword">extern</span> <a class="code" href="structIpl__Inic__t.html">Ipl_Inic_t</a> <a class="code" href="group__bm.html#ga71e6ffd8b98f27d39e2408125bbdf077">Ipl_Inic</a>;</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;<span class="comment">/* FUNCTION PROTOTYPES                                                                            */</span></div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;<span class="comment">/*------------------------------------------------------------------------------------------------*/</span></div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gafa5f5e83af518a555ae6debd8325b404" title="Hardware abstraction. Callback function to set INIC&#39;s RESET_ pin.">Ipl_SetResetPin</a>(uint8_t lowHigh);</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gaa0dae03f53687c599af73249c8dc1111" title="Hardware abstraction. Callback function to set INIC&#39;s ERR/BOOT_ pin.">Ipl_SetErrBootPin</a>(uint8_t lowHigh);</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gaac97f24c8302dfe5b248a1153357b630" title="Hardware abstraction. Callback function to read telegram from INIC.">Ipl_InicRead</a>(uint8_t lData, uint8_t* pData);</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gafe5d645de6e4a4a45637641173a7b5c2" title="Hardware abstraction. Callback function to send telegram to INIC.">Ipl_InicWrite</a>(uint8_t lData, uint8_t* pData);</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span>     <a class="code" href="group__callback.html#gafef602a475f58000c4dd0b4a8e100058" title="Hardware abstraction. Callback function to sleep some milliseconds.">Ipl_Sleep</a>(uint16_t timeMs);</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;<span class="preprocessor">#ifdef IPL_USE_INTPIN</span></div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="keyword">extern</span> uint8_t  Ipl_GetIntPin(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span>     <a class="code" href="group__callback.html#gaacbc14b2bc41338243e1584bbc57b9c6" title="Callback function to deliver trace information.">Ipl_Trace</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* tag, <span class="keyword">const</span> <span class="keywordtype">char</span>* fmt, ...);</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;<span class="preprocessor">#ifdef IPL_PROGRESS_INDICATOR</span></div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span>     <a class="code" href="group__callback.html#gae9ab244cfead932bbcf15cbf703abecc" title="Callback function to deliver progress indication for long running jobs.">Ipl_Progress</a>(uint8_t percent);</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifdef IPL_INICDRIVER_OPENCLOSE</span></div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#ga33e1b7e8c8be8df780a7210cbca6a4f0" title="Hardware abstraction. Callback function to open INIC driver.">Ipl_InicDriverOpen</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__callback.html#gac1c3cbd7aca42a21642fa30c2bc362ad" title="Hardware abstraction. Callback function to close INIC driver.">Ipl_InicDriverClose</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if IPL_DATACHUNK_SIZE &gt; 0</span></div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;<span class="keyword">extern</span> uint8_t* <a class="code" href="group__callback.html#ga4a0b52f4a835d3e43ce6e9b4c868ded5" title="Callback function to provide a portion (chunk) of the IPF data.">Ipl_ProvideDataChunk</a>(uint32_t sIndex, uint32_t lData);</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;uint8_t <a class="code" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode</a>(uint8_t chipID);</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;uint8_t <a class="code" href="group__api.html#gacfe7f25778afff6d61133206f6296d31" title="Resets INIC and starts up in normal mode. Needs to be called when programming is finished.">Ipl_LeaveProgMode</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;uint8_t <a class="code" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by calli...">Ipl_Prog</a>(uint8_t job, uint32_t lData, uint8_t* pData);</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="ipl__pb_8h.html">ipl_pb.h</a></li>
+    <li class="navelem"><a class="el" href="dir_0050ca94a265f7ecb389c44d1de9974e.html">ipl</a></li><li class="navelem"><a class="el" href="dir_9d2a425c484d38ddd81475bb685ae180.html">inc</a></li><li class="navelem"><a class="el" href="ipl__pb_8h.html">ipl_pb.h</a></li>
     <li class="footer">&copy; 2018 Microchip Technology Inc. All rights reserved. <a href="http://www.microchip.com" target="_blank">www.microchip.com</a></li>
   </ul>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: INT Pin Support</title>
+<title>INIC PROGRAMMING LIBRARY: INT_ Pin Support</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -88,34 +88,10 @@ $(document).ready(function(){initNavTree('group__intpin.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">INT Pin Support</div>  </div>
+<div class="title">INT_ Pin Support</div>  </div>
 <div class="ingroups"><a class="el" href="group__conf.html">Configuration</a></div></div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="memitem:gaa8ebbe57f740846098661b54e6611f44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intpin.html#gaa8ebbe57f740846098661b54e6611f44">IPL_USE_INTPIN</a></td></tr>
-<tr class="memdesc:gaa8ebbe57f740846098661b54e6611f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables usage of INICs INT pin for RX control.  <a href="#gaa8ebbe57f740846098661b54e6611f44"></a><br/></td></tr>
-<tr class="separator:gaa8ebbe57f740846098661b54e6611f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Please select, if the INT pin of INIC should be used in the communication with IPL. If this is selected, application needs to provide the callback ::Ipl_GetIntPin() that reads the pin and returns the result. If this is not selected, IPL will use sleep with reasonable timings. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaa8ebbe57f740846098661b54e6611f44"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IPL_USE_INTPIN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enables usage of INICs INT pin for RX control. </p>
-<p>&lt; If not defined, IPL does not check INICs INT pin. </p>
-
-<p>Definition at line <a class="el" href="ipl_8h_source.html#l00086">86</a> of file <a class="el" href="ipl_8h_source.html">ipl.h</a>.</p>
-
-</div>
-</div>
+<p>Please select, if the INT_ pin of INIC should be used in the communication with IPL. If the macro is defined, application needs to provide the callback function ::Ipl_GetIntPin() that reads INIC's INT_ pin and returns the result. If the macro is not defined, IPL will use sleep with reasonable timings. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
@@ -126,7 +102,7 @@ $(document).ready(function(){initNavTree('group__intpin.html','');});
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

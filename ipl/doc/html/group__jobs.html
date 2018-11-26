@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: Jobs</title>
+<title>INIC PROGRAMMING LIBRARY: Jobs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('group__jobs.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gac21fdc7d502428379b403b61ba2fdacf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__jobs.html#gac21fdc7d502428379b403b61ba2fdacf">IPL_JOB_READ_FIRMWARE_VER</a>&#160;&#160;&#160;0x01U</td></tr>
-<tr class="memdesc:gac21fdc7d502428379b403b61ba2fdacf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the firmware version. Available for FLASH INICs only.  <a href="#gac21fdc7d502428379b403b61ba2fdacf"></a><br/></td></tr>
+<tr class="memdesc:gac21fdc7d502428379b403b61ba2fdacf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the firmware version. Available for FLASH and ROM INICs.  <a href="#gac21fdc7d502428379b403b61ba2fdacf"></a><br/></td></tr>
 <tr class="separator:gac21fdc7d502428379b403b61ba2fdacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga12ee1efcef6926c0575d2559d8f7daf9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__jobs.html#ga12ee1efcef6926c0575d2559d8f7daf9">IPL_JOB_READ_CONFIGSTRING_VER</a>&#160;&#160;&#160;0x02U</td></tr>
 <tr class="memdesc:ga12ee1efcef6926c0575d2559d8f7daf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the config string version according to the referred IPF data. Available for FLASH and ROM INICs.  <a href="#ga12ee1efcef6926c0575d2559d8f7daf9"></a><br/></td></tr>
@@ -130,14 +130,14 @@ Macros</h2></td></tr>
 <tr class="memdesc:gad28f34bd363a6c0fe4a9ec23c763fa4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programs the INIC test ident string from the referred IPF data. Available for ROM INICs only.  <a href="#gad28f34bd363a6c0fe4a9ec23c763fa4a"></a><br/></td></tr>
 <tr class="separator:gad28f34bd363a6c0fe4a9ec23c763fa4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__jobs.html#gaf11e90c8cfa125e4ae673f7eb0815338">IPL_JOB_CHK_UPDATE_CONFIGSTRING</a>&#160;&#160;&#160;0x0CU</td></tr>
-<tr class="memdesc:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of config string is useful or not.  <a href="#gaf11e90c8cfa125e4ae673f7eb0815338"></a><br/></td></tr>
+<tr class="memdesc:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of configuration string is useful or not.  <a href="#gaf11e90c8cfa125e4ae673f7eb0815338"></a><br/></td></tr>
 <tr class="separator:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__jobs.html#gac2eb3b9a4d24c5ee78cedaae9693c668">IPL_JOB_CHK_UPDATE_FIRMWARE</a>&#160;&#160;&#160;0x0DU</td></tr>
 <tr class="memdesc:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of firmware is useful or not.  <a href="#gac2eb3b9a4d24c5ee78cedaae9693c668"></a><br/></td></tr>
 <tr class="separator:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The following job are to be used with the <a class="el" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by Ipl_E...">Ipl_Prog()</a> function. If the respective job is not supported for a specific INIC, an error <a class="el" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a> will be reported. </p>
+<p>The following job are to be used with the <a class="el" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by calli...">Ipl_Prog()</a> function. If the respective job is not supported for a specific INIC, an error <a class="el" href="group__result__codes.html#gad534cb51573a2a51f2656cab8fe6f6fb" title="Error. Function is not supported for this INIC.">IPL_RES_ERR_NOT_SUPPORTED</a> will be reported. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gac21fdc7d502428379b403b61ba2fdacf"></a>
 <div class="memitem">
@@ -149,9 +149,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the firmware version. Available for FLASH INICs only. </p>
+<p>Reads the firmware version. Available for FLASH and ROM INICs. </p>
+<p>For reading the firmware version, no IPF data is required. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00366">366</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00532">532</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -167,7 +168,7 @@ Macros</h2></td></tr>
 
 <p>Reads the config string version according to the referred IPF data. Available for FLASH and ROM INICs. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00367">367</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00535">535</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -183,7 +184,7 @@ Macros</h2></td></tr>
 
 <p>Programs the INIC firmware from the referred IPF data. Available for FLASH INICs only. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00368">368</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00539">539</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -198,8 +199,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC configuration from the referred IPF data. Available for FLASH and ROM INICs. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00369">369</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00546">546</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -214,8 +216,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC patch string from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00370">370</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00553">553</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -230,8 +233,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC test config from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00371">371</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00560">560</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -246,8 +250,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC test patch string from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00372">372</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00567">567</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -262,8 +267,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC config string from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00373">373</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00574">574</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -278,8 +284,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC test config string from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00374">374</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00581">581</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -294,8 +301,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC ident string from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00375">375</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00588">588</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -310,8 +318,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Programs the INIC test ident string from the referred IPF data. Available for ROM INICs only. </p>
+<p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00376">376</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00595">595</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -325,26 +334,41 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if an update of config string is useful or not. </p>
-<p>In general an update of config string is considered as useful, if the IPF data contains a config string version which is bigger than the config string version of the connected chip. If the CS does not match to the connected INICs firmware, of course an update is also not considered as useful. </p>
+<p>Checks if an update of configuration string is useful or not. </p>
+<p>In general an update of the configuration string (CFGS) is considered as useful if the IPF data contains a Configuration string version that is higher than the configuration string version of the connected chip. </p>
 <table class="doxtable">
 <tr>
-<th>CS version in IPF data </th><th>CS version in connected INIC </th><th>Result</th></tr>
+<th>CFGS version in IPF data </th><th>CFGS version in connected INIC </th><th>Result</th></tr>
 <tr>
-<td>Invalid </td><td>Any </td><td>Update is not useful (::IPL_RES_ERR_UPDATE_DENIED_UNKNOWN) </td></tr>
+<td>Invalid </td><td>Any </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a>) </td></tr>
 <tr>
 <td>Any </td><td>Invalid </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 <tr>
 <td>Invalid </td><td>Invalid </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 <tr>
-<td>Any </td><td>Bigger than version in IPF </td><td>Update is not useful (::IPL_RES_ERR_UPDATE_DENIED_NEWER) </td></tr>
+<td>Any </td><td>Higher than version in IPF data </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga0100beb0166798212ec1d5884f4fd7a4" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_NEWER</a>) </td></tr>
 <tr>
-<td>Any </td><td>Equal to version in IPF </td><td>Update is not useful (::IPL_RES_ERR_UPDATE_DENIED_EQUAL) </td></tr>
+<td>Any </td><td>Equal to version in IPF data </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga600fba61a3be0a0eeca84146b5ca44d0" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_EQUAL</a>) </td></tr>
 <tr>
-<td>Any </td><td>Smaller than version in IPF </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
+<td>Any </td><td>Lower than version in IPF data </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
+</table>
+<p>If the configuration string does not match to the connected INIC's firmware, of course an update is also not considered as useful: </p>
+<table class="doxtable">
+<tr>
+<th>Firmware version of CFGS in IPF data </th><th>Firmware version in connected INIC </th><th>Result</th></tr>
+<tr>
+<td>Invalid </td><td>Any </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a>) </td></tr>
+<tr>
+<td>Any </td><td>Invalid </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a>) </td></tr>
+<tr>
+<td>Invalid </td><td>Invalid </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a>) </td></tr>
+<tr>
+<td>Any </td><td>Any (different to CFGS in IPF data) </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga7260ddef6f8989a9f67fa452cf3210a2" title="Error. IPF data does not fit the connected INIC firmware version.">IPL_RES_ERR_IPF_WRONGFWVERSION</a>) </td></tr>
+<tr>
+<td>Any </td><td>Any (same as CFGS in IPF data) </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00377">377</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00619">619</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -362,22 +386,22 @@ Macros</h2></td></tr>
 <p>In general, an update of firmware is considered as useful, if the IPF data contains a firmware version which is bigger than the firmware version of the connected chip. </p>
 <table class="doxtable">
 <tr>
-<th>FW version in IPF data </th><th>FW version in connected INIC </th><th>Result</th></tr>
+<th>Firmware version in IPF data </th><th>Firmware version in connected INIC </th><th>Result</th></tr>
 <tr>
-<td>Invalid </td><td>Any </td><td>Update is not useful (::IPL_RES_ERR_UPDATE_DENIED_UNKNOWN) </td></tr>
+<td>Invalid </td><td>Any </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a>) </td></tr>
 <tr>
 <td>Any </td><td>Invalid </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 <tr>
 <td>Invalid </td><td>Invalid </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 <tr>
-<td>Any </td><td>Bigger than version in IPF </td><td>Update is not useful (::IPL_RES_ERR_UPDATE_DENIED_NEWER) </td></tr>
+<td>Any </td><td>Bigger than version in IPF data </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga0100beb0166798212ec1d5884f4fd7a4" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_NEWER</a>) </td></tr>
 <tr>
-<td>Any </td><td>Equal to version in IPF </td><td>Update is not useful (::IPL_RES_ERR_UPDATE_DENIED_EQUAL) </td></tr>
+<td>Any </td><td>Equal to version in IPF data </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga600fba61a3be0a0eeca84146b5ca44d0" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_EQUAL</a>) </td></tr>
 <tr>
-<td>Any </td><td>Smaller than version in IPF </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
+<td>Any </td><td>Smaller than version in IPF data </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00391">391</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00634">634</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -391,7 +415,7 @@ Macros</h2></td></tr>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

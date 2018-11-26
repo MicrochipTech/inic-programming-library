@@ -18,168 +18,90 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl.h
- *  \brief Internal header for general functions for INIC Programming Library
+/*! \file   ipl.h
+ *  \brief  Internal header for general functions for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #ifndef IPL_H
 #define IPL_H
 
 #include <stdint.h>
+#include <stddef.h>
 #include "ipl_cfg.h"
 #include "ipl_pb.h"
 
+
 /*------------------------------------------------------------------------------------------------*/
-/* DOCUMENTATION OF POTENTIALLY UNDEFINED MACROS (ipl_cfg.h) AND INTRODUCTION PAGE                */
+/* CHECKS FOR ipl_cfg.h                                                                           */
 /*------------------------------------------------------------------------------------------------*/
 
-#ifdef _IPL_DOXYGEN
+#ifndef IPL_TRACETAG_INFO
+#define IPL_TRACETAG_INFO 0
+#endif
+
+#ifndef IPL_TRACETAG_ERR
+#error "ipl_cfg.h: IPL_TRACETAG_ERR needs to be defined."
+#endif
+
+#ifndef IPL_DATACHUNK_SIZE
+#error "ipl_cfg.h: IPL_DATACHUNK_SIZE needs to be defined."
+#endif
+
+#if (IPL_DATACHUNK_SIZE > 0) && (IPL_DATACHUNK_SIZE < 2048)
+#error "ipl_cfg.h: IPL_DATACHUNK_SIZE must be at least 2048 (or 0)."
+#endif
 
 #ifndef IPL_USE_OS81118
-/** \ingroup conf_inics */
-/*@{*/
-/*! Adds the functions needed for OS81118. */
-#define IPL_USE_OS81118
-/*@}*/
-#endif
-
 #ifndef IPL_USE_OS81119
-/** \ingroup conf_inics */
-/*@{*/
-/*! Adds the functions needed for OS81119. */
-#define IPL_USE_OS81119
-/*@}*/
-#endif
-
 #ifndef IPL_USE_OS81210
-/** \ingroup conf_inics */
-/*@{*/
-/*! Adds the functions needed for OS81210. */
-#define IPL_USE_OS81210
-/*@}*/
-#endif
-
 #ifndef IPL_USE_OS81212
-/** \ingroup conf_inics */
-/*@{*/
-/*! Adds the functions needed for OS81212. */
-#define IPL_USE_OS81212
-/*@}*/
-#endif
-
 #ifndef IPL_USE_OS81214
-/** \ingroup conf_inics */
-/*@{*/
-/*! Adds the functions needed for OS81214. */
-#define IPL_USE_OS81214
-/*@}*/
+#ifndef IPL_USE_OS81216
+#ifndef IPL_USE_OS81110
+#ifndef IPL_USE_OS81092
+#ifndef IPL_USE_OS81082
+#ifndef IPL_USE_OS81060
+#ifndef IPL_USE_OS81050
+#error "ipl_cfg.h: At least one supported INIC needs to be defined (for example IPL_USE_OS81118)."
 #endif
-
-#ifndef IPL_USE_INTPIN
-/** \ingroup intpin */
-/*@{*/
-/*!< \brief Enables usage of INICs INT pin for RX control.
- *
- * If not defined, IPL does not check INICs INT pin.
- */
-#define IPL_USE_INTPIN
-/*@}*/
 #endif
-
-#ifndef IPL_INICDRIVER_OPENCLOSE
-/** \ingroup driver_openclose */
-/*@{*/
-/*! \brief Enables additional callbacks to open/close INIC driver
- *
- * Callbacks: ::Ipl_InicDriverOpen(), ::Ipl_InicDriverClose().
- */
-#define IPL_INICDRIVER_OPENCLOSE
-/*@}*/
 #endif
-
-#ifndef IPL_PROGRESS_INDICATOR
-/** \ingroup progress_indicator */
-/*@{*/
-/*! \brief Enables progress indicator callback ::Ipl_Progress(). */
-#define IPL_PROGRESS_INDICATOR
-/*@}*/
 #endif
-
-#ifndef IPL_TRACETAG_IPF
-/** \ingroup trace_tags */
-/*@{*/
-/*! \brief Tag used for IPF data tracing.
- *
- * If tag is not defined IPF data is not traced.
- */
-#define IPL_TRACETAG_IPF     "IPL IPF"
-/*@}*/
 #endif
-
-#ifndef IPL_DECODE_RESULTS
-/** \ingroup decode_res */
-/*@{*/
- /*!< \brief The macro enables the API function Ipl_DecodeResult to decode the result values of all functions. */
-#define IPL_DECODE_RESULTS
-/*@}*/
 #endif
-
-#ifndef IPL_TRACETAG_COM
-/** \ingroup trace_tags */
-/*@{*/
-/*!< \brief Tag used for INIC communication tracing.
- *
- * If tag is not defined communication with INIC is not traced.
- */
-#define IPL_TRACETAG_COM     "IPL COM"
-/*@}*/
 #endif
-
 #endif
-
-/**
- * \page introduction INIC Programming Library (IPL)
- * The IPL is a platform independent programming library that enables an application to program
- * Microchip INIC network controllers via the I2C interface.<br> <br>
- * The library can handle the following INICs:<br>
- * OS81118<br>
- * OS81119<br>
- * OS81210<br>
- * OS81212<br>
- * OS81214<br> <br>
- * Depending on the used INIC, it is possible to program ConfigString, IdentString, PatchString and Firmware
- * into RAM, OTP or FLASH.<br>
- * The library is using the IPF format for the programming data which can be created by
- * Microchip Automotive Target Manager (MATM) or UNICENS System Designer.<br>
- * It is also possible to read out ConfigString and Firmware versions and to check, if an update with a
- * certain IPF data file is useful.<br> <br>
- * Besides the connection via I2C, INICs RESET pin and ERR/BOOT pin needs to be controlled by the library.
- * The use of the INT pin is optional.<br> <br>
- * On systems with low memory, it is possible to load only portions of the IPF content instead of the complete data.<br>
- */
+#endif
+#endif
+#endif
 
 
 /*------------------------------------------------------------------------------------------------*/
 /* CONSTANTS                                                                                      */
 /*------------------------------------------------------------------------------------------------*/
 
-/**
- * \defgroup version ***** Version ***** */
-/*@{*/
-/*! This is the version number of the INIC Programming Library.
- *  Please always pass on this number when communicating with MCHP support.
+
+
+/*! \defgroup version Version
+ *  This is the version number of the INIC Programming Library.
+ *  Always pass on this number when communicating with Microchip support.
  */
-#define VERSIONTAG "V0.0.7-0"
-/*@}*/
+/*!@{*/
+#define VERSIONTAG "V0.0.9-0"
+/*!@}*/
 
 
 /*------------------------------------------------------------------------------------------------*/
 /* INIC MODES                                                                                     */
 /*------------------------------------------------------------------------------------------------*/
 
-#define INICMODE_NORMAL                 0x01U
-#define INICMODE_BOOT                   0x02U
+#define INIC_MODE_NORMAL                 0x01U
+#define INIC_MODE_BOOT                   0x02U
+
+#define INIC_TESTMEM_UNCLEARED           0x00U
+#define INIC_TESTMEM_CLEARED             0x01U
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -187,8 +109,18 @@
 /*------------------------------------------------------------------------------------------------*/
 
 #define INIC_MAX_TELLEN                 36U /* Meta.BmMaxDataLength + 4 */
-#define INIC_MAX_PATCHSTRINGLEN         64U
-#define INIC_MAX_TESTMEMSIZE            768U /* OS8121x */
+#define INIC_MAX_PATCHSTRINGSIZE        64U
+#define INIC_MAX_TESTMEMSIZE            768U /*  OS8121x */
+#define INIC_MAX_OTPMEMSIZE             0x01FFU /* Address range from ReadOTPMemory command */
+#define INIC_MAX_INFOMEMSIZE            0x03FFU /* Address range from ReadInfoMemory command */
+#define INIC_MAX_PROGMEMSIZE            0xFFFFU /* Address range from ReadProgramMemory command */
+#define INIC_MAX_RAMSIZE                0x2000U
+#define INIC_MAX_DATABUFFERSIZE         0x5000U
+#define INIC_MAX_RTSIZE                 768U
+#define INIC_MAX_RFSIZE                 640U
+#define INIC_MAX_IOREGNUM               0xFFU
+#define INIC_MAX_EXTIOREGNUM            0xFFU
+#define INIC_MAX_CPUREGNUM              0x07U
 #define TOOL_MAX_TYPELEN                80U
 
 
@@ -238,12 +170,54 @@
 #define CMD_WRITETESTMEM                0x0AU
 #define CMD_WRITETESTMEM_TXLEN          36U /* Meta.BmMaxDataLength + 4 */
 #define CMD_WRITETESTMEM_RXLEN          1U
+#define CMD_READTESTMEM                 0x1AU
+#define CMD_READTESTMEM_TXLEN           4U
+#define CMD_READTESTMEM_RXLEN           36U /* Meta.BmMaxDataLength + 4 */
 #define CMD_CLEARCRC                    0xE5U
 #define CMD_CLEARCRC_TXLEN              4U
 #define CMD_CLEARCRC_RXLEN              1U
 #define CMD_GETCRC                      0xE6U
 #define CMD_GETCRC_TXLEN                4U
 #define CMD_GETCRC_RXLEN                6U
+#define CMD_LEG_READFWVER               0xE4U
+#define CMD_LEG_READFWVER_TXLEN         4U
+#define CMD_LEG_READFWVER_RXLEN         19U
+#define CMD_LEG_ERASEENABLE             0x0FU
+#define CMD_LEG_ERASEENABLE_TXLEN       5U
+#define CMD_LEG_ERASEENABLE_RXLEN       1U
+#define CMD_LEG_ERASECS                 0xCCU
+#define CMD_LEG_ERASECS_TXLEN           2U
+#define CMD_LEG_ERASECS_RXLEN           1U
+#define CMD_LEG_WRITECS                 0xC1U
+#define CMD_LEG_WRITECS_TXLEN           32U
+#define CMD_LEG_WRITECS_RXLEN           1U
+#define CMD_LEG_GETCSINFO               0xD1U
+#define CMD_LEG_GETCSINFO_TXLEN         4U
+#define CMD_LEG_GETCSINFO_RXLEN         30U
+#define CMD_READRAM                     0x10U
+#define CMD_READRAM_TXLEN               4U
+#define CMD_READRAM_RXLEN               36U
+#define CMD_READIOREG                   0x12U
+#define CMD_READIOREG_TXLEN             4U
+#define CMD_READIOREG_RXLEN             36U
+#define CMD_READCPUREG                  0x14U
+#define CMD_READCPUREG_TXLEN            4U
+#define CMD_READCPUREG_RXLEN            36U
+#define CMD_READEXTIOREG                0x1BU
+#define CMD_READEXTIOREG_TXLEN          4U
+#define CMD_READEXTIOREG_RXLEN          36U
+#define CMD_READDATABUF                 0x30U
+#define CMD_READDATABUF_TXLEN           4U
+#define CMD_READDATABUF_RXLEN           36U
+#define CMD_READRT                      0x50U
+#define CMD_READRT_TXLEN                4U
+#define CMD_READRT_RXLEN                36U
+#define CMD_READRF0                     0x51U
+#define CMD_READRF0_TXLEN               4U
+#define CMD_READRF0_RXLEN               36U
+#define CMD_READRF1                     0x52U
+#define CMD_READRF1_TXLEN               4U
+#define CMD_READRF1_RXLEN               36U
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -255,7 +229,6 @@
 #define DIR_RX                          1U
 #define IPL_LOW                         0U
 #define IPL_HIGH                        1U
-
 
 /*------------------------------------------------------------------------------------------------*/
 /* INIC TIMING VALUES (IN MILLISECONDS)                                                           */
@@ -277,23 +250,44 @@
 #define TESTMEM_DATA                    0U
 #define TESTMEM_CLEAR                   1U
 
+#if defined IPL_USE_OS81110 || defined IPL_USE_OS81092 || defined IPL_USE_OS81082 || defined IPL_USE_OS81060 || defined IPL_USE_OS81050
+#define IPL_LEGACY_IPF
+#define IPL_LEGACY_INIC
+#endif
 
 /*------------------------------------------------------------------------------------------------*/
 /* TYPES                                                                                          */
 /*------------------------------------------------------------------------------------------------*/
 
-/* IPL internal Data */
 typedef struct Ipl_IplData_
 {
-    uint8_t  Tel[INIC_MAX_TELLEN]; /* Message Buffer for message to (TX) and from (RX) INIC       */
-    uint8_t  TelLen;               /* Length of the sent/received message                         */
-    uint8_t  ChipID;               /* ChipID as referred in INIC Programming Guide                */
-    uint16_t IntTime;              /* Time elapsed until INT pin toggled                          */
-    uint8_t  ChipMode;             /* Current INIC mode (INICMODE_BOOT or INICMODE_NORMAL         */
+    uint8_t  Tel[INIC_MAX_TELLEN]; /*!< \internal Message Buffer for message to (TX) and from (RX) INIC       */
+    uint8_t  TelLen;               /*!< \internal Length of the sent/received message                         */
+    uint8_t  ChipID;               /*!< \internal ChipID as referred in INIC Programming Guide                */
+    uint16_t IntTime;              /*!< \internal Time elapsed until INT pin toggled                          */
+    uint8_t  ChipMode;             /*!< \internal Current INIC mode (INICMODE_BOOT or INICMODE_NORMAL         */
 
     uint32_t ChunkOffset;
     uint8_t* pData;
 } Ipl_IplData_t;
+
+
+typedef struct Ipl_InicData_
+{
+    uint8_t  ChipID;                  /*!< \internal INIC identifier. */
+    uint8_t  FwMajorVersion;          /*!< \internal Firmware major version. */
+    uint8_t  FwMinorVersion;          /*!< \internal Firmware minor version. */
+    uint8_t  FwReleaseVersion;        /*!< \internal Firmware release version. */
+    uint32_t FwBuildVersion;          /*!< \internal Firmware build version. */
+    uint8_t  CfgsCustMajorVersion;    /*!< \internal ConfigString customer major version. */
+    uint8_t  CfgsCustMinorVersion;    /*!< \internal ConfigString customer minor version. */
+    uint8_t  CfgsCustReleaseVersion;  /*!< \internal ConfigString customer release version. */
+    uint8_t  FwVersionValid;          /*!< \internal Indicator if firmware version is valid or not. */
+    uint16_t FwCrc;                   /*!< \internal CRC value of firmware. */
+    uint8_t  CfgsVersionValid;        /*!< \internal Indicator if ConfigString version is valid or not. */
+    uint8_t  CfgsActiveConfigPage;    /*!< \internal Active configuration page. */
+    uint8_t  TestMemCleared;          /*!< \internal State of the INIC test memory. */
+} Ipl_InicData_t;
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -301,7 +295,7 @@ typedef struct Ipl_IplData_
 /*------------------------------------------------------------------------------------------------*/
 
 extern Ipl_IplData_t Ipl_IplData;
-
+extern Ipl_InicData_t Ipl_InicData;
 
 /*------------------------------------------------------------------------------------------------*/
 /* FUNCTION PROTOTYPES                                                                            */
@@ -313,9 +307,78 @@ void    Ipl_ProgressIndicator(uint32_t val, uint32_t fval);
 uint8_t Ipl_CheckChipId(void);
 uint8_t Ipl_CheckInicFwVersion(void);
 char*   Ipl_TraceTag(uint8_t  result);
-char    Ipl_BcdChr(uint8_t val, uint8_t lowHigh);
+char    Ipl_Bcd2Char(uint8_t val, uint8_t lowHigh);
 uint8_t Ipl_ClrPData(uint32_t lData, uint8_t pData[]);
 uint8_t Ipl_PData(uint32_t index, uint32_t lData, uint8_t pData[]);
+void    Ipl_ExportChipInfo(void);
 
+
+/*------------------------------------------------------------------------------------------------*/
+/* DOXYGEN                                                                                        */
+/*------------------------------------------------------------------------------------------------*/
+
+/*! \defgroup conf Configuration
+ *  All configuration is done inside the ipl_cfg.h file.
+ */
+/*!@{*/
+/*!@}*/
+
+/*! \page introduction INIC Programming Library (IPL)
+ *  Microchip Technology Inc. provides a platform independent programming library called IPL.<br>
+ *  The IPL enables an application to program Microchip's Intelligent Network Interface Controllers (INICs)
+ *  via their I2C interface.<br> <br>
+ *  The IPL can handle the following INICs:<br> <br>
+ *  OS81118 (INICnet<sup>TM</sup> 150)<br>
+ *  OS81119 (INICnet<sup>TM</sup> 150)<br>
+ *  OS81210 (INICnet<sup>TM</sup> 50)<br>
+ *  OS81212 (INICnet<sup>TM</sup> 50)<br>
+ *  OS81214 (INICnet<sup>TM</sup> 50)<br>
+ *  OS81216 (INICnet<sup>TM</sup> 50)<br>
+ */
+#ifdef IPL_LEGACY_INIC
+/*! \page introduction INIC Programming Library (IPL)
+ *  OS81110<br>
+ *  OS81092<br>
+ *  OS81082<br>
+ *  OS81060<br>
+ *  OS81050<br>
+ */
+#endif
+/*! \page introduction INIC Programming Library (IPL)
+ *  Depending on the used INIC, it is possible to program the<br>
+ *  - Configuration string (CFGS)
+ *  - Identification string (IDENTS)
+ *  - Configuration (this includes both CFGS and IDENTS)
+ *  - Patch string (PATCHS)
+ *  - Firmware
+ *
+ *  into RAM, OTP or FLASH memory.<br>
+ *  The IPL uses the IPF format for the programming data, which can be created by
+ *  the Microchip Automotive Target Manager (MATM) or UNICENS<sup>TM</sup> System Designer.<br>
+ *  It is also possible to read out CFGS and firmware versions and to check if an update with a
+ *  certain IPF data file is useful.<br> <br>
+ *  Besides the connection via I2C, INIC's RESET pin and ERR/BOOT_ pin needs to be controlled by the IPL.
+ *  The use of the INT_ pin is optional.<br> <br>
+ *  For systems with low memory it is possible to load portions of the IPF content instead of loading the entire data.<br>
+ *  \note For support related to this code contact http://www.microchip.com/support.
+ */
+
+/*! \page history Release History
+ *  # V0.0.8-0 (Test version) #
+ *  <b> Release date: </b>2018-10-11<br>
+ *  <table>
+ *  <tr><th>Type      <th>Description
+ *  <tr><td>Info                  <td>Interim test version supporting only OS81050, OS81060, OS81082, OS81092, OS81110.
+ *  </table>
+ */
+
+/*! \page misra MISRA-C-2004
+ *  The library was developed in compliance to MISRA-C-2004.
+ *  # Project information #
+ *  <b>Total files:</b> 18 (Core IPL) + 12 (Optional components)<br>
+ *  <b>Checked files:</b> 18 (Core IPL) + 12 (Optional components)<br>
+ *  <b>Total violations:</b> 0<br>
+ *  <b>Suppressed violations:</b> 0<br>
+ */
 
 #endif

@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "INIC Programming Library", "index.html", [
+  [ "INIC PROGRAMMING LIBRARY", "index.html", [
     [ "Introduction", "introduction.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Files", null, [
@@ -11,15 +11,17 @@ var NAVTREE =
         [ "Variables", "globals_vars.html", null ],
         [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
-    ] ]
+    ] ],
+    [ "History", "history.html", null ],
+    [ "MISRA-C-2004", "misra.html", null ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
 "dir_0050ca94a265f7ecb389c44d1de9974e.html",
-"ipl_8h.html#a142f0382bfee928eafda8bcf4f2b7101",
-"ipl__pb_8h.html#gab53585c6b7bba8432ec798479b61f522"
+"ipl_8c.html#a972673aac1b6aca5da582ae77b833457",
+"ipl__81210_8h.html#ab16f5c00d645091634a71ded20b60ece"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

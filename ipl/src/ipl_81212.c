@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl_81212.c
- *  \brief Internal OS81212 specific functions for INIC Programming Library
+/*! \file   ipl_81212.c
+ *  \brief  Internal OS81212 specific functions for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #include <stdint.h>
@@ -97,6 +98,17 @@ uint8_t OS81212_ProgTestConfigString(uint32_t lData, uint8_t pData[])
 uint8_t OS81212_ProgTestIdentString(uint32_t lData, uint8_t pData[])
 {
     return OS81210_ProgTestIdentString(lData, pData);
+}
+
+
+/*------------------------------------------------------------------------------------------------*/
+/* UNSUPPORTED FUNCTIONS                                                                          */
+/*------------------------------------------------------------------------------------------------*/
+
+uint8_t OS81212_ProgFirmware(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81212_ProgFirmware returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
 }
 
 #endif

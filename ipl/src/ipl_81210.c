@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl_81210.c
- *  \brief Internal OS81210 specific functions for INIC Programming Library
+/*! \file   ipl_81210.c
+ *  \brief  Internal OS81210 specific functions for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #include <stdint.h>
@@ -31,8 +32,8 @@
 #include "ipl_81210.h"
 
 
-/* INICnet50 product family */
-#if defined IPL_USE_OS81210 || defined IPL_USE_OS81212 || defined IPL_USE_OS81214
+/* INICnet 50 product family */
+#if defined IPL_USE_OS81210 || defined IPL_USE_OS81212 || defined IPL_USE_OS81214|| defined IPL_USE_OS81216
 
 /*------------------------------------------------------------------------------------------------*/
 /* FUNCTION PROTOTYPES                                                                            */
@@ -64,11 +65,12 @@ uint8_t OS81210_ReadConfigStringVersion(uint32_t lData, uint8_t pData[])
         res = Ipl_CheckChipId();
         if (IPL_RES_OK == res)
         {
+            addr = Ipl_IpfData.Meta.CfgsOvrlStartAddr; /*! \internal Jira UN-577 */
             Ipl_ClrTel();
             Ipl_IplData.Tel[0] = CMD_VERIFYOTPMEM;
-            Ipl_IplData.Tel[1] = 0x00U;
-            Ipl_IplData.Tel[2] = 0x22U;
-            Ipl_IplData.Tel[3] = 34U;
+            Ipl_IplData.Tel[1] = (addr >> 8U) & 0xFFU; /*! \internal Jira UN-577 */
+            Ipl_IplData.Tel[2] = addr & 0xFFU;         /*! \internal Jira UN-577 */
+            Ipl_IplData.Tel[3] = Ipl_IpfData.Meta.CfgsSize & 0xFFU; /* 34U */
             Ipl_IplData.TelLen = 4U;
             res = Ipl_ExecInicCmd();
             if (IPL_RES_OK == res)
@@ -92,11 +94,12 @@ uint8_t OS81210_ReadConfigStringVersion(uint32_t lData, uint8_t pData[])
             }
             else
             {
+                addr = Ipl_IpfData.Meta.CfgsStdStartAddr;  /*! \internal Jira UN-577 */
                 Ipl_ClrTel();
                 Ipl_IplData.Tel[0] = CMD_VERIFYOTPMEM;
-                Ipl_IplData.Tel[1] = 0x00U;
-                Ipl_IplData.Tel[2] = 0x00U;
-                Ipl_IplData.Tel[3] = 34U;
+                Ipl_IplData.Tel[1] = (addr >> 8U) & 0xFFU; /*! \internal Jira UN-577 */
+                Ipl_IplData.Tel[2] = addr & 0xFFU;         /*! \internal Jira UN-577 */
+                Ipl_IplData.Tel[3] = Ipl_IpfData.Meta.CfgsSize & 0xFFU; /* 34U */
                 Ipl_IplData.TelLen = 4U;
                 res = Ipl_ExecInicCmd();
                 if (IPL_RES_OK == res)
@@ -161,7 +164,7 @@ uint8_t OS81210_ReadConfigStringVersion(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Programs a Configuration (CS+IS) to OTP. */
+/*! \internal Programs a Configuration (CS+IS) to OTP. */ /* TBT */
 uint8_t OS81210_ProgConfiguration(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -206,7 +209,7 @@ uint8_t OS81210_ProgConfigString(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Programs an IdentString to OTP. */
+/*! \internal Programs an IdentString to OTP. */  /* TBT */
 uint8_t OS81210_ProgIdentString(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -237,7 +240,7 @@ uint8_t OS81210_ProgIdentString(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Programs a Configuration to the test memory. */
+/*! \internal Programs a Configuration to the test memory. */  /* TBT */
 uint8_t OS81210_ProgTestConfiguration(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -252,7 +255,7 @@ uint8_t OS81210_ProgTestConfiguration(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Programs a PatchString to the test memory. */
+/*! \internal Programs a PatchString to the test memory. */  /* TBT */
 uint8_t OS81210_ProgTestPatchString(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -282,7 +285,7 @@ uint8_t OS81210_ProgTestPatchString(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Programs a ConfigString to the test memory. */
+/*! \internal Programs a ConfigString to the test memory. */  /* TBT */
 uint8_t OS81210_ProgTestConfigString(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -312,7 +315,7 @@ uint8_t OS81210_ProgTestConfigString(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Programs an IdentString to the test memory. */
+/*! \internal Programs an IdentString to the test memory. */  /* TBT */
 uint8_t OS81210_ProgTestIdentString(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -342,18 +345,27 @@ uint8_t OS81210_ProgTestIdentString(uint32_t lData, uint8_t pData[])
 }
 
 
-/*! \internal Clears the test memory. (DUPUG 4.5.1) */
+/*! \internal Clears the test memory. (DUPUG 4.5.1) */  /* TBT */
 static uint8_t OS81210_ClearTestMem(void)
 {
     uint8_t  res;
     Ipl_Trace(IPL_TRACETAG_INFO, "OS81210_ClearTestMem called");
-    res = OS81210_ProgTestMem(0x00U, Ipl_IpfData.Meta.ChipTestMemSize, NULL, TESTMEM_CLEAR);
+    if (INIC_TESTMEM_UNCLEARED == Ipl_InicData.TestMemCleared)
+    {
+        res = OS81210_ProgTestMem(0x00U, Ipl_IpfData.Meta.ChipTestMemSize, NULL, TESTMEM_CLEAR);
+        Ipl_InicData.TestMemCleared = INIC_TESTMEM_CLEARED;
+    }
+    else
+    {
+        Ipl_Trace(IPL_TRACETAG_INFO, "OS81210_ClearTestMem Test memory already cleared before");
+        res = IPL_RES_OK;
+    }
     Ipl_Trace(Ipl_TraceTag(res), "OS81210_ClearTestMem returned 0x%02X", res);
     return res;
 }
 
 
-/*! \internal Programs the test memory. (DUPUG 4.5.2) */
+/*! \internal Programs the test memory. (DUPUG 4.5.2) */  /* TBT */
 static uint8_t OS81210_ProgTestMem(uint32_t addr, uint32_t nOfBytes, uint8_t pData[], uint8_t clearData)
 {
     uint8_t  res, i;
@@ -388,7 +400,7 @@ static uint8_t OS81210_ProgTestMem(uint32_t addr, uint32_t nOfBytes, uint8_t pDa
             }
             else
             {
-                Ipl_IplData.Tel[4U+i] = Ipl_PData(i+Ipl_IpfData.StringOffset+data, (uint32_t) nOfBytes, pData);
+                Ipl_IplData.Tel[4U+i] = Ipl_PData(i+data+Ipl_IpfData.StringOffset, (uint32_t) nOfBytes, pData);
             }
         }
         Ipl_IplData.TelLen = len + 4U;
@@ -406,7 +418,7 @@ static uint8_t OS81210_ProgTestMem(uint32_t addr, uint32_t nOfBytes, uint8_t pDa
 }
 
 
-/*! \internal Programs a patch string. (DUPUG 4.5.3) */
+/*! \internal Programs a patch string. (DUPUG 4.5.3) */  /* TBT */
 uint8_t OS81210_ProgPatchString(uint32_t lData, uint8_t pData[])
 {
     uint8_t res;
@@ -423,11 +435,15 @@ uint8_t OS81210_ProgPatchString(uint32_t lData, uint8_t pData[])
             res = Ipl_CheckInicFwVersion();
             if (IPL_RES_OK == res)
             {
-                /* Program OTP Memory */
-                res = OS81210_ProgOTPMem(Ipl_IpfData.Meta.PatchsStdStartAddr, Ipl_IpfData.Meta.PatchsSize, pData);
+                res = OS81210_ClearTestMem();
                 if (IPL_RES_OK == res)
                 {
-                    res = OS81210_VerifyPatchString(Ipl_IpfData.Meta.PatchsStdStartAddr, Ipl_IpfData.Meta.PatchsSize, pData);
+                    /* Program OTP Memory */
+                    res = OS81210_ProgOTPMem(Ipl_IpfData.Meta.PatchsStdStartAddr, Ipl_IpfData.Meta.PatchsSize, pData);
+                    if (IPL_RES_OK == res)
+                    {
+                        res = OS81210_VerifyPatchString(Ipl_IpfData.Meta.PatchsStdStartAddr, Ipl_IpfData.Meta.PatchsSize, pData);
+                    }
                 }
             }
         }
@@ -440,42 +456,26 @@ uint8_t OS81210_ProgPatchString(uint32_t lData, uint8_t pData[])
 /*! \internal Programs the OTP memory. (DUPUG 4.5.4) */
 static uint8_t OS81210_ProgOTPMem(uint32_t addr, uint32_t nOfBytes, uint8_t pData[])
 {
-    uint8_t  res, i;
-    uint32_t len;
-    uint32_t data = 0U;
+    uint8_t  res;
+    uint32_t index;
     uint32_t size = nOfBytes;
     Ipl_Trace(IPL_TRACETAG_INFO, "OS81210_ProgOTPMem called with Addr 0x%04X, nOfBytes %u", addr, nOfBytes);
+    index = 0U;
     do
     {
         Ipl_ProgressIndicator(size-nOfBytes, size); /* Update Progress Indicator */
-        if (nOfBytes >= Ipl_IpfData.Meta.BmMaxDataLength)
-        {
-            len       = Ipl_IpfData.Meta.BmMaxDataLength;
-            nOfBytes -= Ipl_IpfData.Meta.BmMaxDataLength;
-        }
-        else
-        {
-            len      = nOfBytes;
-            nOfBytes = 0U;
-        }
         /* Write OTP Memory */
         Ipl_ClrTel();
         Ipl_IplData.Tel[0] = CMD_WRITEOTPMEM;
         Ipl_IplData.Tel[1] = (addr >> 8) & 0xFFU;
         Ipl_IplData.Tel[2] = addr & 0xFFU;
-        Ipl_IplData.Tel[3] = len & 0xFFU;
-        for (i=0U; i<len; i++)
-        {
-            Ipl_IplData.Tel[4U+i] = Ipl_PData(i+Ipl_IpfData.StringOffset+data, nOfBytes, pData);
-        }
-        Ipl_IplData.TelLen = len + 4U;
+        Ipl_IplData.Tel[3] = 1U;
+        Ipl_IplData.Tel[4] = Ipl_PData(index+Ipl_IpfData.StringOffset, 1U, pData);
+        Ipl_IplData.TelLen = 5U;
         res = Ipl_ExecInicCmd();
-        if (0U == nOfBytes)
-        {
-            break;
-        }
-        addr += Ipl_IpfData.Meta.BmMaxDataLength;
-        data += Ipl_IpfData.Meta.BmMaxDataLength;
+        index++;
+        addr++;
+        nOfBytes--;
     } while ((nOfBytes != 0U) && (IPL_RES_OK == res));
     Ipl_ProgressIndicator(1U, 1U); /* Set Progress Indicator to 100 */
     Ipl_Trace(Ipl_TraceTag(res), "OS81210_ProgOTPMem returned 0x%02X", res);
@@ -483,16 +483,16 @@ static uint8_t OS81210_ProgOTPMem(uint32_t addr, uint32_t nOfBytes, uint8_t pDat
 }
 
 
-/*! \internal Verifies a written patch string. (DUPUG 4.5.5) */
+/*! \internal Verifies a written patch string. (DUPUG 4.5.5) */  /* TBT */
 static uint8_t OS81210_VerifyPatchString(uint32_t addr, uint32_t nOfBytes, uint8_t pData[])
 {
     uint8_t  res, i;
     uint32_t len;
-    uint8_t  data_read[INIC_MAX_PATCHSTRINGLEN];
+    uint8_t  data_read[INIC_MAX_PATCHSTRINGSIZE];
     uint32_t data = 0U;
     uint32_t size = nOfBytes;
     Ipl_Trace(IPL_TRACETAG_INFO, "OS81210_VerifyPatchString called with Addr 0x%04X, nOfBytes %u", addr, nOfBytes);
-    if (INIC_MAX_PATCHSTRINGLEN > nOfBytes)
+    if (INIC_MAX_PATCHSTRINGSIZE > nOfBytes)
     {
         do
         {
@@ -548,12 +548,12 @@ static uint8_t OS81210_VerifyPatchString(uint32_t addr, uint32_t nOfBytes, uint8
 }
 
 
-/*! \internal Programs the ROM Configuration. (DUPUG 4.5.7) */
+/*! \internal Programs the ROM Configuration. (DUPUG 4.5.7) */  /* TBT */
 static uint8_t OS81210_ProgROMConfiguration(uint32_t stdAddr, uint32_t ovrlAddr, uint32_t cfgSize, uint8_t cfgData[])
 {
     uint8_t  res;
     uint32_t addr;
-    Ipl_Trace(IPL_TRACETAG_INFO, "OS81210_ProgROMConfiguration called with StdAddr 0x%04X, OvrlAddr 0x%04, CfgSize %u",
+    Ipl_Trace(IPL_TRACETAG_INFO, "OS81210_ProgROMConfiguration called with StdAddr 0x%04X, OvrlAddr 0x%04X, CfgSize %u",
                   stdAddr, ovrlAddr, cfgSize);
     /* Verify OTP Memory */
     Ipl_ClrTel();
@@ -607,8 +607,13 @@ static uint8_t OS81210_ProgROMConfiguration(uint32_t stdAddr, uint32_t ovrlAddr,
             if (IPL_RES_OK != res)
             {
                 res = OS81210_ProgOTPMem(addr, cfgSize, cfgData);
+                if (IPL_RES_OK != res)
+                {
+                    addr = ovrlAddr;
+                    res  = OS81210_ProgOTPMem(addr, cfgSize, cfgData);
+                }
             }
-            if (IPL_RES_OK != res)
+            else
             {
                 addr = ovrlAddr;
                 res  = OS81210_ProgOTPMem(addr, cfgSize, cfgData);
@@ -636,6 +641,17 @@ static uint8_t OS81210_ProgROMConfiguration(uint32_t stdAddr, uint32_t ovrlAddr,
     }
     Ipl_Trace(Ipl_TraceTag(res), "OS81210_ProgROMConfiguration returned 0x%02X", res);
     return res;
+}
+
+
+/*------------------------------------------------------------------------------------------------*/
+/* UNSUPPORTED FUNCTIONS                                                                          */
+/*------------------------------------------------------------------------------------------------*/
+
+uint8_t OS81210_ProgFirmware(uint32_t lData, uint8_t pData[])
+{
+    Ipl_Trace(IPL_TRACETAG_ERR, "OS81210_ProgFirmware returned 0x%02X", IPL_RES_ERR_NOT_SUPPORTED);
+    return IPL_RES_ERR_NOT_SUPPORTED;
 }
 
 #endif

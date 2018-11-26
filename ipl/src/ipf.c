@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipf.c
- *  \brief Internal functions to parse IPF data for INIC Programming Library
+/*! \file   ipf.c
+ *  \brief  Internal functions to parse IPF data for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #include <stdint.h>
@@ -60,6 +61,10 @@ uint8_t Ipl_ParseIpf(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_
     uint8_t  ptype;
     uint32_t i, pi, pid, pval, plen;
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ParseIpf called with %u byte IPF, StringType 0x%02X", lData, stringType);
+    if (STRINGTYPE_META == stringType)
+    {
+        Ipl_ClrMetaData(ipf); /* Reparse Metadata everytime */
+    }
     res = Ipl_ClrPData(lData, pData);
     if (IPL_RES_OK == res)
     {
@@ -202,7 +207,7 @@ uint8_t Ipl_ParseIpf(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_
                 else
                 {
                     res = IPL_RES_ERR_IPF_WRONGSTRINGTYPE; /*! \internal Jira UN-374, UN-386 */
-                    Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_ParseIpf StringType 0x%02X not found", stringType);
+                    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ParseIpf StringType 0x%02X not found", stringType);
                 }
             }
         }
@@ -213,7 +218,11 @@ uint8_t Ipl_ParseIpf(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_
 #ifdef IPL_LEGACY_IPF
         if (STRINGTYPE_META == stringType)
         {
-            res = Ipl_SetDefaultMetaProps(ipf);
+            Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ParseIpf IPL_LEGACY_IPF NumOfItems: %d", ipf->Meta.NumOfItems);
+            if ( (0U == ipf->Meta.NumOfItems) || (DEFAULTVAL_UINT32 == ipf->Meta.NumOfItems) ) /*! \internal Jira UN-536 */
+            {                                                                                  /*! \internal Jira UN-536 */
+                res = Ipl_SetDefaultMetaProps(ipf);
+            }                                                                                  /*! \internal Jira UN-536 */
         }
 #endif
     }
@@ -395,6 +404,14 @@ static uint8_t Ipl_SetStdMetaProps(Ipl_IpfData_t *ipf, uint32_t pid, uint32_t pv
             {
                 ipf->Meta.CfgsDefStartAddr = (uint32_t) pval;
             }
+            if (ipf->Meta.CfgsDefStartAddr == 0x0000FF9CU)  /*! \internal Workaround for Jira UN-571 */
+            {                                               /*! \internal Workaround for Jira UN-571 */
+                ipf->Meta.CfgsDefStartAddr =  0x0002FF9CU;  /*! \internal Workaround for Jira UN-571 */
+            }                                               /*! \internal Workaround for Jira UN-571 */
+            if (ipf->Meta.CfgsDefStartAddr == 0x0000FF8CU)  /*! \internal Workaround for Jira UN-571 */
+            {                                               /*! \internal Workaround for Jira UN-571 */
+                ipf->Meta.CfgsDefStartAddr =  0x0002FF8CU;  /*! \internal Workaround for Jira UN-571 */
+            }                                               /*! \internal Workaround for Jira UN-571 */
             break;
         case METAID_CFGSSTDSTARTADDR:
             res = Ipl_CheckMetaPType(pid, pval, ptype, METATYPE_UINT32);
@@ -501,6 +518,9 @@ static uint8_t Ipl_SetStdMetaProps(Ipl_IpfData_t *ipf, uint32_t pid, uint32_t pv
                  ipf->Meta.FwBuildVersion = (uint32_t) pval;
             }
             break;
+        case METAID_TOOLTYPE:
+            /* Ignored for later parsing */
+            break;
         default:
             /* ignore all other IDs */
             Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_SetStdMetaProps MetaProp 0x%08X (unknown) ignored", pid);
@@ -522,6 +542,7 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
 	ipf->Meta.CfgsVersionValid = VERSION_INVALID;
     switch (ipf->ChipID)
     {
+#ifdef IPL_USE_OS81118
         case IPL_CHIP_OS81118:
             ipf->Meta.ChipID                    = IPL_CHIP_OS81118;
             ipf->Meta.ChipPrgMemSize            = 0x0030000U;
@@ -540,6 +561,8 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.FwStartAddr               = 0x00001800U;
             ipf->Meta.NumOfItems                = 15U;
             break;
+#endif
+#ifdef IPL_USE_OS81119
         case IPL_CHIP_OS81119:
             ipf->Meta.ChipID                    = IPL_CHIP_OS81119;
             ipf->Meta.ChipPrgMemSize            = 0x0030000U;
@@ -558,6 +581,8 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.FwStartAddr               = 0x00001800U;
             ipf->Meta.NumOfItems                = 15U;
             break;
+#endif
+#ifdef IPL_USE_OS81210
         case IPL_CHIP_OS81210:
             ipf->Meta.ChipID                    = IPL_CHIP_OS81210;
             ipf->Meta.ChipPrgMemSize            = 0x0030000U;
@@ -576,6 +601,8 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
             ipf->Meta.NumOfItems                = 15U;
             break;
+#endif
+#ifdef IPL_USE_OS81212
         case IPL_CHIP_OS81212:
             ipf->Meta.ChipID                    = IPL_CHIP_OS81212;
             ipf->Meta.ChipPrgMemSize            = 0x0030000U;
@@ -594,6 +621,8 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
             ipf->Meta.NumOfItems                = 15U;
             break;
+#endif
+#ifdef IPL_USE_OS81214
         case IPL_CHIP_OS81214:
             ipf->Meta.ChipID                    = IPL_CHIP_OS81214;
             ipf->Meta.ChipPrgMemSize            = 0x0030000U;
@@ -612,6 +641,62 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
             ipf->Meta.NumOfItems                = 15U;
             break;
+#endif
+#ifdef IPL_USE_OS81216
+        case IPL_CHIP_OS81216:
+            ipf->Meta.ChipID                    = IPL_CHIP_OS81216;
+            ipf->Meta.ChipPrgMemSize            = 0x0030000U;
+            ipf->Meta.ChipPrgMemPageSize        = 0x0010000U;
+            ipf->Meta.BmMaxDataLength           = 32U;
+            ipf->Meta.ChipTestMemSize           = 768U;
+            ipf->Meta.BmSize                    = 0x2000U;
+            ipf->Meta.CfgsDefStartAddr          = 0x0002FF9CU;
+            ipf->Meta.CfgsStdStartAddr          = 0x00U;
+            ipf->Meta.CfgsOvrlStartAddr         = 0x22U;
+            ipf->Meta.CfgsTestStartAddr         = 0x00U;
+            ipf->Meta.IdentsStdStartAddr        = 0x44U;
+            ipf->Meta.IdentsOvrlStartAddr       = 0x52U;
+            ipf->Meta.IdentsTestStartAddr       = 0x22U;
+            ipf->Meta.PatchsStdStartAddr        = 0x60U;
+            ipf->Meta.PatchsTestStartAddr       = 0x30U;
+            ipf->Meta.NumOfItems                = 15U;
+            break;
+#endif
+#ifdef IPL_USE_OS81110
+        case IPL_CHIP_OS81110:
+            ipf->Meta.ChipID                    = IPL_CHIP_OS81110;
+            /* Add meta parameters */
+            ipf->Meta.NumOfItems                = 1U;
+            break;
+#endif
+#ifdef IPL_USE_OS81050
+        case IPL_CHIP_OS81050:
+            ipf->Meta.ChipID                    = IPL_CHIP_OS81050;
+            /* Add meta parameters */
+            ipf->Meta.NumOfItems                = 1U;
+            break;
+#endif
+#ifdef IPL_USE_OS81060
+        case IPL_CHIP_OS81060:
+            ipf->Meta.ChipID                    = IPL_CHIP_OS81060;
+            /* Add meta parameters */
+            ipf->Meta.NumOfItems                = 1U;
+            break;
+#endif
+#ifdef IPL_USE_OS81082
+        case IPL_CHIP_OS81082:
+            ipf->Meta.ChipID                    = IPL_CHIP_OS81082;
+            /* Add meta parameters */
+            ipf->Meta.NumOfItems                = 1U;
+            break;
+#endif
+#ifdef IPL_USE_OS81092
+        case IPL_CHIP_OS81092:
+            ipf->Meta.ChipID                    = IPL_CHIP_OS81092;
+            /* Add meta parameters */
+            ipf->Meta.NumOfItems                = 1U;
+            break;
+#endif
         default:
             Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_SetDefaultMetaProps ChipID unexpected");
 			res = IPL_RES_ERR_IPF_WRONGINIC;
@@ -627,7 +712,7 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
 #endif
 
 
-/*! \internal Sets all Meta properties to the default value. */
+/*! \internal Sets all IPF properties to the default value. */
 void Ipl_ClrIpfData(Ipl_IpfData_t *ipf)
 {
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ClrIpfData");
@@ -636,6 +721,14 @@ void Ipl_ClrIpfData(Ipl_IpfData_t *ipf)
     ipf->StringOffset                      = DEFAULTVAL_UINT32;
     ipf->StringType                        = DEFAULTVAL_UINT8;
     ipf->ChipID                            = DEFAULTVAL_UINT8;
+    Ipl_ClrMetaData(ipf);
+}
+
+
+/*! \internal Sets all Meta properties to the default value. */
+void Ipl_ClrMetaData(Ipl_IpfData_t *ipf)
+{
+    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ClrMetaData");
     ipf->Meta.NumOfItems                   = DEFAULTVAL_UINT32;
     ipf->Meta.ChipID                       = DEFAULTVAL_UINT8;
     ipf->Meta.ChipPrgMemSize               = DEFAULTVAL_UINT32;
@@ -707,9 +800,8 @@ static uint8_t Ipl_CheckMetaPType(uint32_t pid, uint32_t pval, uint8_t ptype_act
 static void Ipl_TraceIpf(uint32_t nOfBytes, uint8_t pData[])
 {
 #ifdef IPL_TRACETAG_IPF
-    uint8_t  i;
     char     line [TRACELINE_MAXLEN];
-    uint32_t len;
+    uint32_t len, i;
     uint32_t data   = 0U;
     uint32_t maxBpl = (TRACELINE_MAXLEN - 4U) / 3U;
     do
@@ -727,8 +819,8 @@ static void Ipl_TraceIpf(uint32_t nOfBytes, uint8_t pData[])
         /* Write Ipf line */
         for (i=0U; i<len; i++)
         {
-            line[0U+(i*3U)] = Ipl_BcdChr(Ipl_PData(Ipl_IpfData.StringOffset+i+data, nOfBytes, pData), IPL_HIGH);
-            line[1U+(i*3U)] = Ipl_BcdChr(Ipl_PData(Ipl_IpfData.StringOffset+i+data, nOfBytes, pData), IPL_LOW);
+            line[0U+(i*3U)] = Ipl_Bcd2Char(Ipl_PData(Ipl_IpfData.StringOffset+i+data, nOfBytes, pData), IPL_HIGH);
+            line[1U+(i*3U)] = Ipl_Bcd2Char(Ipl_PData(Ipl_IpfData.StringOffset+i+data, nOfBytes, pData), IPL_LOW);
             line[2U+(i*3U)] = ' ';
         }
         line[0U+(len*3U)] = '\0';

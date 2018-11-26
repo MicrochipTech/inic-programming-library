@@ -18,9 +18,10 @@
 /* MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS.            */
 /*------------------------------------------------------------------------------------------------*/
 
-/*! \file ipl.c
- *  \brief Internal general functions for INIC Programming Library
+/*! \file   ipl.c
+ *  \brief  Internal general functions for INIC Programming Library
  *  \author Roland Trissl (RTR)
+ *  \note   For support related to this code contact http://www.microchip.com/support.
  */
 
 #include <stdint.h>
@@ -34,6 +35,17 @@
 #include "ipl_81210.h"
 #include "ipl_81212.h"
 #include "ipl_81214.h"
+#include "ipl_81216.h"
+#ifdef IPL_LEGACY_INIC
+#include "ipl_81050.h"
+#include "ipl_81060.h"
+#include "ipl_81082.h"
+#include "ipl_81092.h"
+#include "ipl_81110.h"
+#endif
+#ifdef IPL_TRACETAG_DUMP
+#include "ipl_dmp.h"
+#endif
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -43,31 +55,6 @@
 #ifndef IPL_DATACHUNK_SIZE
 #error "ipl_cfg.h: IPL_DATACHUNK_SIZE needs to be defined."
 #endif
-
-#if (IPL_DATACHUNK_SIZE > 0) && (IPL_DATACHUNK_SIZE < 2048)
-#error "ipl_cfg.h: IPL_DATACHUNK_SIZE must be at least 2048 (or 0)."
-#endif
-
-#ifndef IPL_TRACETAG_INFO
-#error "ipl_cfg.h: IPL_TRACETAG_INFO needs to be defined."
-#endif
-
-#ifndef IPL_TRACETAG_ERR
-#error "ipl_cfg.h: IPL_TRACETAG_ERR needs to be defined."
-#endif
-
-#ifndef IPL_USE_OS81118
-#ifndef IPL_USE_OS81119
-#ifndef IPL_USE_OS81210
-#ifndef IPL_USE_OS81212
-#ifndef IPL_USE_OS81214
-#error "ipl_cfg.h: At least one supported INIC needs to be defined (for example IPL_USE_OS81118)."
-#endif
-#endif
-#endif
-#endif
-#endif
-
 
 /*------------------------------------------------------------------------------------------------*/
 /* CONSTANTS                                                                                      */
@@ -80,10 +67,13 @@
 /* FUNCTION PROTOTYPES                                                                            */
 /*------------------------------------------------------------------------------------------------*/
 
+static uint8_t Ipl_CheckConnectedInic(void);
+static uint8_t Ipl_Bcd2Byte(uint8_t bcd);
 static uint8_t Ipl_ReadFirmwareVersion(void);
 static uint8_t Ipl_CheckUpdate(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_t stringType);
 static uint8_t Ipl_StartupInic(uint8_t chipMode);
 static uint8_t Ipl_WaitForResponse(void);
+static void    Ipl_TraceCfg(void);
 static void    Ipl_TraceTel(uint8_t direction);
 #ifdef IPL_USE_INTPIN
 static uint8_t Ipl_WaitForInt(uint16_t timeout);
@@ -94,8 +84,9 @@ static uint8_t Ipl_WaitForInt(uint16_t timeout);
 /* VARIABLES                                                                                      */
 /*------------------------------------------------------------------------------------------------*/
 
-Ipl_IplData_t  Ipl_IplData;
-Ipl_InicData_t Ipl_InicData;
+Ipl_IplData_t  Ipl_IplData;  /* Internally used only */
+Ipl_InicData_t Ipl_InicData; /* Internally used only */
+Ipl_Inic_t     Ipl_Inic;
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -105,18 +96,21 @@ Ipl_InicData_t Ipl_InicData;
 /*! \internal Sets INIC in programming mode and reads ChipID and firmware version. */
 uint8_t Ipl_EnterProgMode(uint8_t chipID)
 {
-    uint8_t res = IPL_RES_ERR_HW_INIC_COMM;
+    uint8_t res = IPL_RES_ERR_HW_INIC_COM;
     uint8_t cc = 0U;
     Ipl_IplData.ChipID = chipID;
 #ifdef IPL_INICDRIVER_OPENCLOSE
     cc = Ipl_InicDriverOpen();
 #endif
     Ipl_Trace(IPL_TRACETAG_INFO, "INIC Programming Library %s", VERSIONTAG);
+    Ipl_Trace(IPL_TRACETAG_INFO, "For support contact http://www.microchip.com/support");
+    Ipl_TraceCfg();
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_EnterProgMode called with ChipID 0x%02X", chipID);
+    Ipl_InicData.TestMemCleared = INIC_TESTMEM_UNCLEARED;
     Ipl_ClrIpfData(&Ipl_IpfData);
     if (0U == cc)
     {
-        res = Ipl_StartupInic(INICMODE_BOOT);
+        res = Ipl_StartupInic(INIC_MODE_BOOT);
         if (IPL_RES_OK == res)
         {
             Ipl_ClrTel();
@@ -125,11 +119,17 @@ uint8_t Ipl_EnterProgMode(uint8_t chipID)
             {
                 case IPL_CHIP_OS81118:
                 case IPL_CHIP_OS81119:
+                case IPL_CHIP_OS81050:
+                case IPL_CHIP_OS81060:
+                case IPL_CHIP_OS81082:
+                case IPL_CHIP_OS81092:
+                case IPL_CHIP_OS81110:
                     Ipl_IplData.TelLen = CMD_PROGSTART_TXLEN;
                     break;
                 case IPL_CHIP_OS81210:
                 case IPL_CHIP_OS81212:
                 case IPL_CHIP_OS81214:
+                case IPL_CHIP_OS81216:
                     Ipl_IplData.Tel[4] = 0x28U;
                     Ipl_IplData.Tel[5] = 0x1BU;
                     Ipl_IplData.Tel[6] = 0x6BU;
@@ -151,6 +151,7 @@ uint8_t Ipl_EnterProgMode(uint8_t chipID)
              }
         }
     }
+    Ipl_ExportChipInfo();
     Ipl_Trace(Ipl_TraceTag(res), "Ipl_EnterProgMode returned 0x%02X", res);
     return res;
 }
@@ -161,14 +162,14 @@ uint8_t Ipl_LeaveProgMode(void)
 {
     uint8_t res;
     uint8_t cc;
-    res = Ipl_StartupInic(INICMODE_NORMAL);
+    res = Ipl_StartupInic(INIC_MODE_NORMAL);
 #ifdef IPL_INICDRIVER_OPENCLOSE
     if (IPL_RES_OK == res)
     {
         cc = Ipl_InicDriverClose();
         if (0U != cc)
         {
-            res = IPL_RES_ERR_HW_INIC_COMM;
+            res = IPL_RES_ERR_HW_INIC_COM;
         }
     }
 #endif
@@ -180,331 +181,545 @@ uint8_t Ipl_LeaveProgMode(void)
 /*! \internal Executes the referred job by using the referred data. */
 uint8_t Ipl_Prog(uint8_t job, uint32_t lData, uint8_t* pData)
 {
-    uint8_t res;
+    /*! \internal Jira UN-371, UN-372 fixed by new design */
+    uint8_t res = IPL_RES_ERR_NOT_SUPPORTED;
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_Prog called with Job 0x%02X", job);
-    /* Jobs that can be used for OS81118 only */
-    if (IPL_CHIP_OS81118 == Ipl_IplData.ChipID)
+    switch (job)
     {
-        switch (job)
-        {
-            case IPL_JOB_READ_FIRMWARE_VER:
-                res = Ipl_ReadFirmwareVersion();
-                break;
-            case IPL_JOB_CHK_UPDATE_CONFIGSTRING:
-                res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS);
-                break;
-            case IPL_JOB_CHK_UPDATE_FIRMWARE:
-                res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_FW);
-                break;
-            case IPL_JOB_PROG_CONFIG:
+#ifdef IPL_TRACETAG_DUMP
+        case IPL_JOB_DUMP_OTPMEM:
+            res = Ipl_DumpOtpMem(lData, pData);
+            break;
+        case IPL_JOB_DUMP_INFOMEM:
+            res = Ipl_DumpInfoMem(lData, pData);
+            break;
+        case IPL_JOB_DUMP_PROGMEM:
+            res = Ipl_DumpProgMem(lData, pData);
+            break;
+        case IPL_JOB_DUMP_TESTMEM:
+            res = Ipl_DumpTestMem(lData, pData);
+            break;
+        case IPL_JOB_DUMP_ALL:
+            res = Ipl_DumpAll(lData, pData);
+            break;
+#endif
+        case IPL_JOB_READ_FIRMWARE_VER:
+            res = Ipl_ReadFirmwareVersion(); /* No IPF data needed */
+            break;
+        default:
 #ifdef IPL_USE_OS81118
-                res = OS81118_ProgConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
+            if (IPL_CHIP_OS81118 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81118_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81118_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81118_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81118_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81118_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81118_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81118_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81118_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81118_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81118_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_FIRMWARE:                                     /*! \internal Jira UN-578 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_FW); /*! \internal Jira UN-578 */
+                        break;                                                            /*! \internal Jira UN-578 */
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81118_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
 #endif
-                break;
-            case IPL_JOB_PROG_FIRMWARE:
-#ifdef IPL_USE_OS81118
-                res = OS81118_ProgFirmware(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_READ_CONFIGSTRING_VER:
-#ifdef IPL_USE_OS81118
-                res = OS81118_ReadConfigStringVersion(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_PATCHSTRING:
-            case IPL_JOB_PROG_TEST_PATCHSTRING:
-            case IPL_JOB_PROG_CONFIGSTRING:
-            case IPL_JOB_PROG_TEST_CONFIGSTRING:
-            case IPL_JOB_PROG_IDENTSTRING:
-            case IPL_JOB_PROG_TEST_IDENTSTRING:
-            case IPL_JOB_PROG_TEST_CONFIG:
-            default:
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-                break;
-        }
-    }
-    /* Jobs that can be used for OS81119 only */
-    else if (IPL_CHIP_OS81119 == Ipl_IplData.ChipID)
-    {
-        switch (job)
-        {
-            case IPL_JOB_READ_FIRMWARE_VER:
-                res = Ipl_ReadFirmwareVersion();
-                break;
-            case IPL_JOB_PROG_CONFIG:
 #ifdef IPL_USE_OS81119
-                res = OS81119_ProgConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
+            if (IPL_CHIP_OS81119 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81119_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81119_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81119_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81119_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81119_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81119_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81119_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81119_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81119_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81119_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_FIRMWARE:                                     /*! \internal Jira UN-578 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_FW); /*! \internal Jira UN-578 */
+                        break;                                                            /*! \internal Jira UN-578 */
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81119_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
 #endif
-                break;
-            case IPL_JOB_PROG_FIRMWARE:
-#ifdef IPL_USE_OS81119
-                res = OS81119_ProgFirmware(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
+#ifdef IPL_USE_OS81210
+            if (IPL_CHIP_OS81210 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81210_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81210_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81210_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81210_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81210_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81210_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81210_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81210_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81210_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81210_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81210_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
 #endif
-                break;
-            case IPL_JOB_READ_CONFIGSTRING_VER:
-#ifdef IPL_USE_OS81119
-                res = OS81119_ReadConfigStringVersion(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
+#ifdef IPL_USE_OS81212
+            if (IPL_CHIP_OS81212 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81212_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81212_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81212_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81212_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81212_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81212_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81212_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81212_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81212_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81212_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81212_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
 #endif
-                break;
-            case IPL_JOB_PROG_PATCHSTRING:
-            case IPL_JOB_PROG_TEST_PATCHSTRING:
-            case IPL_JOB_PROG_CONFIGSTRING:
-            case IPL_JOB_PROG_TEST_CONFIGSTRING:
-            case IPL_JOB_PROG_IDENTSTRING:
-            case IPL_JOB_PROG_TEST_IDENTSTRING:
-            case IPL_JOB_PROG_TEST_CONFIG:
-            default:
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-                break;
-        }
+#ifdef IPL_USE_OS81214
+            if (IPL_CHIP_OS81214 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81214_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81214_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81214_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81214_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81214_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81214_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81214_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81214_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81214_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81214_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81214_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+#ifdef IPL_USE_OS81216
+            if (IPL_CHIP_OS81216 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81216_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81216_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81216_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81216_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81216_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81216_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81216_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81216_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81216_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81216_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81216_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+#ifdef IPL_USE_OS81050
+            if (IPL_CHIP_OS81050 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81050_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81050_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81050_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81050_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81050_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81050_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81050_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81050_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81050_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81050_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_FIRMWARE:                                     /*! \internal Jira UN-578 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_FW); /*! \internal Jira UN-578 */
+                        break;                                                            /*! \internal Jira UN-578 */
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81050_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+#ifdef IPL_USE_OS81060
+            if (IPL_CHIP_OS81060 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81060_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81060_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81060_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81060_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81060_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81060_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81060_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81060_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81060_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81060_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81060_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+#ifdef IPL_USE_OS81082
+            if (IPL_CHIP_OS81082 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81082_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81082_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81082_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81082_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81082_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81082_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81082_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81082_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81082_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81082_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_FIRMWARE:                                     /*! \internal Jira UN-578 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_FW); /*! \internal Jira UN-578 */
+                        break;                                                            /*! \internal Jira UN-578 */
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81082_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+#ifdef IPL_USE_OS81092
+            if (IPL_CHIP_OS81092 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81092_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81092_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81092_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81092_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81092_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81092_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81092_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81092_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81092_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81092_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81092_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+#ifdef IPL_USE_OS81110
+            if (IPL_CHIP_OS81110 == Ipl_IplData.ChipID)
+            {
+                switch (job)
+                {
+                    case IPL_JOB_PROG_CONFIG:
+                        res = OS81110_ProgConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_FIRMWARE:
+                        res = OS81110_ProgFirmware(lData, pData);
+                        break;
+                    case IPL_JOB_READ_CONFIGSTRING_VER:
+                        res = OS81110_ReadConfigStringVersion(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_PATCHSTRING:
+                        res = OS81110_ProgPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_PATCHSTRING:
+                        res = OS81110_ProgTestPatchString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_CONFIGSTRING:
+                        res = OS81110_ProgConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIGSTRING:
+                        res = OS81110_ProgTestConfigString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_IDENTSTRING:
+                        res = OS81110_ProgIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_IDENTSTRING:
+                        res = OS81110_ProgTestIdentString(lData, pData);
+                        break;
+                    case IPL_JOB_PROG_TEST_CONFIG:
+                        res = OS81110_ProgTestConfiguration(lData, pData);
+                        break;
+                    case IPL_JOB_CHK_UPDATE_FIRMWARE:                                     /*! \internal Jira UN-578 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_FW); /*! \internal Jira UN-578 */
+                        break;                                                            /*! \internal Jira UN-578 */
+                    case IPL_JOB_CHK_UPDATE_CONFIGSTRING:                                 /*! \internal Jira UN-577 */
+                        res = OS81110_ReadConfigStringVersion(lData, pData);              /*! \internal Jira UN-577 */
+                        res = Ipl_CheckUpdate(&Ipl_IpfData, lData, pData, STRINGTYPE_CS); /*! \internal Jira UN-577 */
+                        break;                                                            /*! \internal Jira UN-577 */
+                    default:
+                        res = IPL_RES_ERR_NOT_SUPPORTED;
+                        break;
+                }
+            }
+#endif
+            break;
     }
-    /* Jobs that can be used for OS81210 only */
-    else if (IPL_CHIP_OS81210 == Ipl_IplData.ChipID)
-    {
-        switch (job)
-        {
-            case IPL_JOB_READ_FIRMWARE_VER:
-                res = Ipl_ReadFirmwareVersion();
-                break;
-            case IPL_JOB_PROG_CONFIGSTRING:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgConfigString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_CONFIGSTRING:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgTestConfigString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_IDENTSTRING:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgIdentString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_IDENTSTRING:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgTestIdentString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_CONFIG:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_CONFIG:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgTestConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_PATCHSTRING:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgPatchString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_PATCHSTRING:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ProgTestPatchString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_READ_CONFIGSTRING_VER:
-#ifdef IPL_USE_OS81210
-                res = OS81210_ReadConfigStringVersion(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_FIRMWARE:
-            default:
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-                break;
-        }
-    }
-    /* Jobs that can be used for OS81212 only */
-    else if (IPL_CHIP_OS81212 == Ipl_IplData.ChipID)
-    {
-        switch (job)
-        {
-            case IPL_JOB_READ_FIRMWARE_VER:
-                res = Ipl_ReadFirmwareVersion();
-                break;
-            case IPL_JOB_PROG_CONFIGSTRING:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgConfigString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_CONFIGSTRING:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgTestConfigString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_IDENTSTRING:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgIdentString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_IDENTSTRING:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgTestIdentString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_CONFIG:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_CONFIG:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgTestConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_PATCHSTRING:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgPatchString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_PATCHSTRING:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ProgTestPatchString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_READ_CONFIGSTRING_VER:
-#ifdef IPL_USE_OS81212
-                res = OS81212_ReadConfigStringVersion(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_FIRMWARE:
-            default:
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-                break;
-        }
-    }
-    /* Jobs that can be used for OS81214 only */
-    else if (IPL_CHIP_OS81214 == Ipl_IplData.ChipID)
-    {
-        switch (job)
-        {
-            case IPL_JOB_READ_FIRMWARE_VER:
-                res = Ipl_ReadFirmwareVersion();
-                break;
-            case IPL_JOB_PROG_CONFIGSTRING:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgConfigString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_CONFIGSTRING:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgTestConfigString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_IDENTSTRING:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgIdentString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_IDENTSTRING:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgTestIdentString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_CONFIG:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_CONFIG:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgTestConfiguration(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_PATCHSTRING:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgPatchString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_TEST_PATCHSTRING:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ProgTestPatchString(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_READ_CONFIGSTRING_VER:
-#ifdef IPL_USE_OS81214
-                res = OS81214_ReadConfigStringVersion(lData, pData);
-#else
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-#endif
-                break;
-            case IPL_JOB_PROG_FIRMWARE:
-            default:
-                res = IPL_RES_ERR_NOT_SUPPORTED;
-                break;
-        }
-    }
-    else
-    {
-        res = IPL_RES_ERR_NOT_SUPPORTED; /*! \internal Jira UN-371, UN-372 */
-    }
+    Ipl_ExportChipInfo();
     Ipl_Trace(Ipl_TraceTag(res), "Ipl_Prog returned 0x%02X", res);
     return res;
 }
@@ -513,20 +728,50 @@ uint8_t Ipl_Prog(uint8_t job, uint32_t lData, uint8_t* pData)
 /*! \internal Reads the firmware version from INIC. INIC needs to be in programming mode. */
 static uint8_t Ipl_ReadFirmwareVersion(void)
 {
-    uint8_t res;
+    uint8_t res = IPL_RES_OK;
     Ipl_ClrTel();
-    Ipl_IplData.Tel[0] = CMD_READFWVER;
-    Ipl_IplData.TelLen = CMD_READFWVER_TXLEN;
-    res = Ipl_ExecInicCmd();
+    switch (Ipl_IplData.ChipID)
+    {
+        case IPL_CHIP_OS81050: /* Legacy INICs */
+        case IPL_CHIP_OS81060:
+        case IPL_CHIP_OS81082:
+        case IPL_CHIP_OS81092:
+        case IPL_CHIP_OS81110:
+            Ipl_IplData.Tel[0] = CMD_LEG_READFWVER;
+            Ipl_IplData.Tel[3] = 19U;
+            Ipl_IplData.TelLen = CMD_LEG_READFWVER_TXLEN;
+            break;
+        case IPL_CHIP_OS81118: /* All new standard INICs */
+        case IPL_CHIP_OS81119:
+        case IPL_CHIP_OS81210:
+        case IPL_CHIP_OS81212:
+        case IPL_CHIP_OS81214:
+        case IPL_CHIP_OS81216:
+            Ipl_IplData.Tel[0] = CMD_READFWVER;
+            Ipl_IplData.TelLen = CMD_READFWVER_TXLEN;
+            break;
+        default:
+            Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_ReadFirmwareVersion Ipl_IplData.ChipID unexpected");
+            res = IPL_RES_ERR_WRONG_INIC;
+            break;
+    }
     if (IPL_RES_OK == res)
     {
-        Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ReadFirmwareVersion returned 0x%02X - V%u.%u.%u-%u", res,
+        res = Ipl_ExecInicCmd();
+    }
+    if (IPL_RES_OK == res)
+    {
+        res = Ipl_CheckConnectedInic();
+    }
+    if (IPL_RES_OK == res)
+    {
+        Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ReadFirmwareVersion returned 0x%02X - ChipID: 0x%2X - V%u.%u.%u-%u", res, Ipl_InicData.ChipID,
                 Ipl_InicData.FwMajorVersion, Ipl_InicData.FwMinorVersion, Ipl_InicData.FwReleaseVersion, Ipl_InicData.FwBuildVersion);
     }
     else
     {
         Ipl_InicData.FwVersionValid   = VERSION_INVALID;
-        Ipl_InicData.ChipID           = DEFAULTVAL_UINT32; /*! \internal Jira UN-376 */
+        Ipl_InicData.ChipID           = DEFAULTVAL_UINT8;  /*! \internal Jira UN-376 */
         Ipl_InicData.FwMajorVersion   = DEFAULTVAL_UINT8;  /*! \internal Jira UN-376 */
         Ipl_InicData.FwMinorVersion   = DEFAULTVAL_UINT8;  /*! \internal Jira UN-376 */
         Ipl_InicData.FwReleaseVersion = DEFAULTVAL_UINT8;  /*! \internal Jira UN-376 */
@@ -542,6 +787,7 @@ static uint8_t Ipl_ReadFirmwareVersion(void)
 uint8_t Ipl_ExecInicCmd(void)
 {
     uint8_t rxlen, cmd, cc, rw;
+    uint32_t cid;
     uint8_t res = IPL_RES_ERR_TXTELLEN_INVALID;
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ExecInicCmd called with Command 0x%02X", Ipl_IplData.Tel[0]);
     /* Send telegram */
@@ -617,6 +863,48 @@ uint8_t Ipl_ExecInicCmd(void)
                     case CMD_WRITETESTMEM:
                         rxlen = CMD_WRITETESTMEM_RXLEN;
                         break;
+                    case CMD_READTESTMEM:
+                        rxlen = CMD_READTESTMEM_RXLEN;
+                        break;
+                    case CMD_LEG_READFWVER:
+                        rxlen = CMD_LEG_READFWVER_RXLEN;
+                        break;
+                    case CMD_LEG_ERASEENABLE:
+                        rxlen = CMD_LEG_ERASEENABLE_RXLEN;
+                        break;
+                    case CMD_LEG_ERASECS:
+                        rxlen = CMD_LEG_ERASECS_RXLEN;
+                        break;
+                    case CMD_LEG_WRITECS:
+                        rxlen = CMD_LEG_WRITECS_RXLEN;
+                        break;
+                    case CMD_LEG_GETCSINFO:
+                        rxlen = CMD_LEG_GETCSINFO_RXLEN;
+                        break;
+                    case CMD_READRAM:
+                        rxlen = CMD_READRAM_RXLEN;
+                        break;
+                    case CMD_READIOREG:
+                        rxlen = CMD_READIOREG_RXLEN;
+                        break;
+                    case CMD_READCPUREG:
+                        rxlen = CMD_READCPUREG_RXLEN;
+                        break;
+                    case CMD_READEXTIOREG:
+                        rxlen = CMD_READEXTIOREG_RXLEN;
+                        break;
+                    case CMD_READDATABUF:
+                        rxlen = CMD_READDATABUF_RXLEN;
+                        break;
+                    case CMD_READRT:
+                        rxlen = CMD_READRT_RXLEN;
+                        break;
+                    case CMD_READRF0:
+                        rxlen = CMD_READRF0_RXLEN;
+                        break;
+                    case CMD_READRF1:
+                        rxlen = CMD_READRF1_RXLEN;
+                        break;
                     default:
                         res = IPL_RES_ERR_CMD_UNEXPECTED;
                         break;
@@ -646,10 +934,34 @@ uint8_t Ipl_ExecInicCmd(void)
                             switch (cmd)
                             {
                                 case CMD_READFWVER:
-                                    Ipl_InicData.ChipID           =  ((uint32_t) Ipl_IplData.Tel[6]) << 24U;
-                                    Ipl_InicData.ChipID           += ((uint32_t) Ipl_IplData.Tel[7]) << 16U;
-                                    Ipl_InicData.ChipID           += ((uint32_t) Ipl_IplData.Tel[8]) <<  8U;
-                                    Ipl_InicData.ChipID           += ((uint32_t) Ipl_IplData.Tel[9]) & 0xFFU;
+                                    cid =  ((uint32_t) Ipl_IplData.Tel[6]) << 24U;
+                                    cid += ((uint32_t) Ipl_IplData.Tel[7]) << 16U;
+                                    cid += ((uint32_t) Ipl_IplData.Tel[8]) <<  8U;
+                                    cid += ((uint32_t) Ipl_IplData.Tel[9]) & 0xFFU;
+                                    switch (cid)
+                                    {
+                                        case 0x81118U:
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81118;
+                                            break;
+                                        case 0x81119U:
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81119;
+                                            break;
+                                        case 0x81210U:
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81210;
+                                            break;
+                                        case 0x81212U:
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81212;
+                                            break;
+                                        case 0x81214U:
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81214;
+                                            break;
+                                        case 0x81216U:
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81118;
+                                            break;
+                                        default:
+                                            Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_ExecInicCmd ChipID unexpected");
+                                            break;
+                                    }
                                     Ipl_InicData.FwMajorVersion   =  Ipl_IplData.Tel[10];
                                     Ipl_InicData.FwMinorVersion   =  Ipl_IplData.Tel[11];
                                     Ipl_InicData.FwReleaseVersion =  Ipl_IplData.Tel[12];
@@ -675,6 +987,28 @@ uint8_t Ipl_ExecInicCmd(void)
                                 case CMD_WRITEOTPMEM:
                                 case CMD_WRITEPROGMEM:
                                 case CMD_WRITETESTMEM:
+                                case CMD_READTESTMEM:
+                                case CMD_LEG_ERASEENABLE:
+                                case CMD_LEG_ERASECS:
+                                case CMD_LEG_WRITECS:
+                                case CMD_READRAM:
+                                case CMD_READIOREG:
+                                case CMD_READCPUREG:
+                                case CMD_READEXTIOREG:
+                                case CMD_READDATABUF:
+                                case CMD_READRT:
+                                case CMD_READRF0:
+                                case CMD_READRF1:
+                                case CMD_LEG_GETCSINFO:
+                                    break;
+                                case CMD_LEG_READFWVER:
+                                    Ipl_InicData.ChipID = Ipl_IplData.Tel[12];
+                                    Ipl_InicData.FwMajorVersion   =  Ipl_Bcd2Byte ( Ipl_IplData.Tel[9] );
+                                    Ipl_InicData.FwMinorVersion   =  Ipl_Bcd2Byte ( Ipl_IplData.Tel[10] );
+                                    Ipl_InicData.FwReleaseVersion =  Ipl_Bcd2Byte ( Ipl_IplData.Tel[11] );
+                                    Ipl_InicData.FwBuildVersion   =  0U;
+                                    Ipl_InicData.FwCrc            =  0U;
+                                    Ipl_InicData.FwVersionValid   =  VERSION_VALID;
                                     break;
                                 default:
                                     res = IPL_RES_ERR_RESP_UNEXPECTED;
@@ -732,7 +1066,34 @@ uint8_t Ipl_ExecInicCmd(void)
                                     res = IPL_RES_ERR_WRITEPROGMEM;
                                     break;
                                 case CMD_WRITETESTMEM:
-                                    res = IPL_RES_ERR_WRITETESTMEM;
+                                case CMD_READTESTMEM:
+                                    res = IPL_RES_ERR_ACCESS_TESTMEM;
+                                    break;
+                                case CMD_READRAM:
+                                case CMD_READIOREG:
+                                case CMD_READCPUREG:
+                                case CMD_READEXTIOREG:
+                                case CMD_READDATABUF:
+                                case CMD_READRT:
+                                case CMD_READRF0:
+                                case CMD_READRF1:
+                                    res = IPL_RES_ERR_ACCESS_RAM;
+                                    break;
+                                case CMD_LEG_READFWVER:
+                                    Ipl_InicData.FwVersionValid = VERSION_INVALID;
+                                    res = IPL_RES_ERR_READFWVER; /* Mapped to known error */
+                                    break;
+                                case CMD_LEG_ERASEENABLE:
+                                    res = IPL_RES_ERR_ERASEPROGMEM; /* Mapped to known error */
+                                    break;
+                                case CMD_LEG_ERASECS:
+                                    res = IPL_RES_ERR_ERASEINFOMEM; /* Mapped to known error */
+                                    break;
+                                case CMD_LEG_WRITECS:
+                                    res = IPL_RES_ERR_WRITEINFOMEM; /* Mapped to known error */
+                                    break;
+                                case CMD_LEG_GETCSINFO:
+                                    res = IPL_RES_ERR_READINFOMEM; /* Mapped to known error */
                                     break;
                                 default:
                                     res = IPL_RES_ERR_RESP_UNEXPECTED;
@@ -748,59 +1109,50 @@ uint8_t Ipl_ExecInicCmd(void)
     return res;
 }
 
+
+/*! \internal Checks if the connected INIC fits to the Parameter of Ipl_EnterProgMode */
+static uint8_t Ipl_CheckConnectedInic(void)
+{
+    uint8_t res = IPL_RES_ERR_WRONG_INIC;
+    if (Ipl_IplData.ChipID == Ipl_InicData.ChipID)
+    {
+        res = IPL_RES_OK;
+    }
+    Ipl_Trace(Ipl_TraceTag(res), "Ipl_CheckConnectedInic returned 0x%02X", res);
+    return res;
+}
+
+
+
 /*! \internal Checks if the ChipID of the IPF data is equal to the connected INIC */
 uint8_t Ipl_CheckChipId(void)
 {
     uint8_t res = IPL_RES_ERR_IPF_WRONGINIC;
-    switch (Ipl_InicData.ChipID)
+    if (Ipl_InicData.ChipID == Ipl_IpfData.ChipID)
     {
-        case 0x81118U:
-            if (IPL_CHIP_OS81118 == Ipl_IpfData.ChipID)
-            {
-                res = IPL_RES_OK;
-            }
-            break;
-        case 0x81119U:
-            if (IPL_CHIP_OS81119 == Ipl_IpfData.ChipID)
-            {
-                res = IPL_RES_OK;
-            }
-            break;
-        case 0x81210U:
-            if (IPL_CHIP_OS81210 == Ipl_IpfData.ChipID)
-            {
-                res = IPL_RES_OK;
-            }
-            break;
-        case 0x81212U:
-            if (IPL_CHIP_OS81212 == Ipl_IpfData.ChipID)
-            {
-                res = IPL_RES_OK;
-            }
-            break;
-        case 0x81214U:
-            if (IPL_CHIP_OS81214 == Ipl_IpfData.ChipID)
-            {
-                res = IPL_RES_OK;
-            }
-            break;
-        default: /* No valid ChipID could be determined */                  /*! \internal Jira UN-376 */
-            switch (Ipl_IpfData.ChipID)                                     /*! \internal Jira UN-376 */
-            {                                                               /*! \internal Jira UN-376 */
-                case IPL_CHIP_OS81118:                                      /*! \internal Jira UN-376 */
-                case IPL_CHIP_OS81119:                                      /*! \internal Jira UN-376 */
-                    /* If we assume a Flash Chip, we can try programming */ /*! \internal Jira UN-376 */
-                    res = IPL_RES_OK;                                       /*! \internal Jira UN-376 */
-                    break;                                                  /*! \internal Jira UN-376 */
-                default:                                                    /*! \internal Jira UN-376 */
-                    res = IPL_RES_ERR_NOVALIDCHIPID;                        /*! \internal Jira UN-376 */
-                    /* If we assume a ROM chip, we do not touch it */       /*! \internal Jira UN-376 */
-                    break;                                                  /*! \internal Jira UN-376 */
-            }                                                               /*! \internal Jira UN-376 */
-            break;                                                          /*! \internal Jira UN-376 */
+        res = IPL_RES_OK;
     }
-    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckChipId IPF ChipID 0x%X", Ipl_IpfData.ChipID);
-    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckChipId connected INIC with ChipID 0x%X", Ipl_InicData.ChipID);
+    if (IPL_RES_OK != res)
+    {
+        /* No valid ChipID could be determined in connected INIC */                 /*! \internal Jira UN-376 */
+        switch (Ipl_IpfData.ChipID)                                                 /*! \internal Jira UN-376 */
+        {                                                                           /*! \internal Jira UN-376 */
+            case IPL_CHIP_OS81118:                                                  /*! \internal Jira UN-376 */
+            case IPL_CHIP_OS81119:                                                  /*! \internal Jira UN-376 */
+            case IPL_CHIP_OS81050:                                                  /*! \internal Jira UN-376 */
+            case IPL_CHIP_OS81082:                                                  /*! \internal Jira UN-376 */
+            case IPL_CHIP_OS81110:                                                  /*! \internal Jira UN-376 */
+                /* If we assume a Flash Chip, we can try programming */             /*! \internal Jira UN-376 */
+                res = IPL_RES_OK;                                                   /*! \internal Jira UN-376 */
+                break;                                                              /*! \internal Jira UN-376 */
+            default:                                                                /*! \internal Jira UN-376 */
+                res = IPL_RES_ERR_NOVALIDCHIPID;                                    /*! \internal Jira UN-376 */
+                /* If we assume a ROM chip, we do not touch it */                   /*! \internal Jira UN-376 */
+                break;                                                              /*! \internal Jira UN-376 */
+        }                                                                           /*! \internal Jira UN-376 */
+    }
+    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckChipId IPF ChipID 0x%2X", Ipl_IpfData.ChipID);
+    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckChipId connected INIC with ChipID 0x%2X", Ipl_InicData.ChipID);
     Ipl_Trace(Ipl_TraceTag(res), "Ipl_CheckChipId returned 0x%02X", res);
     return res;
 }
@@ -824,13 +1176,11 @@ uint8_t Ipl_CheckInicFwVersion(void)
             (Ipl_IpfData.Meta.FwReleaseVersion != Ipl_InicData.FwReleaseVersion) ||
             (Ipl_IpfData.Meta.FwBuildVersion   != Ipl_InicData.FwBuildVersion))     /* Connected Version is different from Version in IPF Meta Info */
         {
-
             if ((Ipl_IpfData.Meta.FwMajorVersion   != DEFAULTVAL_UINT8)   ||
                 (Ipl_IpfData.Meta.FwMinorVersion   != DEFAULTVAL_UINT8)   ||
                 (Ipl_IpfData.Meta.FwReleaseVersion != DEFAULTVAL_UINT8)   ||
                 (Ipl_IpfData.Meta.FwBuildVersion   != DEFAULTVAL_UINT32))    /* IPF Meta Version is not default */
             {
-
                 res = IPL_RES_ERR_IPF_WRONGFWVERSION;
             }
         }
@@ -959,7 +1309,7 @@ static uint8_t Ipl_StartupInic(uint8_t chipMode)
     if (0U == pin)
     {
         Ipl_Sleep(INIC_PIN_WAIT_TIME);
-        if (INICMODE_BOOT == chipMode)
+        if (INIC_MODE_BOOT == chipMode)
         {
             pin = Ipl_SetErrBootPin(IPL_LOW);
         }
@@ -1048,7 +1398,7 @@ static uint8_t Ipl_WaitForResponse(void)
 
 #ifdef IPL_USE_INTPIN
 /*! \internal Waits until INT pin goes low or timeout. */
-uint8_t Ipl_WaitForInt(uint16_t timeout)
+static uint8_t Ipl_WaitForInt(uint16_t timeout)
 {
     uint8_t  pin;
     uint8_t  res = IPL_RES_OK;
@@ -1114,6 +1464,20 @@ void Ipl_ProgressIndicator(uint32_t val, uint32_t fval)
 }
 
 
+void Ipl_ExportChipInfo(void)
+{
+    Ipl_Inic.ChipID                 = Ipl_InicData.ChipID;
+    Ipl_Inic.CfgsCustMajorVersion   = Ipl_InicData.CfgsCustMajorVersion;
+    Ipl_Inic.CfgsCustMinorVersion   = Ipl_InicData.CfgsCustMinorVersion;
+    Ipl_Inic.CfgsCustReleaseVersion = Ipl_InicData.CfgsCustReleaseVersion;
+    Ipl_Inic.FwMajorVersion         = Ipl_InicData.FwMajorVersion;
+    Ipl_Inic.FwMinorVersion         = Ipl_InicData.FwMinorVersion;
+    Ipl_Inic.FwReleaseVersion       = Ipl_InicData.FwReleaseVersion;
+    Ipl_Inic.FwBuildVersion         = Ipl_InicData.FwBuildVersion;
+}
+
+
+
 /*------------------------------------------------------------------------------------------------*/
 /* DATA CHUNK HANDLING                                                                            */
 /*------------------------------------------------------------------------------------------------*/
@@ -1171,6 +1535,73 @@ uint8_t Ipl_ClrPData(uint32_t lData, uint8_t pData[])
 /* TRACE LOGGING                                                                                  */
 /*------------------------------------------------------------------------------------------------*/
 
+/*! \internal Traces IPL Configuration. */
+static void Ipl_TraceCfg(void)
+{
+#ifdef IPL_USE_OS81118
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81118 defined");
+#endif
+#ifdef IPL_USE_OS81119
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81119 defined");
+#endif
+#ifdef IPL_USE_OS81210
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81210 defined");
+#endif
+#ifdef IPL_USE_OS81212
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81212 defined");
+#endif
+#ifdef IPL_USE_OS81214
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81214 defined");
+#endif
+#ifdef IPL_USE_OS81216
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81216 defined");
+#endif
+#ifdef IPL_USE_OS81050
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81050 defined");
+#endif
+#ifdef IPL_USE_OS81060
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81060 defined");
+#endif
+#ifdef IPL_USE_OS81082
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81082 defined");
+#endif
+#ifdef IPL_USE_OS81092
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81092 defined");
+#endif
+#ifdef IPL_USE_OS81110
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_OS81110 defined");
+#endif
+#ifdef IPL_USE_INTPIN
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_USE_INTPIN defined");
+#endif
+#ifdef IPL_INICDRIVER_OPENCLOSE
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_INICDRIVER_OPENCLOSE defined");
+#endif
+#ifdef IPL_PROGRESS_INDICATOR
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_PROGRESS_INDICATOR defined");
+#endif
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_DATACHUNK_SIZE = %d", IPL_DATACHUNK_SIZE);
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_INFO = '%s'", IPL_TRACETAG_INFO);
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_ERR  = '%s'", IPL_TRACETAG_ERR);
+#ifdef IPL_TRACETAG_IPF
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_IPF  = '%s'", IPL_TRACETAG_IPF);
+#else
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_IPF not defined");
+#endif
+#ifdef IPL_TRACETAG_COM
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_COM  = '%s'", IPL_TRACETAG_COM);
+#else
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_COM not defined");
+#endif
+#ifdef IPL_TRACETAG_DUMP
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_TRACETAG_DUMP = '%s'", IPL_TRACETAG_IPF);
+#endif
+#ifdef IPL_LEGACY_IPF
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_LEGACY_IPF defined");
+#endif
+}
+
+
 /*! \internal Traces the current telegram buffer. */
 static void Ipl_TraceTel(uint8_t direction)
 {
@@ -1189,8 +1620,8 @@ static void Ipl_TraceTel(uint8_t direction)
     line[2U] = ' ';
     for (i=0U; i<Ipl_IplData.TelLen; i++)
     {
-        line[3U+(i*3U)] = Ipl_BcdChr(Ipl_IplData.Tel[i], IPL_HIGH);
-        line[4U+(i*3U)] = Ipl_BcdChr(Ipl_IplData.Tel[i], IPL_LOW);
+        line[3U+(i*3U)] = Ipl_Bcd2Char(Ipl_IplData.Tel[i], IPL_HIGH);
+        line[4U+(i*3U)] = Ipl_Bcd2Char(Ipl_IplData.Tel[i], IPL_LOW);
         line[5U+(i*3U)] = ' ';
     }
     line[3U+(Ipl_IplData.TelLen*3U)] = '\0';
@@ -1199,8 +1630,19 @@ static void Ipl_TraceTel(uint8_t direction)
 }
 
 
+/*! \internal Returns byte from BCD. */
+static uint8_t Ipl_Bcd2Byte(uint8_t bcd)
+{
+    uint8_t res, ten, one;
+    one = bcd & 0x0FU;
+    ten = bcd >> 4U;
+    res = (10U * ten) + one;
+    return res;
+}
+
+
 /*! \internal Returns a nible in hex format. */
-char Ipl_BcdChr(uint8_t val, uint8_t lowHigh)
+char Ipl_Bcd2Char(uint8_t val, uint8_t lowHigh)
 {
     uint8_t nib;
     char    res;

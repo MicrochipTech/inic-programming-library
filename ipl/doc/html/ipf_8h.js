@@ -64,5 +64,6 @@ var ipf_8h =
     [ "VERSION_INVALID", "ipf_8h.html#a2903132675954e2ea03cb8356d8c76e9", null ],
     [ "Ipl_ParseIpf", "ipf_8h.html#a2038ede66f50ddfbe3533330d5419bb4", null ],
     [ "Ipl_ClrIpfData", "ipf_8h.html#aaa011d9bb521c9ed02cb451c483e04d5", null ],
+    [ "Ipl_ClrMetaData", "ipf_8h.html#a9fa23791e784793617fea0313995a6a2", null ],
     [ "Ipl_IpfData", "ipf_8h.html#ad7ebcd29e66ec422bca0852719b3fafe", null ]
 ];

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>INIC Programming Library: Data Chunk Handling</title>
+<title>INIC PROGRAMMING LIBRARY: Data Chunk Handling</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <script type="text/javascript" src="jquery.js"></script>
@@ -30,7 +30,7 @@
  <tr>
   <td><a href="index.html"><img alt="Logo" src="logo.png"/></a></td>
   <td>
-   <div id="projectname">INIC Programming Library&#160;<span id="projectnumber">V1.x</span></div>
+   <div id="projectname">INIC PROGRAMMING LIBRARY&#160;<span id="projectnumber">V1.x</span></div>
    <div id="projectbrief">User Manual and API Reference</div>
     <div id="searchbox">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -97,11 +97,11 @@ $(document).ready(function(){initNavTree('group__chunk__handling.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga6b839cb9f5defa0c03635db3e261da00"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__chunk__handling.html#ga6b839cb9f5defa0c03635db3e261da00">IPL_DATACHUNK_SIZE</a>&#160;&#160;&#160;2048</td></tr>
-<tr class="memdesc:ga6b839cb9f5defa0c03635db3e261da00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of data chunks in bytes, 0 means complete IPF file is stored in memory.  <a href="#ga6b839cb9f5defa0c03635db3e261da00"></a><br/></td></tr>
+<tr class="memdesc:ga6b839cb9f5defa0c03635db3e261da00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of data chunks in bytes. 0 means that the complete IPF file is stored in the memory.  <a href="#ga6b839cb9f5defa0c03635db3e261da00"></a><br/></td></tr>
 <tr class="separator:ga6b839cb9f5defa0c03635db3e261da00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Adds a callback function to provide single data chunks instead of the complete IPF data Useful if there is not enough RAM to store the complete IPF file. </p>
+<p>Adds a callback function to provide single data chunks instead of the complete IPF data. Useful if there is not enough RAM to store the complete IPF file. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga6b839cb9f5defa0c03635db3e261da00"></a>
 <div class="memitem">
@@ -113,10 +113,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Size of data chunks in bytes, 0 means complete IPF file is stored in memory. </p>
-<p>Smallest value (besides 0) is 2048. If value is unequal to 0 the additional callback <a class="el" href="group__callback.html#ga4a0b52f4a835d3e43ce6e9b4c868ded5" title="Callback function to provide a portion (chunk) of the IPF data.">Ipl_ProvideDataChunk()</a> is used for the application to provide the respective data chunk. If value is 0, the complete IPF data is referred in the <a class="el" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by Ipl_E...">Ipl_Prog()</a> call (no callback is used). </p>
+<p>Size of data chunks in bytes. 0 means that the complete IPF file is stored in the memory. </p>
+<p>Smallest value (besides 0) is 2048. If the value is unequal to 0, the additional callback function <a class="el" href="group__callback.html#ga4a0b52f4a835d3e43ce6e9b4c868ded5" title="Callback function to provide a portion (chunk) of the IPF data.">Ipl_ProvideDataChunk()</a> is used for the application to provide the respective data chunk. If the value is 0, the complete IPF data is referred in the <a class="el" href="group__api.html#ga721b326f53f0d2378443566b46a92b20" title="Performs job by using the referred IPF data. INIC needs to be set in programming mode first (by calli...">Ipl_Prog()</a> call (no callback is used). </p>
 
-<p>Definition at line <a class="el" href="ipl__cfg_8h_source.html#l00112">112</a> of file <a class="el" href="ipl__cfg_8h_source.html">ipl_cfg.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__cfg_8h_source.html#l00117">117</a> of file <a class="el" href="ipl__cfg_8h_source.html">ipl_cfg.h</a>.</p>
 
 </div>
 </div>
@@ -130,7 +130,7 @@ Macros</h2></td></tr>
 </div>
 </body>
 <!--
-Generated on Thu Aug 30 2018 13:34:14 for INIC Programming Library by
+Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

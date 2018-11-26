@@ -5,11 +5,11 @@ include(GetGitRevisionDescription)
 git_describe(GIT_VERSION --tags)
 
 #parse the version information into pieces.
-string(REGEX REPLACE "^v([0-9]+)\\..*" "\\1" VERSION_MAJOR "${GIT_VERSION}")
-string(REGEX REPLACE "^v[0-9]+\\.([0-9]+).*" "\\1" VERSION_MINOR "${GIT_VERSION}")
-string(REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" VERSION_PATCH "${GIT_VERSION}")
-string(REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.[0-9]+-(.*)" "\\1" VERSION_SHA1 "${GIT_VERSION}")
-set(CMAKE_PROJECT_SHA1 ${VERSION_SHA1})
+string(REGEX REPLACE "^V([0-9]+)\\..*" "\\1" VERSION_MAJOR "${GIT_VERSION}")
+string(REGEX REPLACE "^V[0-9]+\\.([0-9]+).*" "\\1" VERSION_MINOR "${GIT_VERSION}")
+string(REGEX REPLACE "^V[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" VERSION_PATCH "${GIT_VERSION}")
+string(REGEX REPLACE "^V[0-9]+\\.[0-9]+\\.[0-9]+-(.*)" "\\1" VERSION_BUILD "${GIT_VERSION}")
+set(CMAKE_PROJECT_BUILD VERSION_BUILD)
 
 set(GIT_VERSION_SHORT "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
