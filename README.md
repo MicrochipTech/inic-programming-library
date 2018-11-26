@@ -16,11 +16,11 @@ The IPL can handle the following INICs:
 
 Depending on the used INIC, it is possible to program the
 
-    * Configuration string (CFGS)
-    * Identification string (IDENTS)
-    * Configuration (this includes both CFGS and IDENTS)
-    * Patch string (PATCHS)
-    * Firmware
+* Configuration string (CFGS)
+* Identification string (IDENTS)
+* Configuration (this includes both CFGS and IDENTS)
+* Patch string (PATCHS)
+* Firmware
 
 into RAM, OTP or FLASH memory.
 The IPL uses the IPF format for the programming data, which can be created by the Microchip Automotive Target Manager (MATM) or UNICENSTM System Designer.
@@ -34,6 +34,5 @@ For systems with low memory it is possible to load portions of the IPF content i
 >    For support related to this code contact http://www.microchip.com/support. 
 
 
-
 ## License
-UNICENS source code is released under the [BSD License](https://github.com/MicrochipTech/unicens/blob/master/LICENSE).
+IPL source code is released under the [BSD License](https://github.com/MicrochipTech/unicens/blob/master/LICENSE).

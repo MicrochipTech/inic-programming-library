@@ -1,6 +1,6 @@
 ﻿BSD 3-Clause License
 
-Copyright 2017, Microchip Technology Inc. and its subsidiaries.
+Copyright 2018, Microchip Technology Inc. and its subsidiaries.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

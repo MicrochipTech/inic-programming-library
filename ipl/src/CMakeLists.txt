@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.11)
 
 set(IPL_PUBLIC_HEADERS
 	${IPL_INCLUDE_DIR}/ipl_pb.h
+	${IPL_CONFIGURATION_DIR}/ipl_cfg.h
+	${IPL_INCLUDE_DIR}/ipl.h
 	)
 
 set(IPL_PRIVATE_HEADERS
@@ -12,8 +14,6 @@ set(IPL_PRIVATE_HEADERS
 	${IPL_INCLUDE_DIR}/ipl_81212.h
 	${IPL_INCLUDE_DIR}/ipl_81214.h
 	${IPL_INCLUDE_DIR}/ipl_81216.h
-	${IPL_CONFIGURATION_DIR}/ipl_cfg.h
-	${IPL_INCLUDE_DIR}/ipl.h
 	)
 
 set(IPL_HEADERS
