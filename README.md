@@ -30,8 +30,10 @@ Besides the connection via I2C, INIC's RESET pin and ERR/BOOT_ pin need to be co
 
 For systems with low memory it is possible to load portions of the IPF content instead of loading the entire data.
 
-> Note:
->    For support, related to this code, go to: http://www.microchip.com/support. 
+> Notes:
+>   Documenation is provided in ipl/doc
+>   For support, related to this code, go to: http://www.microchip.com/support. 
+
 
 
 ## License
