@@ -32,6 +32,7 @@ For systems with low memory it is possible to load portions of the IPF content i
 
 > Notes:
 > * Documenation is provided in the ipl/doc/ folder
+> * An Eclipse CDT (UNICENS System Designer) project is provided
 > * For support, related to this code, go to: http://www.microchip.com/support. 
 
 
