@@ -91,14 +91,25 @@ $(document).ready(function(){initNavTree('history.html','');});
 <div class="title">Release History </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1>V0.0.8-0 (Test version)</h1>
+<div class="textblock"><h1>V1.0.0-3</h1>
+<p><b> Release date: </b>2018-11-28<br/>
+ </p>
+<table class="doxtable">
+<tr>
+<th>Type </th><th>Description </th></tr>
+<tr>
+<td>Fixed Issue </td><td><p class="starttd">If the firmware was not programmed correctly (no valid firmware version could be read), <a class="el" href="group__jobs.html#gaf11e90c8cfa125e4ae673f7eb0815338" title="Checks if an update of configuration string is useful or not. Available for FLASH and ROM INICs...">IPL_JOB_CHK_UPDATE_CONFIGSTRING</a> will report this with result <a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a> and not compare the CFGS version numbers.</p>
+<p class="endtd"></p>
+</td></tr>
+</table>
+<h1>V1.0.0-1 (Initial version)</h1>
 <p><b> Release date: </b>2018-10-11<br/>
  </p>
 <table class="doxtable">
 <tr>
 <th>Type </th><th>Description </th></tr>
 <tr>
-<td>Info </td><td>Interim test version supporting only OS81050, OS81060, OS81082, OS81092, OS81110. </td></tr>
+<td>Info </td><td>First version of IPL. </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -110,7 +121,7 @@ $(document).ready(function(){initNavTree('history.html','');});
 </div>
 </body>
 <!--
-Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
+Generated on Wed Nov 28 2018 17:37:23 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

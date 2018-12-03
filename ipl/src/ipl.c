@@ -1166,24 +1166,37 @@ uint8_t Ipl_CheckInicFwVersion(void)
     if (IPL_RES_OK == res)
     {
         /* additional version check */
-        Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckInicFwVersion FW IPF Meta - V%u.%u.%u-%u",
-                Ipl_IpfData.Meta.FwMajorVersion, Ipl_IpfData.Meta.FwMinorVersion, Ipl_IpfData.Meta.FwReleaseVersion, Ipl_IpfData.Meta.FwBuildVersion);
-        Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckInicFwVersion FW connected INIC V%u.%u.%u-%u",
-                Ipl_InicData.FwMajorVersion, Ipl_InicData.FwMinorVersion, Ipl_InicData.FwReleaseVersion, Ipl_InicData.FwBuildVersion);
+        Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckInicFwVersion FW IPF Meta (Val %u) - V%u.%u.%u-%u",
+                Ipl_IpfData.Meta.FwVersionValid,
+                Ipl_IpfData.Meta.FwMajorVersion,
+                Ipl_IpfData.Meta.FwMinorVersion,
+                Ipl_IpfData.Meta.FwReleaseVersion,
+                Ipl_IpfData.Meta.FwBuildVersion);
+        Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckInicFwVersion FW connected INIC (Val %u) V%u.%u.%u-%u",
+                Ipl_InicData.FwVersionValid,
+                Ipl_InicData.FwMajorVersion,
+                Ipl_InicData.FwMinorVersion,
+                Ipl_InicData.FwReleaseVersion,
+                Ipl_InicData.FwBuildVersion);
+        if (VERSION_VALID == Ipl_InicData.FwVersionValid)                                      /*! \internal Jira UN-582, UN-581 */
+        {                                                                                      /*! \internal Jira UN-582, UN-581 */
+            if (VERSION_VALID == Ipl_IpfData.Meta.FwVersionValid)                              /*! \internal Jira UN-582, UN-581 */
+            {                                                                                  /*! \internal Jira UN-582, UN-581 */
+                if ((Ipl_IpfData.Meta.FwMajorVersion != Ipl_InicData.FwMajorVersion)   ||      /*! \internal Jira UN-582, UN-581 */
+                (Ipl_IpfData.Meta.FwMinorVersion     != Ipl_InicData.FwMinorVersion)   ||      /*! \internal Jira UN-582, UN-581 */
+                (Ipl_IpfData.Meta.FwReleaseVersion   != Ipl_InicData.FwReleaseVersion) ||      /*! \internal Jira UN-582, UN-581 */
+                (Ipl_IpfData.Meta.FwBuildVersion     != Ipl_InicData.FwBuildVersion))          /*! \internal Jira UN-582, UN-581 */
+                {                                                                              /*! \internal Jira UN-582, UN-581 */
+                    res = IPL_RES_ERR_IPF_WRONGFWVERSION;                                      /*! \internal Jira UN-582, UN-581 */
+                }                                                                              /*! \internal Jira UN-582, UN-581 */
+            }                                                                                  /*! \internal Jira UN-582, UN-581 */
+            /* If IPF Version is not valid we return IPL_RES_OK */                             /*! \internal Jira UN-582, UN-581 */
+        }                                                                                      /*! \internal Jira UN-582, UN-581 */
+        else                                                                                   /*! \internal Jira UN-582, UN-581 */
+        {                                                                                      /*! \internal Jira UN-582, UN-581 */
+            res = IPL_RES_ERR_IPF_WRONGFWVERSION; /* INIC does not contain valid FW */         /*! \internal Jira UN-582, UN-581 */
+        }                                                                                      /*! \internal Jira UN-582, UN-581 */
 
-        if ((Ipl_IpfData.Meta.FwMajorVersion   != Ipl_InicData.FwMajorVersion)   ||
-            (Ipl_IpfData.Meta.FwMinorVersion   != Ipl_InicData.FwMinorVersion)   ||
-            (Ipl_IpfData.Meta.FwReleaseVersion != Ipl_InicData.FwReleaseVersion) ||
-            (Ipl_IpfData.Meta.FwBuildVersion   != Ipl_InicData.FwBuildVersion))     /* Connected Version is different from Version in IPF Meta Info */
-        {
-            if ((Ipl_IpfData.Meta.FwMajorVersion   != DEFAULTVAL_UINT8)   ||
-                (Ipl_IpfData.Meta.FwMinorVersion   != DEFAULTVAL_UINT8)   ||
-                (Ipl_IpfData.Meta.FwReleaseVersion != DEFAULTVAL_UINT8)   ||
-                (Ipl_IpfData.Meta.FwBuildVersion   != DEFAULTVAL_UINT32))    /* IPF Meta Version is not default */
-            {
-                res = IPL_RES_ERR_IPF_WRONGFWVERSION;
-            }
-        }
     }
     Ipl_Trace(Ipl_TraceTag(res), "Ipl_CheckInicFwVersion returned 0x%02X", res);
     return res;
@@ -1205,41 +1218,46 @@ static uint8_t Ipl_CheckUpdate(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData
         res = Ipl_ParseIpf(&Ipl_IpfData, lData, pData, STRINGTYPE_META);
         if ((STRINGTYPE_CONFIG == stringType) || (STRINGTYPE_CS == stringType))
         {
-            /* If any version is not valid */
-            if ((VERSION_INVALID == Ipl_IpfData.Meta.CfgsVersionValid) || (VERSION_INVALID == Ipl_InicData.CfgsVersionValid))
+            /* First check if FW version is valid */
+            res = Ipl_CheckInicFwVersion();
+            if ( (VERSION_INVALID == Ipl_IpfData.Meta.FwVersionValid) ||         /*! \internal Jira UN-582, UN-581 */
+                 (VERSION_INVALID == Ipl_InicData.FwVersionValid) )              /*! \internal Jira UN-582, UN-581 */
+            {                                                                    /*! \internal Jira UN-582, UN-581 */
+                res = IPL_RES_UPDATE_DENIED_UNKNOWN;                             /*! \internal Jira UN-582, UN-581 */
+            }                                                                    /*! \internal Jira UN-582, UN-581 */
+            else if (IPL_RES_OK == res)                                          /*! \internal Jira UN-581 */
             {
-                res = IPL_RES_UPDATE_DENIED_UNKNOWN;
-                /* If version in INIC is not valid */
-                if (VERSION_INVALID == Ipl_InicData.CfgsVersionValid)
+                /* If any version is not valid */
+                if ((VERSION_INVALID == Ipl_IpfData.Meta.CfgsVersionValid) || (VERSION_INVALID == Ipl_InicData.CfgsVersionValid))
                 {
-                    res = IPL_RES_OK; /* Update */
+                    res = IPL_RES_UPDATE_DENIED_UNKNOWN;
+                    /* If version in INIC is not valid */
+                    if (VERSION_INVALID == Ipl_InicData.CfgsVersionValid)
+                    {
+                        res = IPL_RES_OK; /* Update */
+                    }
                 }
-            }
-            else /* All versions are valid, we can compare them */
-            {
-                vipf  =   (uint32_t) ( (uint32_t) Ipl_IpfData.Meta.CfgsCustMajorVersion << 16U )
-                        + (uint32_t) ( (uint32_t) Ipl_IpfData.Meta.CfgsCustMinorVersion << 8U )
-                        + (uint32_t) Ipl_IpfData.Meta.CfgsCustReleaseVersion;
-                vinic =   (uint32_t) ( (uint32_t) Ipl_InicData.CfgsCustMajorVersion << 16U )
-                        + (uint32_t) ( (uint32_t) Ipl_InicData.CfgsCustMinorVersion << 8U )
-                        + (uint32_t) Ipl_InicData.CfgsCustReleaseVersion;
+                else /* All versions are valid, we can compare them */
+                {
+                    vipf  =   (uint32_t) ( (uint32_t) Ipl_IpfData.Meta.CfgsCustMajorVersion << 16U )
+                            + (uint32_t) ( (uint32_t) Ipl_IpfData.Meta.CfgsCustMinorVersion << 8U )
+                            + (uint32_t) Ipl_IpfData.Meta.CfgsCustReleaseVersion;
+                    vinic =   (uint32_t) ( (uint32_t) Ipl_InicData.CfgsCustMajorVersion << 16U )
+                            + (uint32_t) ( (uint32_t) Ipl_InicData.CfgsCustMinorVersion << 8U )
+                            + (uint32_t) Ipl_InicData.CfgsCustReleaseVersion;
 
-                if (vipf > vinic)
-                {
-                    res = IPL_RES_OK;
-                }
-                else if (vipf == vinic)
-                {
-                    res = IPL_RES_UPDATE_DENIED_EQUAL;
-                }
-                else
-                {
-                    res = IPL_RES_UPDATE_DENIED_NEWER;
-                }
-                /* Check finally, if CS fits to FW */
-                if (IPL_RES_OK == res)
-                {
-                    res = Ipl_CheckInicFwVersion();
+                    if (vipf > vinic)
+                    {
+                        res = IPL_RES_OK;
+                    }
+                    else if (vipf == vinic)
+                    {
+                        res = IPL_RES_UPDATE_DENIED_EQUAL;
+                    }
+                    else
+                    {
+                        res = IPL_RES_UPDATE_DENIED_NEWER;
+                    }
                 }
             }
             Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckUpdate ConfigString INIC: V%u.%u.%u IPF: V%u.%u.%u",

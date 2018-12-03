@@ -130,10 +130,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:gad28f34bd363a6c0fe4a9ec23c763fa4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programs the INIC test ident string from the referred IPF data. Available for ROM INICs only.  <a href="#gad28f34bd363a6c0fe4a9ec23c763fa4a"></a><br/></td></tr>
 <tr class="separator:gad28f34bd363a6c0fe4a9ec23c763fa4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__jobs.html#gaf11e90c8cfa125e4ae673f7eb0815338">IPL_JOB_CHK_UPDATE_CONFIGSTRING</a>&#160;&#160;&#160;0x0CU</td></tr>
-<tr class="memdesc:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of configuration string is useful or not.  <a href="#gaf11e90c8cfa125e4ae673f7eb0815338"></a><br/></td></tr>
+<tr class="memdesc:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of configuration string is useful or not. Available for FLASH and ROM INICs.  <a href="#gaf11e90c8cfa125e4ae673f7eb0815338"></a><br/></td></tr>
 <tr class="separator:gaf11e90c8cfa125e4ae673f7eb0815338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__jobs.html#gac2eb3b9a4d24c5ee78cedaae9693c668">IPL_JOB_CHK_UPDATE_FIRMWARE</a>&#160;&#160;&#160;0x0DU</td></tr>
-<tr class="memdesc:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of firmware is useful or not.  <a href="#gac2eb3b9a4d24c5ee78cedaae9693c668"></a><br/></td></tr>
+<tr class="memdesc:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an update of firmware is useful or not. Available for FLASH INICs only.  <a href="#gac2eb3b9a4d24c5ee78cedaae9693c668"></a><br/></td></tr>
 <tr class="separator:gac2eb3b9a4d24c5ee78cedaae9693c668"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -167,8 +167,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reads the config string version according to the referred IPF data. Available for FLASH and ROM INICs. </p>
+<dl class="section note"><dt>Note</dt><dd>The configuration string version is read from OTP, not from test memory. </dd></dl>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00535">535</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00537">537</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -184,7 +185,7 @@ Macros</h2></td></tr>
 
 <p>Programs the INIC firmware from the referred IPF data. Available for FLASH INICs only. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00539">539</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00541">541</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -201,7 +202,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC configuration from the referred IPF data. Available for FLASH and ROM INICs. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00546">546</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00548">548</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -218,7 +219,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC patch string from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00553">553</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00555">555</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -235,7 +236,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC test config from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00560">560</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00562">562</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -252,7 +253,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC test patch string from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00567">567</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00569">569</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -269,7 +270,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC config string from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00574">574</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00576">576</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -286,7 +287,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC test config string from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00581">581</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00583">583</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -303,7 +304,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC ident string from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00588">588</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00590">590</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -320,7 +321,7 @@ Macros</h2></td></tr>
 <p>Programs the INIC test ident string from the referred IPF data. Available for ROM INICs only. </p>
 <p>If a ROM INIC is connected and this is the first job to be performed after <a class="el" href="group__api.html#gaa3f49ce540f84dfe75aa2c3b09d3788d" title="Resets INIC, starts up in programming mode and checks Bootloader communication.">Ipl_EnterProgMode()</a>, the INIC's test memory is cleared before programming. </p>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00595">595</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00597">597</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -334,11 +335,12 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if an update of configuration string is useful or not. </p>
+<p>Checks if an update of configuration string is useful or not. Available for FLASH and ROM INICs. </p>
 <p>In general an update of the configuration string (CFGS) is considered as useful if the IPF data contains a Configuration string version that is higher than the configuration string version of the connected chip. </p>
+<dl class="section note"><dt>Note</dt><dd>The configuration string version is read from OTP, not from test memory.</dd></dl>
 <table class="doxtable">
 <tr>
-<th>CFGS version in IPF data </th><th>CFGS version in connected INIC </th><th>Result</th></tr>
+<th>CFGS version in IPF data </th><th>CFGS version in OTP of connected INIC </th><th>Result</th></tr>
 <tr>
 <td>Invalid </td><td>Any </td><td>Update is not useful (<a class="el" href="group__result__codes.html#ga4e31ba87f5ab0131248e79bc066426ae" title="Firmware or configuration string update is not recommended.">IPL_RES_UPDATE_DENIED_UNKNOWN</a>) </td></tr>
 <tr>
@@ -368,7 +370,7 @@ Macros</h2></td></tr>
 <td>Any </td><td>Any (same as CFGS in IPF data) </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00619">619</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00623">623</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +384,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if an update of firmware is useful or not. </p>
+<p>Checks if an update of firmware is useful or not. Available for FLASH INICs only. </p>
 <p>In general, an update of firmware is considered as useful, if the IPF data contains a firmware version which is bigger than the firmware version of the connected chip. </p>
 <table class="doxtable">
 <tr>
@@ -401,7 +403,7 @@ Macros</h2></td></tr>
 <td>Any </td><td>Smaller than version in IPF data </td><td>Update is useful (<a class="el" href="group__result__codes.html#ga4250be2768dfee65e07314ed41c92626" title="Success. No error occured.">IPL_RES_OK</a>) </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00634">634</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
+<p>Definition at line <a class="el" href="ipl__pb_8h_source.html#l00638">638</a> of file <a class="el" href="ipl__pb_8h_source.html">ipl_pb.h</a>.</p>
 
 </div>
 </div>
@@ -415,7 +417,7 @@ Macros</h2></td></tr>
 </div>
 </body>
 <!--
-Generated on Mon Nov 19 2018 09:06:12 for INIC PROGRAMMING LIBRARY by
+Generated on Wed Nov 28 2018 17:37:23 for INIC PROGRAMMING LIBRARY by
 Doxygen 1.8.2
 -->
 <script language="javascript">

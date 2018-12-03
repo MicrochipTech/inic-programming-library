@@ -34,6 +34,19 @@
 
 
 /*------------------------------------------------------------------------------------------------*/
+/* SPECIAL DEFINES                                                                                */
+/*------------------------------------------------------------------------------------------------*/
+
+/*! \internal #define IPL_LEGACY_IPF              */
+/*! \internal #define IPL_TRACETAG_DUMP "IPL DMP" */
+/*! \internal #define IPL_USE_OS81050             */
+/*! \internal #define IPL_USE_OS81060             */
+/*! \internal #define IPL_USE_OS81082             */
+/*! \internal #define IPL_USE_OS81092             */
+/*! \internal #define IPL_USE_OS81110             */
+
+
+/*------------------------------------------------------------------------------------------------*/
 /* CHECKS FOR ipl_cfg.h                                                                           */
 /*------------------------------------------------------------------------------------------------*/
 
@@ -82,14 +95,12 @@
 /* CONSTANTS                                                                                      */
 /*------------------------------------------------------------------------------------------------*/
 
-
-
 /*! \defgroup version Version
  *  This is the version number of the INIC Programming Library.
  *  Always pass on this number when communicating with Microchip support.
  */
 /*!@{*/
-#define VERSIONTAG "V0.0.9-0"
+#define VERSIONTAG "V1.0.0-3"
 /*!@}*/
 
 
@@ -364,11 +375,20 @@ void    Ipl_ExportChipInfo(void);
  */
 
 /*! \page history Release History
- *  # V0.0.8-0 (Test version) #
+ *  # V1.0.0-3 #
+ *  <b> Release date: </b>2018-11-28<br>
+ *  <table>
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Fixed Issue           <td>If the firmware was not programmed correctly (no valid firmware version could be read),
+ *                                    ::IPL_JOB_CHK_UPDATE_CONFIGSTRING will report this with result ::IPL_RES_UPDATE_DENIED_UNKNOWN
+ *                                    and not compare the CFGS version numbers.
+ *
+ *  </table>
+ *  # V1.0.0-1 (Initial version) #
  *  <b> Release date: </b>2018-10-11<br>
  *  <table>
- *  <tr><th>Type      <th>Description
- *  <tr><td>Info                  <td>Interim test version supporting only OS81050, OS81060, OS81082, OS81092, OS81110.
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Info                  <td>First version of IPL.
  *  </table>
  */
 

@@ -87,9 +87,9 @@ uint8_t OS81210_ReadConfigStringVersion(uint32_t lData, uint8_t pData[])
                 if (IPL_RES_OK == res)
                 {
                     Ipl_InicData.CfgsVersionValid       = VERSION_VALID;
-                    Ipl_InicData.CfgsCustMajorVersion   = Ipl_IplData.Tel[4];
-                    Ipl_InicData.CfgsCustMinorVersion   = Ipl_IplData.Tel[5];
-                    Ipl_InicData.CfgsCustReleaseVersion = Ipl_IplData.Tel[6];
+                    Ipl_InicData.CfgsCustMajorVersion   = Ipl_IplData.Tel[4]; /*! \internal Jira UN-596 */
+                    Ipl_InicData.CfgsCustMinorVersion   = Ipl_IplData.Tel[5]; /*! \internal Jira UN-596 */
+                    Ipl_InicData.CfgsCustReleaseVersion = Ipl_IplData.Tel[6]; /*! \internal Jira UN-596 */
                 }
             }
             else
@@ -116,9 +116,9 @@ uint8_t OS81210_ReadConfigStringVersion(uint32_t lData, uint8_t pData[])
                     if (IPL_RES_OK == res)
                     {
                         Ipl_InicData.CfgsVersionValid       = VERSION_VALID;
-                        Ipl_InicData.CfgsCustMajorVersion   = Ipl_IplData.Tel[4];
-                        Ipl_InicData.CfgsCustMinorVersion   = Ipl_IplData.Tel[5];
-                        Ipl_InicData.CfgsCustReleaseVersion = Ipl_IplData.Tel[6];
+                        Ipl_InicData.CfgsCustMajorVersion   = Ipl_IplData.Tel[4]; /*! \internal Jira UN-596 */
+                        Ipl_InicData.CfgsCustMinorVersion   = Ipl_IplData.Tel[5]; /*! \internal Jira UN-596 */
+                        Ipl_InicData.CfgsCustReleaseVersion = Ipl_IplData.Tel[6]; /*! \internal Jira UN-596 */
                     }
                 }
                 else
@@ -142,9 +142,9 @@ uint8_t OS81210_ReadConfigStringVersion(uint32_t lData, uint8_t pData[])
                         if (IPL_RES_OK == res)
                         {
                             Ipl_InicData.CfgsVersionValid       = VERSION_VALID;
-                            Ipl_InicData.CfgsCustMajorVersion   = Ipl_IplData.Tel[4];
-                            Ipl_InicData.CfgsCustMinorVersion   = Ipl_IplData.Tel[5];
-                            Ipl_InicData.CfgsCustReleaseVersion = Ipl_IplData.Tel[6];
+                            Ipl_InicData.CfgsCustMajorVersion   = Ipl_IplData.Tel[4]; /*! \internal Jira UN-596 */
+                            Ipl_InicData.CfgsCustMinorVersion   = Ipl_IplData.Tel[5]; /*! \internal Jira UN-596 */
+                            Ipl_InicData.CfgsCustReleaseVersion = Ipl_IplData.Tel[6]; /*! \internal Jira UN-596 */
                         }
                     }
                 }

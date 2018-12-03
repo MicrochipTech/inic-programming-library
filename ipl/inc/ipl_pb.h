@@ -531,7 +531,9 @@
  */
 #define IPL_JOB_READ_FIRMWARE_VER           0x01U
 
-/*! \brief Reads the config string version according to the referred IPF data. Available for FLASH and ROM INICs. */
+/*! \brief Reads the config string version according to the referred IPF data. Available for FLASH and ROM INICs.
+ *  \note  The configuration string version is read from OTP, not from test memory.
+ */
 #define IPL_JOB_READ_CONFIGSTRING_VER       0x02U
 
 /*! \brief Programs the INIC firmware from the referred IPF data. Available for FLASH INICs only.
@@ -588,37 +590,39 @@
 #define IPL_JOB_PROG_IDENTSTRING            0x0AU
 
 /*! \brief Programs the INIC test ident string from the referred IPF data. Available for ROM INICs only.
-*
-*  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
-*  the INIC's test memory is cleared before programming.
-*/
+ *
+ *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
+ *  the INIC's test memory is cleared before programming.
+ */
 #define IPL_JOB_PROG_TEST_IDENTSTRING       0x0BU
 
-/*! \brief Checks if an update of configuration string is useful or not.
-*
-* In general an update of the configuration string (CFGS) is considered as useful if the IPF data contains a Configuration
-* string version that is higher than the configuration string version of the connected chip.
-* CFGS version in IPF data | CFGS version in connected INIC  | Result
-* -------------------------|---------------------------------|-------------------------------------------------------
-* Invalid                  | Any                             | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
-* Any                      | Invalid                         | Update is useful (::IPL_RES_OK)
-* Invalid                  | Invalid                         | Update is useful (::IPL_RES_OK)
-* Any                      | Higher than version in IPF data | Update is not useful (::IPL_RES_UPDATE_DENIED_NEWER)
-* Any                      | Equal to version in IPF data    | Update is not useful (::IPL_RES_UPDATE_DENIED_EQUAL)
-* Any                      | Lower than version in IPF data  | Update is useful (::IPL_RES_OK)
-*
-* If the configuration string does not match to the connected INIC's firmware, of course an update is also not considered as useful:
-* Firmware version of CFGS in IPF data | Firmware version in connected INIC  | Result
-* -------------------------------------|-------------------------------------|--------------------------------------------------------
-* Invalid                              | Any                                 | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
-* Any                                  | Invalid                             | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
-* Invalid                              | Invalid                             | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
-* Any                                  | Any (different to CFGS in IPF data) | Update is not useful (::IPL_RES_ERR_IPF_WRONGFWVERSION)
-* Any                                  | Any (same as CFGS in IPF data)      | Update is useful (::IPL_RES_OK)
-*/
+/*! \brief Checks if an update of configuration string is useful or not. Available for FLASH and ROM INICs.
+ *
+ *  In general an update of the configuration string (CFGS) is considered as useful if the IPF data contains a Configuration
+ *  string version that is higher than the configuration string version of the connected chip.
+ *  \note The configuration string version is read from OTP, not from test memory.
+ *
+ *  CFGS version in IPF data | CFGS version in OTP of connected INIC | Result
+ *  -------------------------|---------------------------------------|-------------------------------------------------------
+ *  Invalid                  | Any                                   | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
+ *  Any                      | Invalid                               | Update is useful (::IPL_RES_OK)
+ *  Invalid                  | Invalid                               | Update is useful (::IPL_RES_OK)
+ *  Any                      | Higher than version in IPF data       | Update is not useful (::IPL_RES_UPDATE_DENIED_NEWER)
+ *  Any                      | Equal to version in IPF data          | Update is not useful (::IPL_RES_UPDATE_DENIED_EQUAL)
+ *  Any                      | Lower than version in IPF data        | Update is useful (::IPL_RES_OK)
+ *
+ *  If the configuration string does not match to the connected INIC's firmware, of course an update is also not considered as useful:
+ *  Firmware version of CFGS in IPF data | Firmware version in connected INIC  | Result
+ *  -------------------------------------|-------------------------------------|--------------------------------------------------------
+ *  Invalid                              | Any                                 | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
+ *  Any                                  | Invalid                             | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
+ *  Invalid                              | Invalid                             | Update is not useful (::IPL_RES_UPDATE_DENIED_UNKNOWN)
+ *  Any                                  | Any (different to CFGS in IPF data) | Update is not useful (::IPL_RES_ERR_IPF_WRONGFWVERSION)
+ *  Any                                  | Any (same as CFGS in IPF data)      | Update is useful (::IPL_RES_OK)
+ */
 #define IPL_JOB_CHK_UPDATE_CONFIGSTRING     0x0CU
 
-/*! \brief Checks if an update of firmware is useful or not.
+/*! \brief Checks if an update of firmware is useful or not. Available for FLASH INICs only.
  *
  *  In general, an update of firmware is considered as useful, if the IPF data contains a firmware version which
  *  is bigger than the firmware version of the connected chip.
