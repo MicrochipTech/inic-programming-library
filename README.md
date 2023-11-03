@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Microchip Technology Inc. provides a platform-independent programming library called IPL.
+Microchip Technology Inc. provides a platform independent programming library called IPL.
 The IPL enables an application to program Microchip's Intelligent Network Interface Controllers (INICs) via their I2C interface.
 
 The IPL can handle the following INICs:
@@ -13,6 +13,12 @@ The IPL can handle the following INICs:
 * OS81212 (INICnet technology 50)
 * OS81214 (INICnet technology 50)
 * OS81216 (INICnet technology 50)
+
+* OS81110 (MOST 150)
+* OS81092 (MOST 50)
+* OS81082 (MOST 50)
+* OS81060 (MOST 25)
+* OS81050 (MOST 25)
 
 Depending on the used INIC, it is possible to program the
 
