@@ -41,9 +41,7 @@ Ipl_IpfData_t Ipl_IpfData;
 /*------------------------------------------------------------------------------------------------*/
 
 static uint8_t Ipl_SetStdMetaProps(Ipl_IpfData_t *ipf, uint32_t pid, uint32_t pval, uint8_t ptype);
-#ifdef IPL_LEGACY_IPF
 static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf);
-#endif
 static uint8_t Ipl_CheckMetaPType(uint32_t pid, uint32_t pval, uint8_t ptype_act, uint8_t ptype_ref);
 static void    Ipl_TraceIpf(uint32_t nOfBytes, uint8_t pData[]);
 
@@ -215,16 +213,16 @@ uint8_t Ipl_ParseIpf(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_
         {
             Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_ParseIpf IPF contains no valid data");
         }
-#ifdef IPL_LEGACY_IPF
+/* #ifdef IPL_LEGACY_IPF */ /*! \internal Support released MATM Versions without all Meta Parameters */
         if (STRINGTYPE_META == stringType)
         {
-            Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ParseIpf IPL_LEGACY_IPF NumOfItems: %d", ipf->Meta.NumOfItems);
+            Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ParseIpf NumOfItems after parsing: %d", ipf->Meta.NumOfItems);
             if ( (0U == ipf->Meta.NumOfItems) || (DEFAULTVAL_UINT32 == ipf->Meta.NumOfItems) ) /*! \internal Jira UN-536 */
             {                                                                                  /*! \internal Jira UN-536 */
                 res = Ipl_SetDefaultMetaProps(ipf);
             }                                                                                  /*! \internal Jira UN-536 */
         }
-#endif
+/* #endif */
     }
     Ipl_Trace(Ipl_TraceTag(res), "Ipl_ParseIpf returned 0x%02X", res);
     return res;
@@ -531,7 +529,6 @@ static uint8_t Ipl_SetStdMetaProps(Ipl_IpfData_t *ipf, uint32_t pid, uint32_t pv
 }
 
 
-#ifdef IPL_LEGACY_IPF
 /*! \internal In case the IPF data does not contain Meta information the default values are set. */
 static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
 {
@@ -590,16 +587,18 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.BmMaxDataLength           = 32U;
             ipf->Meta.ChipTestMemSize           = 768U;
             ipf->Meta.BmSize                    = 0x2000U;
-            ipf->Meta.CfgsDefStartAddr          = 0x0002FF9CU;
+            ipf->Meta.CfgsDefStartAddr          = 0x0002FF8CU;            /*! \internal Case 00947204A */
             ipf->Meta.CfgsStdStartAddr          = 0x00U;
-            ipf->Meta.CfgsOvrlStartAddr         = 0x22U;
+            ipf->Meta.CfgsOvrlStartAddr         = 0x32U;                  /*! \internal Case 00947204A */
             ipf->Meta.CfgsTestStartAddr         = 0x00U;
-            ipf->Meta.IdentsStdStartAddr        = 0x44U;
-            ipf->Meta.IdentsOvrlStartAddr       = 0x52U;
-            ipf->Meta.IdentsTestStartAddr       = 0x22U;
+            ipf->Meta.CfgsSize                  = 0x32U;                  /*! \internal Case 00947204 */
+            ipf->Meta.IdentsStdStartAddr        = 0x64U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsOvrlStartAddr       = 0x72U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsTestStartAddr       = 0x32U;                  /*! \internal Case 01225641 */
+            ipf->Meta.IdentsSize                = 0x0EU;                  /*! \internal Case 00947204 */
             ipf->Meta.PatchsStdStartAddr        = 0x60U;
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
-            ipf->Meta.NumOfItems                = 15U;
+            ipf->Meta.NumOfItems                = 17U;                    /*! \internal Case 01225641 */
             break;
 #endif
 #ifdef IPL_USE_OS81212
@@ -610,16 +609,18 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.BmMaxDataLength           = 32U;
             ipf->Meta.ChipTestMemSize           = 768U;
             ipf->Meta.BmSize                    = 0x2000U;
-            ipf->Meta.CfgsDefStartAddr          = 0x0002FF9CU;
+            ipf->Meta.CfgsDefStartAddr          = 0x0002FF8CU;            /*! \internal Case 00947204A */
             ipf->Meta.CfgsStdStartAddr          = 0x00U;
-            ipf->Meta.CfgsOvrlStartAddr         = 0x22U;
+            ipf->Meta.CfgsOvrlStartAddr         = 0x32U;                  /*! \internal Case 00947204A */
             ipf->Meta.CfgsTestStartAddr         = 0x00U;
-            ipf->Meta.IdentsStdStartAddr        = 0x44U;
-            ipf->Meta.IdentsOvrlStartAddr       = 0x52U;
-            ipf->Meta.IdentsTestStartAddr       = 0x22U;
+            ipf->Meta.CfgsSize                  = 0x32U;                  /*! \internal Case 00947204 */
+            ipf->Meta.IdentsStdStartAddr        = 0x64U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsOvrlStartAddr       = 0x72U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsTestStartAddr       = 0x32U;                  /*! \internal Case 01225641 */
+            ipf->Meta.IdentsSize                = 0x0EU;                  /*! \internal Case 00947204 */
             ipf->Meta.PatchsStdStartAddr        = 0x60U;
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
-            ipf->Meta.NumOfItems                = 15U;
+            ipf->Meta.NumOfItems                = 17U;                    /*! \internal Case 01225641 */
             break;
 #endif
 #ifdef IPL_USE_OS81214
@@ -630,16 +631,18 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.BmMaxDataLength           = 32U;
             ipf->Meta.ChipTestMemSize           = 768U;
             ipf->Meta.BmSize                    = 0x2000U;
-            ipf->Meta.CfgsDefStartAddr          = 0x0002FF9CU;
+            ipf->Meta.CfgsDefStartAddr          = 0x0002FF8CU;            /*! \internal Case 00947204A */
             ipf->Meta.CfgsStdStartAddr          = 0x00U;
-            ipf->Meta.CfgsOvrlStartAddr         = 0x22U;
+            ipf->Meta.CfgsOvrlStartAddr         = 0x32U;                  /*! \internal Case 00947204A */
             ipf->Meta.CfgsTestStartAddr         = 0x00U;
-            ipf->Meta.IdentsStdStartAddr        = 0x44U;
-            ipf->Meta.IdentsOvrlStartAddr       = 0x52U;
-            ipf->Meta.IdentsTestStartAddr       = 0x22U;
+            ipf->Meta.CfgsSize                  = 0x32U;                  /*! \internal Case 00947204 */
+            ipf->Meta.IdentsStdStartAddr        = 0x64U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsOvrlStartAddr       = 0x72U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsTestStartAddr       = 0x32U;                  /*! \internal Case 01225641 */
+            ipf->Meta.IdentsSize                = 0x0EU;                  /*! \internal Case 00947204 */
             ipf->Meta.PatchsStdStartAddr        = 0x60U;
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
-            ipf->Meta.NumOfItems                = 15U;
+            ipf->Meta.NumOfItems                = 17U;                    /*! \internal Case 01225641 */
             break;
 #endif
 #ifdef IPL_USE_OS81216
@@ -650,16 +653,18 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
             ipf->Meta.BmMaxDataLength           = 32U;
             ipf->Meta.ChipTestMemSize           = 768U;
             ipf->Meta.BmSize                    = 0x2000U;
-            ipf->Meta.CfgsDefStartAddr          = 0x0002FF9CU;
+            ipf->Meta.CfgsDefStartAddr          = 0x0002FF8CU;            /*! \internal Case 00947204A */
             ipf->Meta.CfgsStdStartAddr          = 0x00U;
-            ipf->Meta.CfgsOvrlStartAddr         = 0x22U;
+            ipf->Meta.CfgsOvrlStartAddr         = 0x32U;                  /*! \internal Case 00947204A */
             ipf->Meta.CfgsTestStartAddr         = 0x00U;
-            ipf->Meta.IdentsStdStartAddr        = 0x44U;
-            ipf->Meta.IdentsOvrlStartAddr       = 0x52U;
-            ipf->Meta.IdentsTestStartAddr       = 0x22U;
+            ipf->Meta.CfgsSize                  = 0x32U;                  /*! \internal Case 00947204 */
+            ipf->Meta.IdentsStdStartAddr        = 0x64U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsOvrlStartAddr       = 0x72U;                  /*! \internal Case 00947204A */
+            ipf->Meta.IdentsTestStartAddr       = 0x32U;                  /*! \internal Case 01225641 */
+            ipf->Meta.IdentsSize                = 0x0EU;                  /*! \internal Case 00947204 */
             ipf->Meta.PatchsStdStartAddr        = 0x60U;
             ipf->Meta.PatchsTestStartAddr       = 0x30U;
-            ipf->Meta.NumOfItems                = 15U;
+            ipf->Meta.NumOfItems                = 17U;                    /*! \internal Case 01225641 */
             break;
 #endif
 #ifdef IPL_USE_OS81110
@@ -709,7 +714,6 @@ static uint8_t Ipl_SetDefaultMetaProps(Ipl_IpfData_t *ipf)
 	Ipl_Trace(Ipl_TraceTag(res), "Ipl_SetDefaultMetaProps returned 0x%02X", res);
 	return res;
 }
-#endif
 
 
 /*! \internal Sets all IPF properties to the default value. */

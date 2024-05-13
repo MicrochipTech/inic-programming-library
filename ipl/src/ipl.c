@@ -71,6 +71,9 @@ static uint8_t Ipl_CheckConnectedInic(void);
 static uint8_t Ipl_Bcd2Byte(uint8_t bcd);
 static uint8_t Ipl_ReadFirmwareVersion(void);
 static uint8_t Ipl_CheckUpdate(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_t stringType);
+#ifdef IPL_CHK_IPF_JOBS
+static uint8_t Ipl_CheckIpfOnly(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_t stringType);
+#endif
 static uint8_t Ipl_StartupInic(uint8_t chipMode);
 static uint8_t Ipl_WaitForResponse(void);
 static void    Ipl_TraceCfg(void);
@@ -99,11 +102,19 @@ uint8_t Ipl_EnterProgMode(uint8_t chipID)
     uint8_t res = IPL_RES_ERR_HW_INIC_COM;
     uint8_t cc = 0U;
     Ipl_IplData.ChipID = chipID;
+
 #ifdef IPL_INICDRIVER_OPENCLOSE
     cc = Ipl_InicDriverOpen();
 #endif
     Ipl_Trace(IPL_TRACETAG_INFO, "INIC Programming Library %s", VERSIONTAG);
     Ipl_Trace(IPL_TRACETAG_INFO, "For support contact http://www.microchip.com/support");
+#ifdef IPL_INICDRIVER_OPENCLOSE
+	Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_InicDriverOpen returned 0x%02X", cc);
+	if (0U != cc)
+    {
+		res = IPL_RES_ERR_HW_INIC_COM;
+    }
+#endif
     Ipl_TraceCfg();
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_EnterProgMode called with ChipID 0x%02X", chipID);
     Ipl_InicData.TestMemCleared = INIC_TESTMEM_UNCLEARED;
@@ -163,6 +174,7 @@ uint8_t Ipl_LeaveProgMode(void)
     uint8_t res;
     uint8_t cc;
     res = Ipl_StartupInic(INIC_MODE_NORMAL);
+	Ipl_Trace(Ipl_TraceTag(res), "Ipl_LeaveProgMode returned 0x%02X", res);
 #ifdef IPL_INICDRIVER_OPENCLOSE
     if (IPL_RES_OK == res)
     {
@@ -173,7 +185,6 @@ uint8_t Ipl_LeaveProgMode(void)
         }
     }
 #endif
-    Ipl_Trace(Ipl_TraceTag(res), "Ipl_LeaveProgMode returned 0x%02X", res);
     return res;
 }
 
@@ -201,6 +212,17 @@ uint8_t Ipl_Prog(uint8_t job, uint32_t lData, uint8_t* pData)
             break;
         case IPL_JOB_DUMP_ALL:
             res = Ipl_DumpAll(lData, pData);
+            break;
+#endif
+#ifdef IPL_CHK_IPF_JOBS
+        case IPL_JOB_CHK_IPF_CONFIGSTRING:
+            res = Ipl_CheckIpfOnly(&Ipl_IpfData, lData, pData, STRINGTYPE_CS);
+            break;
+         case IPL_JOB_CHK_IPF_IDENTSTRING:
+            res = Ipl_CheckIpfOnly(&Ipl_IpfData, lData, pData, STRINGTYPE_IS);
+            break;
+        case IPL_JOB_CHK_IPF_FIRMWARE:
+            res = Ipl_CheckIpfOnly(&Ipl_IpfData, lData, pData, STRINGTYPE_FW);
             break;
 #endif
         case IPL_JOB_READ_FIRMWARE_VER:
@@ -905,6 +927,9 @@ uint8_t Ipl_ExecInicCmd(void)
                     case CMD_READRF1:
                         rxlen = CMD_READRF1_RXLEN;
                         break;
+                    case CMD_WRITEIOREG:
+                        rxlen = CMD_WRITEIOREG_RXLEN;
+                        break;
                     default:
                         res = IPL_RES_ERR_CMD_UNEXPECTED;
                         break;
@@ -928,6 +953,13 @@ uint8_t Ipl_ExecInicCmd(void)
                         /* Parse response */
                         cc = Ipl_IplData.Tel[0];
                         Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_ExecInicCmd read CC 0x%02X", cc);
+#ifdef IPL_ALTERNATIVE_CRYSTAL
+                        if ( (cmd == CMD_PROGSTART) && (0x20 == cc) )  /*! \internal Case01308691 */
+                        {
+                            cc = IPL_RES_CC_OK;
+                            Ipl_Trace(IPL_TRACETAG_INFO, "Forced CC to 0x%02X because alternative crystal is used.", cc);
+                        }
+#endif
                         if (IPL_RES_CC_OK == cc)
                         {
                             res = IPL_RES_OK;
@@ -956,7 +988,7 @@ uint8_t Ipl_ExecInicCmd(void)
                                             Ipl_InicData.ChipID = IPL_CHIP_OS81214;
                                             break;
                                         case 0x81216U:
-                                            Ipl_InicData.ChipID = IPL_CHIP_OS81118;
+                                            Ipl_InicData.ChipID = IPL_CHIP_OS81216;  /*! \internal Case00607049 */
                                             break;
                                         default:
                                             Ipl_Trace(IPL_TRACETAG_ERR, "Ipl_ExecInicCmd ChipID unexpected");
@@ -999,6 +1031,7 @@ uint8_t Ipl_ExecInicCmd(void)
                                 case CMD_READRT:
                                 case CMD_READRF0:
                                 case CMD_READRF1:
+                                case CMD_WRITEIOREG:
                                 case CMD_LEG_GETCSINFO:
                                     break;
                                 case CMD_LEG_READFWVER:
@@ -1077,6 +1110,7 @@ uint8_t Ipl_ExecInicCmd(void)
                                 case CMD_READRT:
                                 case CMD_READRF0:
                                 case CMD_READRF1:
+                                case CMD_WRITEIOREG:
                                     res = IPL_RES_ERR_ACCESS_RAM;
                                     break;
                                 case CMD_LEG_READFWVER:
@@ -1317,6 +1351,35 @@ static uint8_t Ipl_CheckUpdate(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData
     return res;
 }
 
+#ifdef IPL_CHK_IPF_JOBS
+/*! \internal Checks ipf only */
+static uint8_t Ipl_CheckIpfOnly(Ipl_IpfData_t *ipf, uint32_t lData, uint8_t pData[], uint8_t stringType)
+{
+    uint8_t  res;
+
+    Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckIpfOnly called with %u byte IPF, StringType 0x%02X", lData, stringType);
+    /* Check if correct string is contained in IPF data */
+    res = Ipl_ParseIpf(&Ipl_IpfData, lData, pData, stringType);
+    if (IPL_RES_OK == res)
+    {
+        /* Get IPF versions from metadata */
+        res = Ipl_ParseIpf(&Ipl_IpfData, lData, pData, STRINGTYPE_META);
+        if ((STRINGTYPE_CONFIG == stringType) || (STRINGTYPE_CS == stringType))
+        {
+            Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckIpfOnly ConfigString IPF: V%u.%u.%u",
+                Ipl_IpfData.Meta.CfgsCustMajorVersion, Ipl_IpfData.Meta.CfgsCustMinorVersion, Ipl_IpfData.Meta.CfgsCustReleaseVersion);
+        }
+        else if  (STRINGTYPE_FW == stringType)
+        {
+            Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_CheckIpfOnly Firmware IPF: V%u.%u.%u-%u",
+                Ipl_IpfData.Meta.FwMajorVersion, Ipl_IpfData.Meta.FwMinorVersion, Ipl_IpfData.Meta.FwReleaseVersion, Ipl_IpfData.Meta.FwBuildVersion);
+        }
+    }
+    Ipl_Trace(Ipl_TraceTag(res), "Ipl_CheckIpfOnly returned 0x%02X", res);
+    return res;
+}
+#endif
+
 
 /*! \internal Starts up INIC either in boot mode or normal mode. */
 static uint8_t Ipl_StartupInic(uint8_t chipMode)
@@ -1377,11 +1440,26 @@ static uint8_t Ipl_WaitForResponse(void)
 {
     uint8_t res = IPL_RES_OK;
     int32_t waittime;
+#ifdef IPL_USE_INTPIN
+    int32_t waittime2;
+#endif
     Ipl_Trace(IPL_TRACETAG_INFO, "Ipl_WaitForResponse called");
     switch (Ipl_IplData.Tel[0])
     {
         case CMD_WRITEPROGMEM:
             waittime = (int32_t) INIC_PROGRAM_WAIT_TIME;
+            switch (Ipl_IplData.ChipID) /*! \internal Additional wait time for legacy INICs */
+            {
+                case IPL_CHIP_OS81050:
+                case IPL_CHIP_OS81060:
+                case IPL_CHIP_OS81082:
+                case IPL_CHIP_OS81092:
+                case IPL_CHIP_OS81110:
+                    waittime += (int32_t) INIC_PROGRAM_ADDWAIT_TIME;
+                    break;
+                default:
+                    break;
+            }
             break;
         case CMD_ERASEPROGMEM:
             waittime = (int32_t) INIC_ERASEPROGMEM_WAIT_TIME;
@@ -1396,9 +1474,13 @@ static uint8_t Ipl_WaitForResponse(void)
 #ifdef IPL_USE_INTPIN
     if ( (int32_t) INIC_INT_WAIT_TIMEOUT > waittime )
     {
-        waittime = (int32_t) INIC_INT_WAIT_TIMEOUT;
+        waittime2 = (int32_t) INIC_INT_WAIT_TIMEOUT; /*! \internal Case00510681 */
     }
-    res = Ipl_WaitForInt((uint16_t) waittime);
+    else
+    {
+        waittime2 = waittime; /*! \internal Case00510681 */
+    }
+    res = Ipl_WaitForInt((uint16_t) waittime2); /*! \internal Case00510681 */
     waittime -= (int32_t) Ipl_IplData.IntTime;
 #endif
     if (0 < waittime)
@@ -1616,6 +1698,12 @@ static void Ipl_TraceCfg(void)
 #endif
 #ifdef IPL_LEGACY_IPF
     Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_LEGACY_IPF defined");
+#endif
+#ifdef IPL_XTRA
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_XTRA defined");
+#endif
+#ifdef IPL_ALTERNATIVE_CRYSTAL
+    Ipl_Trace(IPL_TRACETAG_INFO, "ipl_cfg.h: IPL_ALTERNATIVE_CRYSTAL defined");
 #endif
 }
 

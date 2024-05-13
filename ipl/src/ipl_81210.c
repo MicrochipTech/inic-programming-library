@@ -32,7 +32,7 @@
 #include "ipl_81210.h"
 
 
-/* INICnet 50 product family */
+/* INICnet technology 50 */
 #if defined IPL_USE_OS81210 || defined IPL_USE_OS81212 || defined IPL_USE_OS81214|| defined IPL_USE_OS81216
 
 /*------------------------------------------------------------------------------------------------*/
@@ -275,7 +275,7 @@ uint8_t OS81210_ProgTestPatchString(uint32_t lData, uint8_t pData[])
                 res = OS81210_ClearTestMem();
                 if (IPL_RES_OK == res)
                 {
-                    res = OS81210_ProgTestMem(Ipl_IpfData.Meta.PatchsStdStartAddr, Ipl_IpfData.Meta.PatchsSize, pData, TESTMEM_DATA);
+                    res = OS81210_ProgTestMem(Ipl_IpfData.Meta.PatchsTestStartAddr, Ipl_IpfData.Meta.PatchsSize, pData, TESTMEM_DATA); /*! \internal Jira UN-615 */
                 }
             }
         }
