@@ -59,7 +59,7 @@ extern char Hw_GetKey(void);
 
 uint8_t  image[IMAGE_MAXLEN];
 int32_t  imageLen;
-uint8_t  chipid = IPL_CHIP_OS81210;
+uint8_t  chipid = 0xFF;
 char     ipffile[FILENAME_MAXLEN];
 
 
@@ -70,6 +70,7 @@ char     ipffile[FILENAME_MAXLEN];
 uint32_t load_ipf(char* fileName, uint32_t posData, uint32_t lData, uint8_t* pData);
 uint8_t  exec_job(uint8_t job);
 void     print_menu(void);
+void     change_chipid(void);
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -157,23 +158,27 @@ void print_menu(void)
         case IPL_CHIP_OS81082: printf("OS81082, "); break;
         case IPL_CHIP_OS81092: printf("OS81092, "); break;
         case IPL_CHIP_OS81110: printf("OS81110, "); break;
+        default:               printf("unknown (%d)", chipid); break;
     }
 #ifndef IPL_USE_INTPIN
     printf("no ");
 #endif
     printf("INT pin used.\n");
     printf("------------------------------------------------------------------------\n");
-    printf("[0] - Change Chip \n");
-    printf("[1] - EnterProgMode \n");
-    printf("[2] - LoadIpf \n");
-    printf("[u] - CheckUpdateConfig / CheckUpdateFirmware\n");
-    printf("[9] - LeaveProgMode \n");
+    printf("[0] - Change Chip                                                       \n");
+    printf("[1] - EnterProgMode                                                     \n");
+    printf("[2] - LoadIpf                                                           \n");
+#ifdef IPL_CHK_IPF_JOBS
+    printf("[8] - CheckIpf                                                          \n");
+#endif
+    printf("[u] - CheckUpdateConfig / CheckUpdateFirmware                           \n");
+    printf("[9] - LeaveProgMode                                                     \n");
     printf("------------------------------------------------------------------------\n");
-    printf("[3] - ReadFirmwareVersion \n");
-    printf("[4] - ReadConfigStringVersion \n");
+    printf("[3] - ReadFirmwareVersion                                               \n");
+    printf("[4] - ReadConfigStringVersion                                           \n");
     printf("------------------------------------------------------------------------\n");
     printf("[5] - ProgramConfiguration             [a] - ProgramTestConfiguration   \n");
-    printf("[6] - ProgramFirmware \n");
+    printf("[6] - ProgramFirmware                                                   \n");
     printf("------------------------------------------------------------------------\n");
     printf("[c] - ProgramConfigString              [d] - ProgramTestConfigString    \n");
     printf("[e] - ProgramIdentString               [f] - ProgramTestIdentString     \n");
@@ -186,42 +191,68 @@ void print_menu(void)
 /* Changes the current Chip ID. */
 void change_chipid(void)
 {
-    switch (chipid)
+    uint8_t chip_avail[30U];
+    uint8_t chip_max  = 0U;
+    uint8_t i;
+#ifdef IPL_USE_OS81118
+    chip_avail[chip_max] = IPL_CHIP_OS81118;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81119
+    chip_avail[chip_max] = IPL_CHIP_OS81119;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81210
+    chip_avail[chip_max] = IPL_CHIP_OS81210;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81212
+    chip_avail[chip_max] = IPL_CHIP_OS81212;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81214
+    chip_avail[chip_max] = IPL_CHIP_OS81214;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81216
+    chip_avail[chip_max] = IPL_CHIP_OS81216;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81050
+    chip_avail[chip_max] = IPL_CHIP_OS81050;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81060
+    chip_avail[chip_max] = IPL_CHIP_OS81060;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81082
+    chip_avail[chip_max] = IPL_CHIP_OS81082;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81092
+    chip_avail[chip_max] = IPL_CHIP_OS81092;
+    chip_max++;
+#endif
+#ifdef IPL_USE_OS81110
+    chip_avail[chip_max] = IPL_CHIP_OS81110;
+    chip_max++;
+#endif
+    /* Find current chip ID */
+    for (i=0U; i<chip_max; i++)
     {
-        case IPL_CHIP_OS81118:
-            chipid = IPL_CHIP_OS81119;
+        if (chipid == chip_avail[i])
+        {
             break;
-        case IPL_CHIP_OS81119:
-            chipid = IPL_CHIP_OS81210;
-            break;
-        case IPL_CHIP_OS81210:
-            chipid = IPL_CHIP_OS81212;
-            break;
-        case IPL_CHIP_OS81212:
-            chipid = IPL_CHIP_OS81214;
-            break;
-        case IPL_CHIP_OS81214:
-            chipid = IPL_CHIP_OS81216;
-            break;
-        case IPL_CHIP_OS81216:
-            chipid = IPL_CHIP_OS81050;
-            break;
-        case IPL_CHIP_OS81050:
-            chipid = IPL_CHIP_OS81060;
-            break;
-        case IPL_CHIP_OS81060:
-            chipid = IPL_CHIP_OS81082;
-            break;
-        case IPL_CHIP_OS81082:
-            chipid = IPL_CHIP_OS81092;
-            break;
-        case IPL_CHIP_OS81092:
-            chipid = IPL_CHIP_OS81110;
-            break;
-        case IPL_CHIP_OS81110:
-        default:
-            chipid = IPL_CHIP_OS81118;
-            break;
+        }
+    }
+    if ((i+1) >= chip_max)
+    {
+        chipid = chip_avail[0U];
+    }
+    else
+    {
+        chipid = chip_avail[i+1U];
     }
     print_menu();
 }
@@ -393,6 +424,11 @@ int main(int argc, char** argv)
             else if ( 0 == strcmp(argv[4], "PROG_TEST_IDENTSTRING" ) )     jobid = IPL_JOB_PROG_TEST_IDENTSTRING;
             else if ( 0 == strcmp(argv[4], "CHK_UPDATE_CONFIGSTRING" ) )   jobid = IPL_JOB_CHK_UPDATE_CONFIGSTRING;
             else if ( 0 == strcmp(argv[4], "CHK_UPDATE_FIRMWARE" ) )       jobid = IPL_JOB_CHK_UPDATE_FIRMWARE;
+#ifdef IPL_CHK_IPF_JOBS
+            else if ( 0 == strcmp(argv[4], "CHK_IPF_CONFIGSTRING" ) )      jobid = IPL_JOB_CHK_IPF_CONFIGSTRING;
+            else if ( 0 == strcmp(argv[4], "CHK_IPF_IDENTSTRING" ) )       jobid = IPL_JOB_CHK_IPF_IDENTSTRING;
+            else if ( 0 == strcmp(argv[4], "CHK_IPF_FIRMWARE" ) )          jobid = IPL_JOB_CHK_IPF_FIRMWARE;
+#endif
             else err_syntax = true;
         }
         else err_syntax = true;
@@ -409,23 +445,23 @@ int main(int argc, char** argv)
     if ( (!err_syntax) && (argc > 1) )
     {
         res = Ipl_EnterProgMode(chipid);
-        printf("\n\nEnterProgMode 0x%02X\n", res);
+        printf("\n\nEnterProgMode 0x%02X", res);
         if (argc == 7)
         {
              imageLen = load_ipf(ipffile, 0, 0, image);
              if (imageLen > 0)
              {
-                 printf("File %s loaded, total %u bytes\n", ipffile, imageLen);
+                 printf("\nFile %s loaded, total %u bytes\n", ipffile, imageLen);
              }
              else
              {
-                 printf("File %s could not be loaded\n", ipffile);
+                 printf("\nFile %s could not be loaded\n", ipffile);
              }
         }
-        res = exec_job(jobid);
-        res = Ipl_LeaveProgMode();
+        res += exec_job(jobid);
+        res += Ipl_LeaveProgMode();
         printf("LeaveProgMode 0x%02X\n\n", res);
-        return 0;
+        return res;
     }
     else if (err_syntax)
     {
@@ -454,10 +490,13 @@ int main(int argc, char** argv)
         printf("    %s -INIC OS81214 -JOB PROG_IDENTSTRING -IPF myFile.ipf\r\n", argv[0]);
         printf("    %s -INIC OS81214 -JOB PROG_TEST_IDENTSTRING -IPF myFile.ipf\r\n", argv[0]);
         printf("    %s -INIC OS81214 -JOB CHK_UPDATE_CONFIG -IPF myFile.ipf\r\n", argv[0]);
-        printf("    %s -INIC OS81118 -JOB CHK_UPDATE_FIRMWARE -IPF myFile.ipf\r\n\n", argv[0]);
-        return 0;
+        printf("    %s -INIC OS81118 -JOB CHK_UPDATE_FIRMWARE -IPF myFile.ipf\r\n", argv[0]);
+        printf("    %s -INIC OS81118 -JOB CHK_IPF_CONFIGSTRING -IPF myFile.ipf\r\n\n", argv[0]);
+        return -1;
     }
+    /* Interactive mode */
     print_menu();
+    change_chipid(); /* Prints also menu */
     while ( !app_stop )
     {
         ch = Hw_GetKey();
@@ -485,7 +524,7 @@ int main(int argc, char** argv)
                 }
                 else
                 {
-                       printf("File %s could not be loaded\n", ipffile);
+                    printf("File %s could not be loaded\n", ipffile);
                 }
                 break;
             case '3':
@@ -502,6 +541,13 @@ int main(int argc, char** argv)
                 break;
             case '7':
                 exec_job(IPL_JOB_PROG_PATCHSTRING);
+                break;
+            case '8':
+#ifdef IPL_CHK_IPF_JOBS
+                exec_job(IPL_JOB_CHK_IPF_CONFIGSTRING);
+                exec_job(IPL_JOB_CHK_IPF_IDENTSTRING);
+                exec_job(IPL_JOB_CHK_IPF_FIRMWARE);
+#endif
                 break;
             case '9':
                 res = Ipl_LeaveProgMode();

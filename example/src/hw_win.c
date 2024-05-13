@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------------------*/
-/* (c) 2018 Microchip Technology Inc. and its subsidiaries.                                       */
+/* (c) 2022 Microchip Technology Inc. and its subsidiaries.                                       */
 /*                                                                                                */
 /* You may use this software and any derivatives exclusively with Microchip products.             */
 /*                                                                                                */
@@ -24,13 +24,16 @@
  *  \note   For support related to this code contact http://www.microchip.com/support.
  *
  *  Used Pins:
- *  PHY+ Board          RasPI
- *  GND               - Red (GND)
- *  Pin 33            - Brown (SCL)
- *  Pin 35            - Orange (SDA)
- *  Pin 25 (Reset)    - Green (MISO)
- *  Pin 27 (Err/Boot) - Gray (MOSI)
- *  Pin 34 (Int)      - White (SS)
+ *  PHY+ Board Connector    Chip        Aardvark
+ *  GND                                 Red (GND)
+ *  Pin 33 (SCL)                        Brown (SCL)
+ *  Pin 35 (SDA)                        Orange (SDA)
+ *  Pin 25 (Reset)                      Green (MISO)
+ *  Pin 27 (Err/Boot)                   Gray (MOSI)
+ *
+ *  Pin 34 (Int)                        White (SS) - Optional
+ *  Pin 32 (DSDA/TDI)       Pin 13      Orange (SDA) - Debug
+ *  Pin 29 (DSCL/TCK)       Pin 14      Brown  (SCL) - Debug
  */
 
 
@@ -94,15 +97,15 @@ uint8_t         rx_buffer[AARD_MAX_DATA_LEN];
 
 uint8_t Ipl_InicDriverOpen(void)
 {
-    FILE *hfile = NULL;
+    //FILE *hfile = NULL;
     aard_device = AARD_DEV;
     aard_tgt    = AARD_TGT;
     aard_port   = AARD_PORT;
-    hfile = fopen(HW_TRACEFILE, "w"); /* Create empty trace file */
-    if (hfile != NULL)
-    {
-        tracefile = hfile;
-    }
+    //hfile = fopen(HW_TRACEFILE, "w"); /* Create empty trace file */
+    //if (hfile != NULL)
+    //{
+      //  tracefile = hfile;
+    //}
     aard_handle = aa_open(aard_port); /* Open the device */
     if (aard_handle <= 0)
     {
@@ -128,7 +131,11 @@ uint8_t Ipl_InicDriverClose(void)
         return 1U;
     }
     (void)fflush(tracefile);
-    fclose(tracefile);
+
+    if (aard_handle <= 0)
+    {
+        fclose(tracefile); // Close only if no error to keep logfile
+    }
     aa_close(aard_handle);
     return 0U;
 }
@@ -202,6 +209,17 @@ uint8_t Ipl_GetIntPin(void)
 void Ipl_Trace(const char *tag, const char* fmt, ...)
 {
     va_list args;
+
+    if ( NULL == tracefile)
+    {
+        FILE *hfile = NULL;
+        hfile = fopen(HW_TRACEFILE, "w"); /* Create empty trace file */
+        if (hfile != NULL)
+        {
+            tracefile = hfile;
+        }
+    }
+
     if ( NULL != tracefile)
     {
         if ( NULL != tag )

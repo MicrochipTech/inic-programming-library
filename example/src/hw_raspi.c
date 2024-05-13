@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------------------*/
-/* (c) 2018 Microchip Technology Inc. and its subsidiaries.                                       */
+/* (c) 2022 Microchip Technology Inc. and its subsidiaries.                                       */
 /*                                                                                                */
 /* You may use this software and any derivatives exclusively with Microchip products.             */
 /*                                                                                                */
@@ -24,13 +24,16 @@
  *  \note   For support related to this code contact http://www.microchip.com/support.
  *
  *  Used Pins:
- *  PHY+ Board          RasPI
- *  GND               - Pin 9
- *  Pin 33 (SCL)      - Pin 5 - GPIO 3 (SCL)
- *  Pin 35 (SDA)      - Pin 3 - GPIO 2 (SDA)
- *  Pin 25 (Reset)    - Pin 29 - GPIO 5
- *  Pin 27 (Err/Boot) - Pin 12 - GPIO 18
- *  Pin 34 (Int)      - Pin 31 - GPIO 6
+ *  PHY+ Board Connector    Chip        RasPI
+ *  GND                                 Pin 9
+ *  Pin 33 (SCL)                        Pin 5 - GPIO 3 (SCL)
+ *  Pin 35 (SDA)                        Pin 3 - GPIO 2 (SDA)
+ *  Pin 25 (Reset)                      Pin 29 - GPIO 5
+ *  Pin 27 (Err/Boot)                   Pin 12 - GPIO 18
+ *
+ *  Pin 34 (Int)                        Pin 31 - GPIO 6 - Optional
+ *  Pin 32 (DSDA/TDI)       Pin 13      Pin 3 - GPIO 2 (SDA) - Debug
+ *  Pin 29 (DSCL/TCK)       Pin 14      Pin 5 - GPIO 3 (SCL) - Debug
  */
 
 
@@ -143,18 +146,54 @@ uint8_t Ipl_InicDriverOpen(void)
         return 1U;
     }
 
-    if (!WriteCharactersToFile(GPIO_EXPORT, RESET_PIN)) return 2U;
-    if (!WriteCharactersToFile(GPIO_EXPORT, BOOT_PIN)) return 3U;
-    if (!WriteCharactersToFile(GPIO_EXPORT, INT_PIN)) return 4U;
+    if (!WriteCharactersToFile(GPIO_EXPORT, RESET_PIN)) 
+	{
+		printf("Failed to access RESET_PIN, error=%s\n", GetErrnoString());
+		return 2U;
+	}
+    if (!WriteCharactersToFile(GPIO_EXPORT, BOOT_PIN)) 
+	{
+		printf("Failed to access BOOT_PIN, error=%s\n", GetErrnoString());
+		return 3U;
+	}
+    if (!WriteCharactersToFile(GPIO_EXPORT, INT_PIN)) 
+	{
+		printf("Failed to access INT_PIN, error=%s\n", GetErrnoString());
+		return 4U;
+	}
 
-    if (!WaitForDevice(RESET_PIN_FOLDER)) return 5U;
-    if (!WriteCharactersToFile(RESET_PIN_FOLDER DIRECTION, DIRECTION_OUT)) return 6U;
+    if (!WaitForDevice(RESET_PIN_FOLDER)) 
+	{
+		printf("Failed to access RESET_PIN_FOLDER, error=%s\n", GetErrnoString());
+		return 5U;
+	}
+    if (!WriteCharactersToFile(RESET_PIN_FOLDER DIRECTION, DIRECTION_OUT)) 
+	{
+		printf("Failed to access RESET_PIN_FOLDER, error=%s\n", GetErrnoString());
+		return 6U;
+	}
 
-    if (!WaitForDevice(BOOT_PIN_FOLDER)) return 7U;
-    if (!WriteCharactersToFile(BOOT_PIN_FOLDER DIRECTION, DIRECTION_OUT)) return 8U;
+    if (!WaitForDevice(BOOT_PIN_FOLDER)) 
+	{
+		printf("Failed to access BOOT_PIN_FOLDER, error=%s\n", GetErrnoString());
+		return 7U;
+	}
+    if (!WriteCharactersToFile(BOOT_PIN_FOLDER DIRECTION, DIRECTION_OUT)) 
+	{
+		printf("Failed to access BOOT_PIN_FOLDER DIRECTION, error=%s\n", GetErrnoString());
+		return 8U;
+	}
 
-    if (!WaitForDevice(INT_PIN_FOLDER)) return 9U;
-    if (!WriteCharactersToFile(INT_PIN_FOLDER DIRECTION, DIRECTION_IN)) return 10U;
+    if (!WaitForDevice(INT_PIN_FOLDER)) 
+	{
+		printf("Failed to access INT_PIN_FOLDER, error=%s\n", GetErrnoString());
+		return 9U;
+	}
+    if (!WriteCharactersToFile(INT_PIN_FOLDER DIRECTION, DIRECTION_IN)) 
+	{
+		printf("Failed to access INT_PIN_FOLDER DIRECTION, error=%s\n", GetErrnoString());
+		return 10U;
+	}
 
     return 0U;
 }
@@ -213,7 +252,7 @@ uint8_t Ipl_InicWrite(uint8_t lData, uint8_t* pData)
     SetI2CAddress(HW_INIC_I2C_ADDR);
     if (write(m_fh, pData, lData) != lData)
     {
-        printf("LldInic_I2cWrite failed, error=%s\n", GetErrnoString());
+        printf("Ipl_InicWrite failed, error=%s\n", GetErrnoString());
         return 2U;
     }
     return 0U;
@@ -226,7 +265,7 @@ uint8_t Ipl_InicRead(uint8_t lData, uint8_t* pData)
     SetI2CAddress(HW_INIC_I2C_ADDR);
     if (read(m_fh, pData, lData) != lData)
     {
-        printf("LldInic_I2cWrite failed, error=%s\n", GetErrnoString());
+        printf("Ipl_InicRead failed, error=%s\n", GetErrnoString());
         return 2U;
     }
     return 0U;
