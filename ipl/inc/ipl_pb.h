@@ -50,27 +50,27 @@
  */
 /*!@{*/
 
-/*! \brief OS81118 (INICnet 150). */
+/*! \brief OS81118 (INICnet technology 150). */
 #define IPL_CHIP_OS81118                    0x18U
-/*! \brief OS81119 (INICnet 150). */
+/*! \brief OS81119 (INICnet technology 150). */
 #define IPL_CHIP_OS81119                    0x19U
-/*! \brief OS81210 (INICnet 50). */
+/*! \brief OS81210 (INICnet technology 50). */
 #define IPL_CHIP_OS81210                    0x30U
-/*! \brief OS81212 (INICnet 50). */
+/*! \brief OS81212 (INICnet technology 50). */
 #define IPL_CHIP_OS81212                    0x32U
-/*! \brief OS81214 (INICnet 50). */
+/*! \brief OS81214 (INICnet technology 50). */
 #define IPL_CHIP_OS81214                    0x34U
-/*! \brief OS81216 (INICnet 50). */
+/*! \brief OS81216 (INICnet technology 50). */
 #define IPL_CHIP_OS81216                    0x33U
-/*! \brief OS81110. */
+/*! \brief OS81110 (MOST 150). */
 #define IPL_CHIP_OS81110                    0x10U
-/*! \brief OS81092. */
+/*! \brief OS81092 (MOST 50). */
 #define IPL_CHIP_OS81092                    0x82U
-/*! \brief OS81082. */
+/*! \brief OS81082 (MOST 50). */
 #define IPL_CHIP_OS81082                    0x92U
-/*! \brief OS81060. */
+/*! \brief OS81060 (MOST 25). */
 #define IPL_CHIP_OS81060                    0x60U
-/*! \brief OS81050. */
+/*! \brief OS81050 (MOST25). */
 #define IPL_CHIP_OS81050                    0x0FU
 
 /*!@}*/
@@ -520,7 +520,7 @@
 
 /*!
  * \defgroup jobs ***** Jobs *****
- * The following job are to be used with the ::Ipl_Prog() function.
+ * The following jobs are to be used with the ::Ipl_Prog() function.
  * If the respective job is not supported for a specific INIC, an error ::IPL_RES_ERR_NOT_SUPPORTED will be reported.
  */
 /*!@{*/
@@ -531,72 +531,72 @@
  */
 #define IPL_JOB_READ_FIRMWARE_VER           0x01U
 
-/*! \brief Reads the config string version according to the referred IPF data. Available for FLASH and ROM INICs.
+/*! \brief Reads the config string version according to the referred IPF data.
  *  \note  The configuration string version is read from OTP, not from test memory.
  */
 #define IPL_JOB_READ_CONFIGSTRING_VER       0x02U
 
-/*! \brief Programs the INIC firmware from the referred IPF data. Available for FLASH INICs only.
+/*! \brief Programs the INIC firmware from the referred IPF data.
  */
 #define IPL_JOB_PROG_FIRMWARE               0x03U
 
-/*! \brief Programs the INIC configuration from the referred IPF data. Available for FLASH and ROM INICs.
+/*! \brief Programs the INIC configuration from the referred IPF data.
  *
  * If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  * the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_CONFIG                 0x04U
 
-/*! \brief Programs the INIC patch string from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC patch string from the referred IPF data.
 *
 *   If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
 *   the INIC's test memory is cleared before programming.
 */
 #define IPL_JOB_PROG_PATCHSTRING            0x05U
 
-/*! \brief Programs the INIC test config from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC test config from the referred IPF data.
  *
  *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  *  the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_TEST_CONFIG            0x06U
 
-/*! \brief Programs the INIC test patch string from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC test patch string from the referred IPF data.
  *
  *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  *  the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_TEST_PATCHSTRING       0x07U
 
-/*! \brief Programs the INIC config string from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC config string from the referred IPF data.
  *
  *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  *  the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_CONFIGSTRING           0x08U
 
-/*! \brief Programs the INIC test config string from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC test config string from the referred IPF data.
  *
  *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  *  the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_TEST_CONFIGSTRING      0x09U
 
-/*! \brief Programs the INIC ident string from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC ident string from the referred IPF data.
  *
  *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  *  the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_IDENTSTRING            0x0AU
 
-/*! \brief Programs the INIC test ident string from the referred IPF data. Available for ROM INICs only.
+/*! \brief Programs the INIC test ident string from the referred IPF data.
  *
  *  If a ROM INIC is connected and this is the first job to be performed after ::Ipl_EnterProgMode(),
  *  the INIC's test memory is cleared before programming.
  */
 #define IPL_JOB_PROG_TEST_IDENTSTRING       0x0BU
 
-/*! \brief Checks if an update of configuration string is useful or not. Available for FLASH and ROM INICs.
+/*! \brief Checks if an update of configuration string is useful or not.
  *
  *  In general an update of the configuration string (CFGS) is considered as useful if the IPF data contains a Configuration
  *  string version that is higher than the configuration string version of the connected chip.
@@ -622,7 +622,7 @@
  */
 #define IPL_JOB_CHK_UPDATE_CONFIGSTRING     0x0CU
 
-/*! \brief Checks if an update of firmware is useful or not. Available for FLASH INICs only.
+/*! \brief Checks if an update of firmware is useful or not.
  *
  *  In general, an update of firmware is considered as useful, if the IPF data contains a firmware version which
  *  is bigger than the firmware version of the connected chip.
@@ -637,18 +637,30 @@
  */
 #define IPL_JOB_CHK_UPDATE_FIRMWARE        0x0DU
 
+/*! \brief This option adds 3 jobs to only check the IPF content. */
+#ifdef IPL_CHK_IPF_JOBS
+/*! \brief Checks if the IPF data contains config string. */
+#define IPL_JOB_CHK_IPF_CONFIGSTRING       0xE0U
+/*! \brief Checks if the IPF data contains ident string. */
+#define IPL_JOB_CHK_IPF_IDENTSTRING        0xE1U
+/*! \brief Checks if the IPF data contains firmware. */
+#define IPL_JOB_CHK_IPF_FIRMWARE           0xE2U
+#endif
+
 #ifdef IPL_TRACETAG_DUMP
-/*! \brief Dumps the OTP memory to trace log. Available for ROM INICs (INICnet<sup>TM</sup> only). */
+/*! \brief Dumps the OTP memory to trace log. Available for ROM INICs (INICnet technology only). */
 #define IPL_JOB_DUMP_OTPMEM                0xF0U
-/*! \brief Dumps the Info memory to trace log. Available for FLASH INICs (INICnet<sup>TM</sup> only). */
+/*! \brief Dumps the Info memory to trace log. Available for FLASH INICs (INICnet technology only). */
 #define IPL_JOB_DUMP_INFOMEM               0xF1U
-/*! \brief Dumps the Program memory to trace log. Available for FLASH and ROM INICs (INICnet<sup>TM</sup> only). */
+/*! \brief Dumps the Program memory to trace log. Available for FLASH and ROM INICs (INICnet technology only). */
 #define IPL_JOB_DUMP_PROGMEM               0xF2U
-/*! \brief Dumps the Test memory to trace log. Available for ROM INICs (INICnet<sup>TM</sup> only). */
+/*! \brief Dumps the Test memory to trace log. Available for ROM INICs (INICnet technology only). */
 #define IPL_JOB_DUMP_TESTMEM               0xF3U
-/*! \brief Dumps all available INIC information to trace log. */
+/*! \brief Dumps all available INIC information to trace log (INICnet technology only). */
 #define IPL_JOB_DUMP_ALL                   0xFEU
 #endif
+
+
 /*!@}*/
 
 

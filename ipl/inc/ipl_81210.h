@@ -31,7 +31,7 @@
 #include "ipl_cfg.h"
 
 
-/* INICnet 50 product family */
+/* INICnet technology 50 */
 #if defined IPL_USE_OS81210 || defined IPL_USE_OS81212 || defined IPL_USE_OS81214 || defined IPL_USE_OS81216
 
 /*------------------------------------------------------------------------------------------------*/

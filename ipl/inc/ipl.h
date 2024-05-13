@@ -44,6 +44,7 @@
 /*! \internal #define IPL_USE_OS81082             */
 /*! \internal #define IPL_USE_OS81092             */
 /*! \internal #define IPL_USE_OS81110             */
+/*! \internal #define IPL_XTRA                    */
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -100,7 +101,7 @@
  *  Always pass on this number when communicating with Microchip support.
  */
 /*!@{*/
-#define VERSIONTAG "V1.0.0-3"
+#define VERSIONTAG "V1.0.0-8"
 /*!@}*/
 
 
@@ -229,6 +230,9 @@
 #define CMD_READRF1                     0x52U
 #define CMD_READRF1_TXLEN               4U
 #define CMD_READRF1_RXLEN               36U
+#define CMD_WRITEIOREG                  0x02U
+#define CMD_WRITEIOREG_TXLEN            8U
+#define CMD_WRITEIOREG_RXLEN            1U
 
 
 /*------------------------------------------------------------------------------------------------*/
@@ -250,6 +254,7 @@
 #define INIC_INT_WAIT_TIMEOUT           200U  /* Timeout for INT pin getting low */
 #define INIC_BOOTUP_TIME                12U   /* Time to wait after INIC reset before sending 1st command */
 #define INIC_PROGRAM_WAIT_TIME          10U   /* Time to wait after a programming command was sent */
+#define INIC_PROGRAM_ADDWAIT_TIME       5U    /* Additional time for legacy INICs */
 #define INIC_ERASEPROGMEM_WAIT_TIME     5000U /* Time to wait after an erase prog mem command was sent */
 #define INIC_ERASEINFOMEM_WAIT_TIME     1100U /* Time to wait after an erase info mem command was sent */
 
@@ -334,27 +339,32 @@ void    Ipl_ExportChipInfo(void);
 /*!@{*/
 /*!@}*/
 
+
 /*! \page introduction INIC Programming Library (IPL)
  *  Microchip Technology Inc. provides a platform independent programming library called IPL.<br>
  *  The IPL enables an application to program Microchip's Intelligent Network Interface Controllers (INICs)
  *  via their I2C interface.<br> <br>
  *  The IPL can handle the following INICs:<br> <br>
- *  OS81118 (INICnet<sup>TM</sup> 150)<br>
- *  OS81119 (INICnet<sup>TM</sup> 150)<br>
- *  OS81210 (INICnet<sup>TM</sup> 50)<br>
- *  OS81212 (INICnet<sup>TM</sup> 50)<br>
- *  OS81214 (INICnet<sup>TM</sup> 50)<br>
- *  OS81216 (INICnet<sup>TM</sup> 50)<br>
+ *  OS81118 (INICnet technology 150)<br>
+ *  OS81119 (INICnet technology 150)<br>
+ *  OS81210 (INICnet technology 50)<br>
+ *  OS81212 (INICnet technology 50)<br>
+ *  OS81214 (INICnet technology 50)<br>
+ *  OS81216 (INICnet technology 50)<br>
  */
+
+
 #ifdef IPL_LEGACY_INIC
 /*! \page introduction INIC Programming Library (IPL)
- *  OS81110<br>
- *  OS81092<br>
- *  OS81082<br>
- *  OS81060<br>
- *  OS81050<br>
+ *  OS81110 (MOST 150)<br>
+ *  OS81092 (MOST 50)<br>
+ *  OS81082 (MOST 50)<br>
+ *  OS81060 (MOST 25)<br>
+ *  OS81050 (MOST 25)<br>
  */
 #endif
+
+
 /*! \page introduction INIC Programming Library (IPL)
  *  Depending on the used INIC, it is possible to program the<br>
  *  - Configuration string (CFGS)
@@ -364,25 +374,126 @@ void    Ipl_ExportChipInfo(void);
  *  - Firmware
  *
  *  into RAM, OTP or FLASH memory.<br>
- *  The IPL uses the IPF format for the programming data, which can be created by
- *  the Microchip Automotive Target Manager (MATM) or UNICENS<sup>TM</sup> System Designer.<br>
- *  It is also possible to read out CFGS and firmware versions and to check if an update with a
- *  certain IPF data file is useful.<br> <br>
+ *  The IPL uses the IPF format for the programming data. IPF files can be created by
+ *  the Microchip Automotive Target Manager (MATM)<br> or UNICENS System Designer.
+ *  If the programming device cannot handle files, you can convert an IPF file to a C-style \ref ipfconvert "data array". <br> <br>
+ *  With the IPL, it is possible to read out CFGS and firmware versions and to check if an update with a
+ *  certain IPF data file is useful.<br>
  *  Besides the connection via I2C, INIC's RESET pin and ERR/BOOT_ pin needs to be controlled by the IPL.
- *  The use of the INT_ pin is optional.<br> <br>
- *  For systems with low memory it is possible to load portions of the IPF content instead of loading the entire data.<br>
+ *  The use of the INT_ pin is optional.<br>
+ *  For systems with low memory it is possible to load portions of the IPF content instead of loading the entire data. <br>
  *  \note For support related to this code contact http://www.microchip.com/support.
  */
 
+
+/*! \page ipfconvert Conversion of IPF files to data array
+ *  If the programming device cannot handle files, you can convert an IPF file to a C-style data array.
+ *
+ *  For such purpose, the Linux tool
+ *
+ *  <strong>xxd</strong>
+ *
+ *  can be used. With the command line option -i a header file can be created.
+ *
+ *  Example:
+ *
+ *  <strong>xxd -i cs.ipf >cs.h</strong>
+ *
+ *  where:
+ *
+ *  <strong>cs.ipf</strong> is the IPF file created with MATM or UNICENS System Designer.<br>
+ *  <strong>cs.h</strong> is the header file that will be created.
+ *
+ *  <strong>cs.h</strong> then contains the data in the following style:
+ *
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+ unsigned char cs_ipf[] = {
+ 0x01, 0x30, 0xff, 0xff, 0xff, 0xff, 0x06, 0x01, 0x00, 0x02, 0xff, 0xec,
+ 0x00, 0x00, 0x00, 0x10, 0x01, 0x00, 0x08, 0x12, 0x10, 0x01, 0x01, 0x00,
+ 0x00, 0x00, 0x00, 0x16, 0xff, 0xff, 0x85, 0x13, 0x03, 0x01, 0x00, 0x00,
+ 0x00, 0x00, 0x00, 0x00, 0x00, 0x32, 0x87, 0x22, 0x12, 0x70, 0x01, 0x00,
+ 0x99, 0x09, 0x08, 0x03, 0xff, 0xff, 0xff, 0xfd, 0xa0, 0x01, 0x50, 0xaa,
+ 0x00, 0x8d, 0xb4, 0x01, 0x17, 0x18, 0xe0, 0x00, 0x02, 0x04, 0x08, 0x10,
+ 0x78, 0xf1, 0xe3, 0xc0, 0x00, 0x00, 0x30, 0x9f, 0xff, 0xff, 0xff, 0xf0,
+ 0x60, 0x42, 0x82, 0x7f, 0xff, 0xff, 0x86, 0x62, 0x07, 0x01, 0x00, 0x00,
+ 0x00, 0x00, 0x00, 0x00, 0x01, 0x32, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00,
+ 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00,
+ 0x01, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00,
+ 0x01, 0x02, 0x04, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
+ 0x01, 0x03, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 0x01, 0x06, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00,
+ 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
+ 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
+ 0x02, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 0x02, 0x03, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00,
+ 0x02, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x02, 0xe5, 0xff, 0x00, 0x00,
+ 0x02, 0x05, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x00, 0x00, 0x00,
+ 0x04, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00,
+ 0x04, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00,
+ 0x06, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x87, 0x00, 0x00,
+ 0x06, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x00,
+ 0x06, 0x05, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x9c, 0x00, 0x00,
+ 0x06, 0x06, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 0x06, 0x07, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x00,
+ 0x06, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 0x09, 0x00, 0x40, 0x00, 0x00, 0x1a, 0x00, 0x00, 0x01, 0x18, 0x00, 0x00,
+ 0x09, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
+ 0x09, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 0x09, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x75, 0x63,
+ 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x2d, 0x63,
+ 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x00
+ };
+ unsigned int cs_ipf_len = 408;
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * and can added to your project.
+ * The array can be easily referenced by any IPL job:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+ res = Ipl_Prog(IPL_JOB_PROG_CONFIGSTRING, cs_ipf_len, &cs_ipf);
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ * <br>
+ */
+
+
+
 /*! \page history Release History
+ *  # V1.0.0-8 #
+ *  <b> Release date: </b>2023-11-03<br>
+ *  <table>
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Issue                 <td>Fixed issue: Reviewed and corrected all meta data for OS8121x.
+ *  </table>
+ *  # V1.0.0-7 #
+ *  <b> Release date: </b>2023-03-24<br>
+ *  <table>
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Issue                 <td>Fixed issue: IdentString Address for Test Memory on OS8121x was incorrect. Minor adjustments.
+ *  </table>
+ *  # V1.0.0-6 #
+ *  <b> Release date: </b>2022-06-03<br>
+ *  <table>
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Issue                 <td>Fixed issue: Added default values to support MATM versions that create IPF files without meta data.
+ *  </table>
+ *  # V1.0.0-5 #
+ *  <b> Release date: </b>2020-04-09<br>
+ *  <table>
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Issue                 <td>Fixed issue: Wait time after detection of INT_ pin activity longer than needed.
+ *  </table>
+ *  # V1.0.0-4 #
+ *  <b> Release date: </b>2019-03-15<br>
+ *  <table>
+ *  <tr><th>Type                  <th>Description
+ *  <tr><td>Issue                 <td>Added OS81050, OS81060, OS81082, OS81092, OS81110. Some minor fixes and cleanups.
+ *  </table>
  *  # V1.0.0-3 #
  *  <b> Release date: </b>2018-11-28<br>
  *  <table>
  *  <tr><th>Type                  <th>Description
- *  <tr><td>Fixed Issue           <td>If the firmware was not programmed correctly (no valid firmware version could be read),
+ *  <tr><td>Issue                 <td>Fixed issue: If the firmware was not programmed correctly (no valid firmware version could be read),
  *                                    ::IPL_JOB_CHK_UPDATE_CONFIGSTRING will report this with result ::IPL_RES_UPDATE_DENIED_UNKNOWN
  *                                    and not compare the CFGS version numbers.
- *
  *  </table>
  *  # V1.0.0-1 (Initial version) #
  *  <b> Release date: </b>2018-10-11<br>
@@ -391,6 +502,7 @@ void    Ipl_ExportChipInfo(void);
  *  <tr><td>Info                  <td>First version of IPL.
  *  </table>
  */
+
 
 /*! \page misra MISRA-C-2004
  *  The library was developed in compliance to MISRA-C-2004.
